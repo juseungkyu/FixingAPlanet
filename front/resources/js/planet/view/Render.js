@@ -30,7 +30,7 @@ export default class Render {
         this.renderer.render(this.scene, this.camera);
 
 
-        // this.animate()
+        this.animate()
     }
 
     setRenderer() {
@@ -41,7 +41,7 @@ export default class Render {
         
         this.container.appendChild(this.renderer.domElement);
 
-        this.renderer.autoClear = false;
+        this.renderer.autoClear = true;
         this.renderer.shadowMapEnabled = true;
     }
 
@@ -56,7 +56,7 @@ export default class Render {
 
     setLight() {
         this.light = new THREE.SpotLight(0xFFFFFF, 1, 0, Math.PI / 2, 1)
-        this.light.position.set(4000, 4000, 1500)
+        this.light.position.set(14000, 4000, 1500)
         this.light.target.position.set (1000, 3800, 1000)
 
         this.scene.add(this.light);
@@ -66,15 +66,14 @@ export default class Render {
         let planetGeo = new THREE.SphereGeometry (30, 40, 400)
         this.planetMat = new THREE.MeshPhongMaterial()
 
-        // this.planetMat.map = THREE.ImageUtils.loadTexture('./resources/image/test.jpg');
+        this.planetMat.map = THREE.ImageUtils.loadTexture('./resources/image/test.jpg');
 
-        // // bump map
-        // this.planetMat.bumpMap = THREE.ImageUtils.loadTexture('https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/bump-map.jpg');
-        // this.planetMat.bumpScale = 8;
+        // bump map
+        this.planetMat.bumpMap = THREE.ImageUtils.loadTexture('./resources/image/test_bump.jpg');
+        this.planetMat.bumpScale = 8;
 
         this.planetMesh = new THREE.Mesh(planetGeo, this.planetMat)
         this.planetMesh.position.set(-100, 0, 0)
-        this.planetMesh.rotation.y = 5
 
         this.scene.add(this.planetMesh)
     }
@@ -88,9 +87,7 @@ export default class Render {
         let clock = new THREE.Clock()
         let delta = clock.getDelta(); 
 
-        this.planetMesh.rotation.y += 0.1 * delta;
+        this.planetMesh.rotation.y += 0.005;
         this.renderer.render(this.scene, this.camera);
-
-        console.log('render')
     }
 }
