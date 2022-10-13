@@ -36,6 +36,8 @@ export default class Render {
         this.bumpMapCanvas.width = 1000
         this.bumpMapCanvas.height = 500
 
+        this.mapCanvas
+
         this.mapCtx = this.mapCanvas.getContext('2d')
         this.bumpMapCtx = this.bumpMapCanvas.getContext('2d')
 

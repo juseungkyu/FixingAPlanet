@@ -29,6 +29,19 @@ class App {
 
     addEvent() {
         window.addEventListener('resize', this.render.setRendererSize)
+        this.container.addEventListener('mousedown', this.mouseDown)
+        this.container.addEventListener('mouseup', this.mouseUp)
+        this.container.addEventListener('mouseleave', this.mouseLeave)
+    }
+
+    mouseDown = ()=>{
+        
+    }
+    mouseUp = ()=>{
+        
+    }
+    mouseLeave = ()=>{
+        
     }
 }
 
