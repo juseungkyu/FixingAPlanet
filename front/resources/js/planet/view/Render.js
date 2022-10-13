@@ -37,7 +37,7 @@ export default class Render {
         this.bumpMapCanvas.height = 500
 
         this.mapCtx = this.mapCanvas.getContext('2d')
-        this.bumpMapCtx = this.mapCanvas.getContext('2d')
+        this.bumpMapCtx = this.bumpMapCanvas.getContext('2d')
 
         this.mapCtx.fillStyle = "#ffffff"
         this.mapCtx.fillRect(0,0,1000,500)
