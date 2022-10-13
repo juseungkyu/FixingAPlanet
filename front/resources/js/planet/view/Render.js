@@ -38,15 +38,24 @@ export default class Render {
 
         this.mapCtx = this.mapCanvas.getContext('2d')
         this.bumpMapCtx = this.mapCanvas.getContext('2d')
+
+        this.mapCtx.fillStyle = "#ffffff"
+        this.mapCtx.fillRect(0,0,1000,500)
     }
 
-    setMap(img) {
+    drawMap(img) {
         this.mapCtx.drawImage(img)
+    }
+
+    drawBumpMap(img) {
+        this.bumpMapCtx.drawImage(img)
+    }
+
+    setMap() {
         this.planetMat.map = THREE.ImageUtils.loadTexture(this.mapCanvas.toDataURL());
     }
 
-    setBumpMap(img) {
-        this.bumpMapCtx.drawImage(img)
+    setBumpMap() {
         this.planetMat.bumpMap = THREE.ImageUtils.loadTexture(this.bumpMapCanvas.toDataURL());
     }
 
@@ -112,7 +121,7 @@ export default class Render {
         let clock = new THREE.Clock()
         let delta = clock.getDelta(); 
 
-        this.planetMesh.rotation.y += 0.005;
+        // this.planetMesh.rotation.y += 0.005;
         this.renderer.render(this.scene, this.camera);
     }
 }
