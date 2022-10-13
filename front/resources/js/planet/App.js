@@ -17,7 +17,6 @@ class App {
         this.drawContinent = new DrawContinent()
         this.DrawWater = new DrawWater()
 
-
         this.addEvent()
     }
 
