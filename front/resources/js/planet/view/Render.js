@@ -43,12 +43,18 @@ export default class Render {
         this.mapCtx.fillRect(0,0,1000,500)
     }
 
+    getMapCtx = () => this.map
+
+    getBumpMapCtx = () => this.bumpMap
+
     drawMap(img) {
-        this.mapCtx.drawImage(img)
+        this.mapCtx.drawImage(img,0,0, 1000, 500)
+        this.setMap()
     }
 
     drawBumpMap(img) {
-        this.bumpMapCtx.drawImage(img)
+        this.bumpMapCtx.drawImage(img,0,0, 1000, 500)
+        this.setBumpMap()
     }
 
     setMap() {
@@ -92,7 +98,7 @@ export default class Render {
     setLight() {
         this.light = new THREE.SpotLight(0xFFFFFF, 1, 0, Math.PI / 2, 1)
         this.light.position.set(14000, 4000, 1500)
-        this.light.target.position.set (1000, 3800, 1000)
+        this.light.target.position.set(1000, 3800, 1000)
 
         this.scene.add(this.light);
     }
@@ -121,7 +127,7 @@ export default class Render {
         let clock = new THREE.Clock()
         let delta = clock.getDelta(); 
 
-        // this.planetMesh.rotation.y += 0.005;
+        this.planetMesh.rotation.y += 0.005;
         this.renderer.render(this.scene, this.camera);
     }
 }

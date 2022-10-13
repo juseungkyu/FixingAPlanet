@@ -8,7 +8,7 @@ class App {
         this.init()
     }
 
-    init() {
+    async init() {
         this.container = document.querySelector('.container')
 
         this.render = new Render(this.container)
@@ -16,6 +16,10 @@ class App {
         this.drawCloud = new DrawCloud()
         this.drawContinent = new DrawContinent()
         this.DrawWater = new DrawWater()
+
+        this.render.drawMap(await urlToImageDom('/front/resources/image/test.jpg'))
+        // this.render.drawBumpMap(await urlToImageDom('/front/resources/image/test_bump.jpg'))
+        
 
         this.addEvent()
     }
