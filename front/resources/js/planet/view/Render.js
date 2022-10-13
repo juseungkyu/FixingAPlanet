@@ -5,44 +5,70 @@ export default class Render {
     }
 
     init() {
-        this.WIDTH = window.innerWidth - 30
-        this.HEIGHT = window.innerHeight - 30
+        this.WIDTH = window.innerWidth
+        this.HEIGHT = window.innerHeight
 
         this.angle = 45
         this.aspect = this.WIDTH / this.HEIGHT
         this.near = 0.1
         this.far = 3000
 
+        this.setCanvas()
+
         this.setCamera()
         this.setScene()
         this.setLight()
         this.setPlanet()
 
-        console.log('행성 준비 완료')
-
-        console.log(this.planetMesh)
-        console.log(this.camera.position)
-
         this.camera.lookAt( this.planetMesh.position );
         this.setRenderer()
 
-        console.log(this.scene)
         this.renderer.render(this.scene, this.camera);
 
-
         this.animate()
+    }
+
+    setCanvas() {
+        this.mapCanvas = document.createElement('canvas')
+        this.mapCanvas.width = 1000
+        this.mapCanvas.height = 500
+        this.bumpMapCanvas = document.createElement('canvas')
+        this.bumpMapCanvas.width = 1000
+        this.bumpMapCanvas.height = 500
+
+        this.mapCtx = this.mapCanvas.getContext('2d')
+        this.bumpMapCtx = this.mapCanvas.getContext('2d')
+    }
+
+    setMap(img) {
+        this.mapCtx.drawImage(img)
+        this.planetMat.map = THREE.ImageUtils.loadTexture(this.mapCanvas.toDataURL());
+    }
+
+    setBumpMap(img) {
+        this.bumpMapCtx.drawImage(img)
+        this.planetMat.bumpMap = THREE.ImageUtils.loadTexture(this.bumpMapCanvas.toDataURL());
     }
 
     setRenderer() {
         this.renderer = new THREE.WebGLRenderer({antialiasing : true});
 
-        this.renderer.setSize(this.WIDTH, this.HEIGHT);
+        this.setRendererSize()
         this.renderer.domElement.style.position = 'relative';
         
         this.container.appendChild(this.renderer.domElement);
 
         this.renderer.autoClear = true;
         this.renderer.shadowMapEnabled = true;
+    }
+
+    setRendererSize = () => {
+        this.WIDTH = window.innerWidth
+        this.HEIGHT = window.innerHeight
+        this.aspect = this.WIDTH / this.HEIGHT
+        this.camera.aspect = this.aspect
+        this.camera.updateProjectionMatrix()
+        this.renderer.setSize(this.WIDTH, this.HEIGHT);
     }
 
     setCamera() {
@@ -66,13 +92,12 @@ export default class Render {
         let planetGeo = new THREE.SphereGeometry (30, 40, 400)
         this.planetMat = new THREE.MeshPhongMaterial()
 
-        this.planetMat.map = THREE.ImageUtils.loadTexture('./resources/image/test.jpg');
+        this.setMap()
+        this.setBumpMap()
 
-        // bump map
-        this.planetMat.bumpMap = THREE.ImageUtils.loadTexture('./resources/image/test_bump.jpg');
-        this.planetMat.bumpScale = 8;
-
+        this.planetMat.bumpScale = 100;
         this.planetMesh = new THREE.Mesh(planetGeo, this.planetMat)
+
         this.planetMesh.position.set(-100, 0, 0)
 
         this.scene.add(this.planetMesh)

@@ -16,10 +16,13 @@ class App {
         this.drawCloud = new DrawCloud()
         this.drawContinent = new DrawContinent()
         this.DrawWater = new DrawWater()
+
+
+        this.addEvent()
     }
 
     addEvent() {
-
+        window.addEventListener('resize', this.render.setRendererSize)
     }
 }
 
