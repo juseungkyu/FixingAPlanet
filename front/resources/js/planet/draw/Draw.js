@@ -1,6 +1,11 @@
 export default class Draw {
-    constructor() {
+    constructor(render) {
+        this.render = render
         this.init()
+    }
+
+    init = () => {
+        
     }
 
     /**

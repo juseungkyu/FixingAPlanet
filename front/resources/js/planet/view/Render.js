@@ -36,17 +36,17 @@ export default class Render {
      */
     setCanvas() {
         this.mapCanvas = document.createElement('canvas')
-        this.mapCanvas.width = 1000
-        this.mapCanvas.height = 500
+        this.mapCanvas.width = 2000
+        this.mapCanvas.height = 1000
         this.bumpMapCanvas = document.createElement('canvas')
-        this.bumpMapCanvas.width = 1000
-        this.bumpMapCanvas.height = 500
+        this.bumpMapCanvas.width = 2000
+        this.bumpMapCanvas.height = 1000
 
         this.mapCtx = this.mapCanvas.getContext('2d')
         this.bumpMapCtx = this.bumpMapCanvas.getContext('2d')
 
         this.mapCtx.fillStyle = "#ffffff"
-        this.mapCtx.fillRect(0,0,1000,500)
+        this.mapCtx.fillRect(0,0,2000,1000)
     }
 
     /**
@@ -67,7 +67,7 @@ export default class Render {
      * @param {HTMLBodyElement} img
      */
     drawMap(img) {
-        this.mapCtx.drawImage(img,0,0, 1000, 500)
+        this.mapCtx.drawImage(img,0,0, 2000, 1000)
         this.setMap()
     }
 
@@ -77,7 +77,7 @@ export default class Render {
      * @param {HTMLBodyElement} img
      */
     drawBumpMap(img) {
-        this.bumpMapCtx.drawImage(img,0,0, 1000, 500)
+        this.bumpMapCtx.drawImage(img,0,0, 2000, 1000)
         this.setBumpMap()
     }
 
@@ -154,14 +154,15 @@ export default class Render {
      * 행성 도형 준비
      */
     setPlanet() {
-        let planetGeo = new THREE.SphereGeometry (30, 40, 400)
+        this.planetGeo = new THREE.SphereGeometry(30, 40, 400)
         this.planetMat = new THREE.MeshPhongMaterial()
 
         this.setMap()
         this.setBumpMap()
+        this.planetMat.needsUpdate = true
 
         this.planetMat.bumpScale = 100
-        this.planetMesh = new THREE.Mesh(planetGeo, this.planetMat)
+        this.planetMesh = new THREE.Mesh(this.planetGeo, this.planetMat)
 
         this.planetMesh.position.set(-100, 0, 0)
 
@@ -180,10 +181,8 @@ export default class Render {
      * 행성을 렌더
      */
     render() {
-        let clock = new THREE.Clock()
-        let delta = clock.getDelta() 
-
-        this.planetMesh.rotation.y += 0.005
+        // this.planetMesh.rotation.x += 0.005
+        // this.planetMesh.rotation.y += 0.01
         this.renderer.render(this.scene, this.camera)
     }
 }
