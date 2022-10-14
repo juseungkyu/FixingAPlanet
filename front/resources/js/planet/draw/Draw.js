@@ -4,6 +4,7 @@ export default class Draw {
     }
 
     /**
+     * onMouseDown 이벤트
      * @param {PointerEvent} event
      */
     onMouseDown = (event) => {
@@ -11,6 +12,7 @@ export default class Draw {
     }
 
     /**
+     * onMouseUp 이벤트
      * @param {PointerEvent} event
      */
     onMouseUp = (event) => {
@@ -18,6 +20,7 @@ export default class Draw {
     }
 
     /**
+     * onMouseLeave 이벤트
      * @param {PointerEvent} event
      */
     onMouseLeave = (event) => {

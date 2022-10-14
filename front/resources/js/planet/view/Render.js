@@ -139,6 +139,9 @@ export default class Render {
         this.scene = new THREE.Scene()
     }
 
+    /**
+     * 조명 설정
+     */
     setLight() {
         this.light = new THREE.SpotLight(0xFFFFFF, 1, 0, Math.PI / 2, 1)
         this.light.position.set(14000, 4000, 1500)
@@ -147,6 +150,9 @@ export default class Render {
         this.scene.add(this.light)
     }
 
+    /**
+     * 행성 도형 준비
+     */
     setPlanet() {
         let planetGeo = new THREE.SphereGeometry (30, 40, 400)
         this.planetMat = new THREE.MeshPhongMaterial()
@@ -162,11 +168,17 @@ export default class Render {
         this.scene.add(this.planetMesh)
     }
     
+    /**
+     * 프레임마다 렌더
+     */
     animate = () => { 
         requestAnimationFrame(this.animate)
         this.render() 
     }
 
+    /**
+     * 행성을 렌더
+     */
     render() {
         let clock = new THREE.Clock()
         let delta = clock.getDelta() 
