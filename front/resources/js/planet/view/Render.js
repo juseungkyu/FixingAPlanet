@@ -36,30 +36,35 @@ export default class Render {
      */
     setCanvas() {
         this.mapCanvas = document.createElement('canvas')
-        this.mapCanvas.width = 2000
-        this.mapCanvas.height = 1000
+        this.mapCanvas.width = 1000
+        this.mapCanvas.height = 500
         this.bumpMapCanvas = document.createElement('canvas')
-        this.bumpMapCanvas.width = 2000
-        this.bumpMapCanvas.height = 1000
+        this.bumpMapCanvas.width = 1000
+        this.bumpMapCanvas.height = 500
 
         this.mapCtx = this.mapCanvas.getContext('2d')
         this.bumpMapCtx = this.bumpMapCanvas.getContext('2d')
 
-        this.mapCtx.fillStyle = "#ffffff"
-        this.mapCtx.fillRect(0,0,2000,1000)
+        this.mapCtx.fillStyle = "rgb(255,255,255)"
+        this.mapCtx.fillRect(0,0,1000,500)
+        
+        this.bumpMapCtx.fillStyle = "rgb(0,0,0)"
+        this.bumpMapCtx.fillRect(0,0,1000,500)
     }
 
     /**
      * mapCtx 반환
      * Map : 색 같은 그래픽을 설정
+     * @returns {CanvasRenderingContext2D} mapCtx
      */
-    getMapCtx = () => this.map
+    getMapCtx = () => this.mapCtx
 
     /**
      * BumpMapCtx 반환
      * BumpMap : 고도 설정
+     * @returns {CanvasRenderingContext2D} bumpMapCtx
      */
-    getBumpMapCtx = () => this.bumpMap
+    getBumpMapCtx = () => this.bumpMapCtx
     
     /**
      * 이미지로 Map을 설정
@@ -67,7 +72,7 @@ export default class Render {
      * @param {HTMLBodyElement} img
      */
     drawMap(img) {
-        this.mapCtx.drawImage(img,0,0, 2000, 1000)
+        this.mapCtx.drawImage(img,0,0, 1000, 500)
         this.setMap()
     }
 
@@ -77,7 +82,7 @@ export default class Render {
      * @param {HTMLBodyElement} img
      */
     drawBumpMap(img) {
-        this.bumpMapCtx.drawImage(img,0,0, 2000, 1000)
+        this.bumpMapCtx.drawImage(img,0,0, 1000, 500)
         this.setBumpMap()
     }
 
@@ -86,7 +91,7 @@ export default class Render {
      * Map : 색과 같은 그래픽을 설정
      */
     setMap() {
-        this.planetMat.map = THREE.ImageUtils.loadTexture(this.mapCanvas.toDataURL())
+        this.planetMat.map = new THREE.CanvasTexture(this.mapCanvas);
     }
 
     /**
@@ -94,7 +99,23 @@ export default class Render {
      * BumpMap : 고도 설정
      */
     setBumpMap() {
-        this.planetMat.bumpMap = THREE.ImageUtils.loadTexture(this.bumpMapCanvas.toDataURL())
+        document.querySelector('body').appendChild(this.bumpMapCanvas)
+        document.querySelector('body').appendChild(this.mapCanvas)
+        this.planetMat.bumpMap = new THREE.CanvasTexture(this.bumpMapCanvas);
+    }
+
+    /**
+     * Map이 업데이트가 필요하다고 설정
+     */
+    setMapNeedUpdateTrue() {
+        this.planetMat.map.needsUpdate = true
+    }
+
+    /**
+     * BumpMap이 업데이트가 필요하다고 설정
+     */
+    setBumpMapNeedUpdateTrue() {
+        this.planetMat.bumpMap.needsUpdate = true
     }
 
     /**
@@ -109,7 +130,7 @@ export default class Render {
         this.container.appendChild(this.renderer.domElement)
 
         this.renderer.autoClear = true
-        this.renderer.shadowMapEnabled = true
+        this.renderer.shadowMap.enabled = true
     }
 
     /**
@@ -154,17 +175,16 @@ export default class Render {
      * 행성 도형 준비
      */
     setPlanet() {
-        this.planetGeo = new THREE.SphereGeometry(30, 40, 400)
+        this.planetGeo = new THREE.SphereGeometry(50, 50, 50)
         this.planetMat = new THREE.MeshPhongMaterial()
 
         this.setMap()
         this.setBumpMap()
-        this.planetMat.needsUpdate = true
 
         this.planetMat.bumpScale = 100
         this.planetMesh = new THREE.Mesh(this.planetGeo, this.planetMat)
 
-        this.planetMesh.position.set(-100, 0, 0)
+        this.planetMesh.position.set(-200, 0, 0)
 
         this.scene.add(this.planetMesh)
     }
@@ -173,8 +193,8 @@ export default class Render {
      * 프레임마다 렌더
      */
     animate = () => { 
-        requestAnimationFrame(this.animate)
         this.render() 
+        requestAnimationFrame(this.animate)
     }
 
     /**

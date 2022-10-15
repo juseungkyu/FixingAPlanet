@@ -21,7 +21,7 @@ class App {
         // console.log(await urlToImageDom('/resources/image/test.jpg'))
         // console.log(await urlToImageDom('/resources/image/test_bump.jpg'))
         // this.render.drawMap(await urlToImageDom('/resources/image/test.jpg'))
-        this.render.drawBumpMap(await urlToImageDom('/resources/image/test_bump.jpg'))
+        // this.render.drawBumpMap(await urlToImageDom('/resources/image/test_bump.jpg'))
 
         this.addEvent()
     }
@@ -29,6 +29,7 @@ class App {
     addEvent() {
         window.addEventListener('resize', this.render.setRendererSize)
         this.container.addEventListener('mousedown', this.mouseDown)
+        this.container.addEventListener('mousemove', this.mouseMove)
         this.container.addEventListener('mouseup', this.mouseUp)
         this.container.addEventListener('mouseleave', this.mouseLeave)
     }
@@ -36,11 +37,14 @@ class App {
     mouseDown = (e)=>{
         this.drawContinent.onMouseDown(e)
     }
-    mouseUp = ()=>{
-        
+    mouseMove = (e)=>{
+        this.drawContinent.onMouseMove(e)
     }
-    mouseLeave = ()=>{
-        
+    mouseUp = (e)=>{
+        this.drawContinent.onMouseUp(e)
+    }
+    mouseLeave = (e)=>{
+        this.drawContinent.onMouseLeave(e)
     }
 }
 
