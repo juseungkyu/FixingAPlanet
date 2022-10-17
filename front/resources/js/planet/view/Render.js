@@ -91,6 +91,7 @@ export default class Render {
      * Map : 색과 같은 그래픽을 설정
      */
     setMap() {
+        document.querySelector('body').appendChild(this.mapCanvas)
         this.planetMat.map = new THREE.CanvasTexture(this.mapCanvas);
     }
 
@@ -99,8 +100,6 @@ export default class Render {
      * BumpMap : 고도 설정
      */
     setBumpMap() {
-        document.querySelector('body').appendChild(this.bumpMapCanvas)
-        document.querySelector('body').appendChild(this.mapCanvas)
         this.planetMat.bumpMap = new THREE.CanvasTexture(this.bumpMapCanvas);
     }
 
@@ -201,8 +200,7 @@ export default class Render {
      * 행성을 렌더
      */
     render() {
-        // this.planetMesh.rotation.x += 0.005
-        // this.planetMesh.rotation.y += 0.01
+        this.planetMesh.rotation.y += 0.01
         this.renderer.render(this.scene, this.camera)
     }
 }

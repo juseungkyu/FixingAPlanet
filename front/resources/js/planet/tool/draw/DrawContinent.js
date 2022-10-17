@@ -7,10 +7,6 @@ export default class DrawContinent extends Draw {
      */
     constructor(render) {
         super(render)
-        this.ctx = this.render.getMapCtx()
-        this.bumpCtx = this.render.getBumpMapCtx()
-        this.beforePoint = new THREE.Vector2(0,0)
-        this.afterPoint = new THREE.Vector2(0,0)
     }
 
     init() {
@@ -61,18 +57,37 @@ export default class DrawContinent extends Draw {
     }
 
     drawLine(drawPoint1, drawPoint2) {
-        this.ctx.strokeStyle = 'rgba(255,255,255)'
-        this.bumpCtx.strokeStyle = 'rgba(255,255,255,0.01)'
 
-        this.ctx.beginPath()
-        this.ctx.moveTo(drawPoint1.x, drawPoint1.y)
-        this.ctx.lineTo(drawPoint2.x, drawPoint2.y)
-        this.ctx.stroke()
+        const reverseLine = Math.abs(drawPoint1.x - drawPoint2.x) > this.render.WIDTH / 2
 
-        this.bumpCtx.beginPath()
-        this.bumpCtx.moveTo(drawPoint1.x, drawPoint1.y)
-        this.bumpCtx.lineTo(drawPoint2.x, drawPoint2.y)
-        this.bumpCtx.stroke()
+        if(reverseLine){
+            this.reverseDrawLine(drawPoint1, drawPoint2)
+            return
+        }
+
+        this.ctx.strokeStyle = 'rgba(0,0,0)'
+        this.bumpCtx.strokeStyle = 'rgba(255,255,255,0.1)'
+
+        this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
+        this.justDrawLine(this.bumpCtx, drawPoint1, drawPoint2)
+
+        this.render.setMapNeedUpdateTrue()
+        this.render.setBumpMapNeedUpdateTrue()
+    }
+
+    reverseDrawLine(drawPoint1, drawPoint2) {
+        if(drawPoint1.x < drawPoint2.x) {
+            let temp = drawPoint1
+            drawPoint1 = drawPoint2
+            drawPoint2 = temp
+        }
+
+        let centerY = (drawPoint1.y + drawPoint2.y) / 2
+
+        this.justDrawLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
+        this.justDrawLine(this.ctx, drawPoint2, {x : 0, y : centerY})
+        this.justDrawLine(this.bumpCtx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
+        this.justDrawLine(this.bumpCtx, drawPoint2, {x : 0, y : centerY})
 
         this.render.setMapNeedUpdateTrue()
         this.render.setBumpMapNeedUpdateTrue()

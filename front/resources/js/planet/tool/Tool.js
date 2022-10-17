@@ -1,4 +1,4 @@
-export default class Draw {
+export default class Tool {
     constructor(render) {
         this.render = render
         this.mouseDown = false
@@ -61,19 +61,5 @@ export default class Draw {
 
     leaveProcess(event) {
 
-    }
-
-    /**
-     * UV좌표를 지도좌표로 변환
-     * @param {Vector2} uvPoint
-     * @param {Vector2} point
-     */
-    uvToDrawPoint(uvPoint) {
-        const point = uvPoint
-        point.x *= this.render.mapCanvas.width
-        point.y = 1- point.y
-        point.y *= this.render.mapCanvas.height
-
-        return point
     }
 }
