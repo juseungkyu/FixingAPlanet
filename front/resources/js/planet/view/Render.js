@@ -202,7 +202,7 @@ export default class Render {
      */
     render() {
         // this.planetMesh.rotation.x += 0.005
-        // this.planetMesh.rotation.y += 0.01
+        this.planetMesh.rotation.y += 0.01
         this.renderer.render(this.scene, this.camera)
     }
 }
