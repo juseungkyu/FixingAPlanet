@@ -14,7 +14,6 @@ export default class Tool {
      * @param {PointerEvent} event
      */
     onMouseDown = (event) => {
-        this.mouseDown = true
         this.downProcess(event)
     }
 
@@ -23,8 +22,6 @@ export default class Tool {
      * @param {PointerEvent} event
      */
     onMouseMove = (event) => {
-        if(!this.mouseDown) return
-
         console.log('move')
         this.moveProcess(event)
     }
@@ -34,7 +31,6 @@ export default class Tool {
      * @param {PointerEvent} event
      */
     onMouseUp = (event) => {
-        this.mouseDown = false
         this.upProcess(event)
     }
 
@@ -43,7 +39,6 @@ export default class Tool {
      * @param {PointerEvent} event
      */
     onMouseLeave = (event) => {
-        this.mouseDown = false
         this.leaveProcess(event)
     }
 

@@ -65,7 +65,7 @@ export default class DrawContinent extends Draw {
             return
         }
 
-        this.ctx.strokeStyle = 'rgba(0,0,0)'
+        this.ctx.strokeStyle = 'rgb(0,0,0)'
         this.bumpCtx.strokeStyle = 'rgba(255,255,255,0.1)'
 
         this.justDrawLine(this.ctx, drawPoint1, drawPoint2)

@@ -18,9 +18,9 @@ body {
     top: 0;
 }
 
-.ui>* {
-    width: 200px;
-    height: 200px;
+.fix-full>* {
+    width: 150px;
+    height: 150px;
     /* background-color: #555555; */
     color: white;
 }
@@ -33,7 +33,6 @@ body {
     text-align: center;
     line-height: 40px;
     font-size: 20px;
-    position: absolute;
 }
 
 .left-top {
@@ -86,4 +85,39 @@ body {
     position: absolute;
     right: 0;
     bottom: 0%;
+}
+
+.map canvas {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+.right-bottom .tool {
+    position: absolute;
+    transition: 0.5s;
+}
+
+.right-bottom .tool:nth-child(1) {
+    left: 0px;
+    top: 90px;
+}
+
+.right-bottom .tool:nth-child(2) {
+    left: 20px;
+    top: 20px;
+}
+
+.right-bottom .tool:nth-child(3) {
+    left: 90px;
+    top: 0px;
+}
+
+.right-bottom .tool:nth-child(4) {
+    width: 70px;
+    height: 70px;
+    font-size: 35px;
+    line-height: 70px;
+    left: 60px;
+    top: 60px;
 }

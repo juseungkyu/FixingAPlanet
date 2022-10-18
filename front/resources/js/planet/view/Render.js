@@ -126,7 +126,7 @@ export default class Render {
         this.setRendererSize()
         this.renderer.domElement.style.position = 'relative'
         
-        this.container.appendChild(this.renderer.domElement)
+        this.container.insertBefore(this.renderer.domElement, document.querySelector('.left-top.ui'))
 
         this.renderer.autoClear = true
         this.renderer.shadowMap.enabled = true
