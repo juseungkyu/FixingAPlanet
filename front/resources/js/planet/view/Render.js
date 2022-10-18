@@ -200,7 +200,7 @@ export default class Render {
      * 행성을 렌더
      */
     render() {
-        this.planetMesh.rotation.y += 0.01
+        // this.planetMesh.rotation.y += 0.01
         this.renderer.render(this.scene, this.camera)
     }
 }

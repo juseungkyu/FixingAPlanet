@@ -31,8 +31,6 @@ export default class ToolControl {
         this.btns.drawContinent.addEventListener('click', this.drawContinentToolSet)
         this.btns.drawWater.addEventListener('click', this.drawWaterToolSet)
 
-        console.log(this.canvas)
-
         this.canvas.addEventListener('mousedown', this.onMouseDown)
         this.canvas.addEventListener('mousemove', this.onMouseMove)
         this.canvas.addEventListener('mouseup', this.onMouseUp)
