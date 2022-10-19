@@ -27,6 +27,7 @@ export default class Render {
         this.setPlanet()
         this.setCamera()
         this.setRenderer()
+        this.setSkybox()
 
         this.renderer.render(this.scene, this.camera)
 
@@ -48,10 +49,10 @@ export default class Render {
         this.bumpMapCtx = this.bumpMapCanvas.getContext('2d')
 
         this.mapCtx.fillStyle = "rgb(255,255,255)"
-        this.mapCtx.fillRect(0,0,1000,500)
-        
+        this.mapCtx.fillRect(0, 0, 1000, 500)
+
         this.bumpMapCtx.fillStyle = "rgb(0,0,0)"
-        this.bumpMapCtx.fillRect(0,0,1000,500)
+        this.bumpMapCtx.fillRect(0, 0, 1000, 500)
     }
 
     /**
@@ -67,14 +68,14 @@ export default class Render {
      * @returns {CanvasRenderingContext2D} bumpMapCtx
      */
     getBumpMapCtx = () => this.bumpMapCtx
-    
+
     /**
      * 이미지로 Map을 설정
      * Map : 색과 같은 그래픽을 설정
      * @param {HTMLBodyElement} img
      */
     drawMap(img) {
-        this.mapCtx.drawImage(img,0,0, 1000, 500)
+        this.mapCtx.drawImage(img, 0, 0, 1000, 500)
         this.setMap()
     }
 
@@ -84,7 +85,7 @@ export default class Render {
      * @param {HTMLBodyElement} img
      */
     drawBumpMap(img) {
-        this.bumpMapCtx.drawImage(img,0,0, 1000, 500)
+        this.bumpMapCtx.drawImage(img, 0, 0, 1000, 500)
         this.setBumpMap()
     }
 
@@ -123,11 +124,11 @@ export default class Render {
      * Renderer 생성, 초기설정
      */
     setRenderer() {
-        this.renderer = new THREE.WebGLRenderer({antialiasing : true})
+        this.renderer = new THREE.WebGLRenderer({ antialiasing: true })
 
         this.setRendererSize()
         this.renderer.domElement.style.position = 'relative'
-        
+
         this.container.insertBefore(this.renderer.domElement, document.querySelector('.left-top.ui'))
 
         this.renderer.autoClear = true
@@ -149,18 +150,20 @@ export default class Render {
     /**
      * 카메라 설정
      */
-    setCamera(x=200, y=0, z=0) {
+    setCamera(x = 200, y = 0, z = 0) {
         this.camera = new THREE.PerspectiveCamera(this.angle, this.aspect, this.near, this.far)
-        this.moveCamera(x,y,z)
+        this.camera.position.set(x, y, z)
+        // this.moveCamera({x,y,z})
+        this.camera.lookAt(this.planetMesh.position)
     }
 
-    moveCamera({x, y, z}) {
-        console.log(Math.round(y), Math.round(z))
-        
-        this.camera.position.set(x, y, z)
-        // console.log(this.camera.position.z)
-        this.camera.lookAt( this.planetMesh.position )
-    }
+    // moveCamera({x, y, z}) {
+    //     console.log(Math.round(x), Math.round(y), Math.round(z))
+
+    //     this.camera.position.set(x, y, z)
+    //     // console.log(this.camera.position.z)
+    //     this.camera.lookAt( this.planetMesh.position )
+    // }
 
     /**
      * scene 설정
@@ -173,10 +176,10 @@ export default class Render {
      * 조명 설정
      */
     setLight() {
-        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.1)
+        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.3)
 
-        this.light = new THREE.DirectionalLight(0xffffff, 0.9)
-        this.light.position.set(200, 0, 0);
+        this.light = new THREE.DirectionalLight(0xffffff, 0.6)
+        this.light.position.set(1000, 0, 0);
 
         this.scene.add(this.ambientLight)
         this.scene.add(this.light)
@@ -199,12 +202,40 @@ export default class Render {
 
         this.scene.add(this.planetMesh)
     }
-    
+
+    /**
+     * 스카이박스(배경) 설정
+     */
+    setSkybox() {
+        const materialArray = [];
+        const texture_ft = new THREE.TextureLoader().load('/resources/image/skybox/space_ft.png');
+        const texture_bk = new THREE.TextureLoader().load('/resources/image/skybox/space_bk.png');
+        const texture_up = new THREE.TextureLoader().load('/resources/image/skybox/space_up.png');
+        const texture_dn = new THREE.TextureLoader().load('/resources/image/skybox/space_dn.png');
+        const texture_rt = new THREE.TextureLoader().load('/resources/image/skybox/space_rt.png');
+        const texture_lf = new THREE.TextureLoader().load('/resources/image/skybox/space_lf.png');
+
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_ft }));
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_bk }));
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_up }));
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_dn }));
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_rt }));
+        materialArray.push(new THREE.MeshBasicMaterial({ map: texture_lf }));
+
+        for (let i = 0; i < 6; i++)
+            materialArray[i].side = THREE.BackSide;
+
+        const skyboxGeo = new THREE.BoxGeometry(500, 500, 500);
+        this.skybox = new THREE.Mesh(skyboxGeo, materialArray);
+        
+        this.scene.add(this.skybox);
+    }
+
     /**
      * 프레임마다 렌더
      */
-    animate = () => { 
-        this.render() 
+    animate = () => {
+        this.render()
         requestAnimationFrame(this.animate)
     }
 
@@ -212,32 +243,8 @@ export default class Render {
      * 행성을 렌더
      */
     render() {
-        this.angleX += 0.1
-        // this.angleY += 0.01
-        // this.angleX = 1
-        // this.angleY = 45
-
-        this.moveCamera(this.getCamera(this.angleX, this.angleY))
+        this.planetMesh.rotation.y += 0.01
+        this.skybox.rotation.y += 0.01
         this.renderer.render(this.scene, this.camera)
-    }
-
-    /**
-     * 
-     * @param {Number} angleX 
-     * @param {Number} angleY 
-     * @returns {x:Number, y:Number, z:Number}
-     */
-    getCamera(angleX, angleY) {
-        const y = this.radius * Math.sin(angleY)
-        const a = this.radius * Math.cos(angleY)
-        const x = a * Math.sin(angleX)
-        const z = a * Math.cos(angleX)
-
-
-        // const x = this.radius * Math.sin(angleY) * Math.cos(angleX)
-        // const y = this.radius * Math.cos(angleY)
-        // const z = this.radius * Math.sin(angleY) * Math.sin(angleX)
-
-        return {x,y,z}
     }
 }
