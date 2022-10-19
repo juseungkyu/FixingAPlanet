@@ -11,13 +11,13 @@ class App {
         this.render = new Render(this.container)
         this.tool = new ToolControl(this.render, this.container)
 
-        document.querySelector('.map').appendChild(this.render.mapCanvas)
+        document.querySelector('.map').appendChild(this.render.bumpMapCanvas)
 
         // test
         // console.log(await urlToImageDom('/resources/image/test.jpg'))
         // console.log(await urlToImageDom('/resources/image/test_bump.jpg'))
         // this.render.drawMap(await urlToImageDom('/resources/image/test.jpg'))
-        // this.render.drawBumpMap(await urlToImageDom('/resources/image/test_bump.jpg'))
+        this.render.drawBumpMap(await urlToImageDom('/resources/image/test_bump.jpg'))
 
         this.addEvent()
     }

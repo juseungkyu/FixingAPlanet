@@ -180,7 +180,7 @@ export default class Render {
         this.setMap()
         this.setBumpMap()
 
-        this.planetMat.bumpScale = 100
+        this.planetMat.bumpScale = 10000
         this.planetMesh = new THREE.Mesh(this.planetGeo, this.planetMat)
 
         this.planetMesh.position.set(-200, 0, 0)

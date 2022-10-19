@@ -20,6 +20,7 @@ export default class DrawContinent extends Draw {
         }
 
         this.beforePoint = drawPoint
+        this.drawLine(this.beforePoint, this.beforePoint)
     }
 
     moveProcess(event) {
@@ -65,8 +66,9 @@ export default class DrawContinent extends Draw {
             return
         }
 
-        this.ctx.strokeStyle = 'rgb(0,0,0)'
-        this.bumpCtx.strokeStyle = 'rgba(255,255,255,0.1)'
+        this.ctx.stroke
+        this.ctx.strokeStyle = 'rgb(255,255,255)'
+        this.bumpCtx.strokeStyle = 'rgba(255,255,255,0.005)'
 
         this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
         this.justDrawLine(this.bumpCtx, drawPoint1, drawPoint2)

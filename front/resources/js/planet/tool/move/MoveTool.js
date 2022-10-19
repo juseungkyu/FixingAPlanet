@@ -7,26 +7,37 @@ export default class MoveTool extends Tool {
         this.afterPoint = new THREE.Vector2(0,0)
     }
 
-    uvToDrawPoint(uvPoint) {
-        const point = uvPoint
-        point.x *= this.render.mapCanvas.width
-        point.y = 1- point.y
-        point.y *= this.render.mapCanvas.height
+    getUVPoint(event) {
+        const raycaster = new THREE.Raycaster()
+        const mouse = new THREE.Vector2(event.clientX/this.render.WIDTH * 2 - 1, event.clientY/this.render.HEIGHT * -2 + 1)
+        raycaster.setFromCamera(mouse, this.render.camera)
+        
+        const intersects = raycaster.intersectObjects(this.render.scene.children, true);
 
-        return point
+        if(intersects.length == 0){
+            return -1
+        }
+
+        return intersects[0].uv
     }
 
     downProcess(event) {
-        const drawPoint =  this.getDrawPoint(event)
-        if(drawPoint === -1) {
+        const uvPoint =  this.getUVPoint(event)
+        if(uvPoint === -1) {
             return 
         }
 
-        this.beforePoint = drawPoint
+        this.beforePoint = uvPoint
+        
     }
 
     moveProcess(event) {
-        this.afterPoint = drawPoint
+        const uvPoint =  this.getUVPoint(event)
+        if(uvPoint === -1) {
+            return 
+        }
+
+        this.afterPoint = this.getUVPoint(event)
         this.drawLine(this.beforePoint, this.afterPoint)
         this.beforePoint = this.afterPoint
     }
