@@ -18,12 +18,10 @@ export default class Render {
 
         this.setCanvas()
 
-        this.setCamera()
         this.setScene()
         this.setLight()
         this.setPlanet()
-
-        this.camera.lookAt( this.planetMesh.position )
+        this.setCamera()
         this.setRenderer()
 
         this.renderer.render(this.scene, this.camera)
@@ -91,7 +89,7 @@ export default class Render {
      * Map : 색과 같은 그래픽을 설정
      */
     setMap() {
-        document.querySelector('body').appendChild(this.mapCanvas)
+        // document.querySelector('body').appendChild(this.mapCanvas)
         this.planetMat.map = new THREE.CanvasTexture(this.mapCanvas);
     }
 
@@ -147,9 +145,15 @@ export default class Render {
     /**
      * 카메라 설정
      */
-    setCamera() {
+    setCamera(x=200, y=0, z=0) {
         this.camera = new THREE.PerspectiveCamera(this.angle, this.aspect, this.near, this.far)
-        this.camera.position.set(0, 0, 0)
+        this.moveCamera(x,y,z)
+    }
+
+    moveCamera(x, y, z) {
+        this.camera.position.set(x, y, z)
+        console.log(this.camera.position, this.planetMesh.position)
+        this.camera.lookAt( this.planetMesh.position )
     }
 
     /**
@@ -163,10 +167,12 @@ export default class Render {
      * 조명 설정
      */
     setLight() {
-        this.light = new THREE.SpotLight(0xFFFFFF, 1, 0, Math.PI / 2, 1)
-        this.light.position.set(14000, 4000, 1500)
-        this.light.target.position.set(1000, 3800, 1000)
+        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.1)
 
+        this.light = new THREE.DirectionalLight(0xffffff, 0.9)
+        this.light.position.set(200, 0, 0);
+
+        this.scene.add(this.ambientLight)
         this.scene.add(this.light)
     }
 
@@ -183,7 +189,7 @@ export default class Render {
         this.planetMat.bumpScale = 10000
         this.planetMesh = new THREE.Mesh(this.planetGeo, this.planetMat)
 
-        this.planetMesh.position.set(-200, 0, 0)
+        this.planetMesh.position.set(0, 0, 0)
 
         this.scene.add(this.planetMesh)
     }
@@ -201,6 +207,8 @@ export default class Render {
      */
     render() {
         // this.planetMesh.rotation.y += 0.01
+
+        // this.moveCamera()
         this.renderer.render(this.scene, this.camera)
     }
 }
