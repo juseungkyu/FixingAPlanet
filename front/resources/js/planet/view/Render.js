@@ -8,6 +8,10 @@ export default class Render {
      * 기본 설정 함수
      */
     init() {
+        this.radius = 200
+        this.angleX = 0
+        this.angleY = 0
+
         this.WIDTH = window.innerWidth
         this.HEIGHT = window.innerHeight
 
@@ -150,9 +154,11 @@ export default class Render {
         this.moveCamera(x,y,z)
     }
 
-    moveCamera(x, y, z) {
+    moveCamera({x, y, z}) {
+        console.log(Math.round(y), Math.round(z))
+        
         this.camera.position.set(x, y, z)
-        console.log(this.camera.position, this.planetMesh.position)
+        // console.log(this.camera.position.z)
         this.camera.lookAt( this.planetMesh.position )
     }
 
@@ -186,7 +192,7 @@ export default class Render {
         this.setMap()
         this.setBumpMap()
 
-        this.planetMat.bumpScale = 10000
+        this.planetMat.bumpScale = 10
         this.planetMesh = new THREE.Mesh(this.planetGeo, this.planetMat)
 
         this.planetMesh.position.set(0, 0, 0)
@@ -206,9 +212,32 @@ export default class Render {
      * 행성을 렌더
      */
     render() {
-        // this.planetMesh.rotation.y += 0.01
+        this.angleX += 0.1
+        // this.angleY += 0.01
+        // this.angleX = 1
+        // this.angleY = 45
 
-        // this.moveCamera()
+        this.moveCamera(this.getCamera(this.angleX, this.angleY))
         this.renderer.render(this.scene, this.camera)
+    }
+
+    /**
+     * 
+     * @param {Number} angleX 
+     * @param {Number} angleY 
+     * @returns {x:Number, y:Number, z:Number}
+     */
+    getCamera(angleX, angleY) {
+        const y = this.radius * Math.sin(angleY)
+        const a = this.radius * Math.cos(angleY)
+        const x = a * Math.sin(angleX)
+        const z = a * Math.cos(angleX)
+
+
+        // const x = this.radius * Math.sin(angleY) * Math.cos(angleX)
+        // const y = this.radius * Math.cos(angleY)
+        // const z = this.radius * Math.sin(angleY) * Math.sin(angleX)
+
+        return {x,y,z}
     }
 }

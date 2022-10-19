@@ -7,6 +7,9 @@ export default class DrawContinent extends Draw {
      */
     constructor(render) {
         super(render)
+
+        this.lineWidth = 2
+        this.color = 'rgb(200,200,200)'
     }
 
     init() {
@@ -66,9 +69,10 @@ export default class DrawContinent extends Draw {
             return
         }
 
-        this.ctx.stroke
-        this.ctx.strokeStyle = 'rgb(255,255,255)'
-        this.bumpCtx.strokeStyle = 'rgba(255,255,255,0.005)'
+        this.ctx.lineWidth = this.lineWidth
+        this.bumpCtx.lineWidth = this.lineWidth
+        this.ctx.strokeStyle = this.color
+        this.bumpCtx.strokeStyle = 'rgba(255,255,255,0.01)'
 
         this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
         this.justDrawLine(this.bumpCtx, drawPoint1, drawPoint2)
