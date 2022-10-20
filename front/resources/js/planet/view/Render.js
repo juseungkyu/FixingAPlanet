@@ -30,7 +30,6 @@ export default class Render {
         this.setSkybox()
 
         this.renderer.render(this.scene, this.camera)
-
         this.animate()
     }
 
@@ -225,7 +224,7 @@ export default class Render {
         for (let i = 0; i < 6; i++)
             materialArray[i].side = THREE.BackSide;
 
-        const skyboxGeo = new THREE.BoxGeometry(500, 500, 500);
+        const skyboxGeo = new THREE.BoxGeometry(2000, 2000, 2000);
         this.skybox = new THREE.Mesh(skyboxGeo, materialArray);
         
         this.scene.add(this.skybox);
@@ -243,8 +242,6 @@ export default class Render {
      * 행성을 렌더
      */
     render() {
-        this.planetMesh.rotation.y += 0.01
-        this.skybox.rotation.y += 0.01
         this.renderer.render(this.scene, this.camera)
     }
 }

@@ -42,10 +42,27 @@ export default class ToolControl {
     }
 
     /**
+     * 모든 툴 선택 취소
+     */
+    unsetAllTool() {
+        this.moveToolUnSet()
+    }
+
+    /**
+     * 이동툴 취소
+     */
+    moveToolUnSet(){
+        this.moveTool.setDisable()
+    }
+
+    /**
      * 이동툴 설정
      */
     moveToolSet = ()=>{
+        this.unsetAllTool()
+
         console.log('moveTool')
+        this.moveTool.setAble()
         this.currentTool = this.moveTool
         this.rightBottom.appendChild(this.btns.move)
     }
@@ -54,6 +71,8 @@ export default class ToolControl {
      * 구름 그리기 툴 설정
      */
     drawCloudToolSet = ()=>{
+        this.unsetAllTool()
+
         console.log('CloudTool')
         this.currentTool = this.drawCloudTool
         this.rightBottom.appendChild(this.btns.drawCloud)
@@ -63,6 +82,8 @@ export default class ToolControl {
      * 지형 그리기 툴 설정
      */
     drawContinentToolSet = ()=>{
+        this.unsetAllTool()
+
         console.log('ContinentTool')
         this.currentTool = this.drawContinentTool
         this.rightBottom.appendChild(this.btns.drawContinent)
@@ -72,6 +93,8 @@ export default class ToolControl {
      * 물 그리기 툴 설정
      */
     drawWaterToolSet = ()=>{
+        this.unsetAllTool()
+        
         console.log('WaterTool')
         this.currentTool = this.drawWaterTool
         this.rightBottom.appendChild(this.btns.drawWater)
@@ -84,7 +107,7 @@ export default class ToolControl {
      */
     onMouseDown = (event) => {
         this.mouseDown = true
-        this.currentTool.onMouseDown(event)
+        this.currentTool.downProcess(event)
     }
 
     /**
@@ -94,7 +117,7 @@ export default class ToolControl {
     onMouseMove = (event) => {
         if(!this.mouseDown) return
 
-        this.currentTool.onMouseMove(event)
+        this.currentTool.moveProcess(event)
     }
 
     /**
@@ -102,8 +125,12 @@ export default class ToolControl {
      * @param {PointerEvent} event
      */
     onMouseUp = (event) => {
+        if(!this.mouseDown) {
+            return
+        }
+
         this.mouseDown = false
-        this.currentTool.onMouseUp(event)
+        this.currentTool.upProcess(event)
     }
 
     /**
@@ -111,7 +138,11 @@ export default class ToolControl {
      * @param {PointerEvent} event
      */
     onMouseLeave = (event) => {
+        if(!this.mouseDown) {
+            return
+        }
+        
         this.mouseDown = false
-        this.currentTool.onMouseLeave(event)
+        this.currentTool.leaveProcess(event)
     }
 }

@@ -61,10 +61,10 @@ export default class DrawContinent extends Draw {
     }
 
     drawLine(drawPoint1, drawPoint2) {
-
-        const reverseLine = Math.abs(drawPoint1.x - drawPoint2.x) > this.render.WIDTH / 2
+        const reverseLine = Math.abs(drawPoint1.x - drawPoint2.x) > this.render.mapCanvas.width / 2
 
         if(reverseLine){
+            console.log(drawPoint1.x - drawPoint2.x)
             this.reverseDrawLine(drawPoint1, drawPoint2)
             return
         }
