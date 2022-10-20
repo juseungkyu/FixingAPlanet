@@ -242,6 +242,10 @@ export default class Render {
      * 행성을 렌더
      */
     render() {
+        this.light.position.x = this.camera.position.x * 100
+        this.light.position.y = this.camera.position.y * 100
+        this.light.position.z = this.camera.position.z * 100
+        
         this.renderer.render(this.scene, this.camera)
     }
 }

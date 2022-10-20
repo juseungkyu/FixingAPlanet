@@ -69,12 +69,9 @@ export default class DrawContinent extends Draw {
             return
         }
 
-        this.ctx.lineWidth = this.lineWidth
         this.bumpCtx.lineWidth = this.lineWidth
-        this.ctx.strokeStyle = this.color
         this.bumpCtx.strokeStyle = 'rgba(255,255,255,0.01)'
 
-        this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
         this.justDrawLine(this.bumpCtx, drawPoint1, drawPoint2)
 
         this.render.setMapNeedUpdateTrue()
@@ -90,8 +87,6 @@ export default class DrawContinent extends Draw {
 
         let centerY = (drawPoint1.y + drawPoint2.y) / 2
 
-        this.justDrawLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
-        this.justDrawLine(this.ctx, drawPoint2, {x : 0, y : centerY})
         this.justDrawLine(this.bumpCtx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
         this.justDrawLine(this.bumpCtx, drawPoint2, {x : 0, y : centerY})
 
