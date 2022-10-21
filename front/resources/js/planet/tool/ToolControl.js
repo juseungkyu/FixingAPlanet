@@ -46,6 +46,7 @@ export default class ToolControl {
      */
     unsetAllTool() {
         this.moveToolUnSet()
+        this.continentToolUnSet()
     }
 
     /**
@@ -53,6 +54,13 @@ export default class ToolControl {
      */
     moveToolUnSet(){
         this.moveTool.setDisable()
+    }
+
+    /**
+     * 이동툴 취소
+     */
+    continentToolUnSet(){
+        this.drawContinentTool.setDisable()
     }
 
     /**
@@ -85,6 +93,7 @@ export default class ToolControl {
         this.unsetAllTool()
 
         console.log('ContinentTool')
+        this.drawContinentTool.setAble()
         this.currentTool = this.drawContinentTool
         this.rightBottom.appendChild(this.btns.drawContinent)
     }

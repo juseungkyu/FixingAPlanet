@@ -10,11 +10,11 @@ export default class MoveTool extends Tool {
     setController() {
         this.controls = new THREE.OrbitControls(this.render.camera, this.render.renderer.domElement);
 
-        this.controls.rotateSpeed = 1.0
-        this.controls.zoomSpeed = 0.5
+        this.controls.rotateSpeed = 0.5
+        this.controls.zoomSpeed = 1
         this.controls.panSpeed = 0.8
         this.controls.minDistance = 100
-        this.controls.maxDistance = 500
+        this.controls.maxDistance = 700
     }
 
     setAble() {

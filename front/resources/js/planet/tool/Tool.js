@@ -2,11 +2,6 @@ export default class Tool {
     constructor(render) {
         this.render = render
         this.mouseDown = false
-        this.init()
-    }
-
-    init = () => {
-        
     }
 
     /**

@@ -6,6 +6,17 @@
 
 .map{
     background-color: #555555;
+    /* height: 150px; */
+    width: 150px;
+    position: relative;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.gap-10 {
+    gap: 10px;
 }
 
 body {
@@ -27,6 +38,9 @@ body {
     height: 150px;
     /* background-color: #555555; */
     color: white;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 .tool {
@@ -50,6 +64,7 @@ body {
     left: 50%;
     top: 0;
     transform: translateX(-50%);
+    padding-top: 20px;
 }
 
 .right-top {
@@ -124,4 +139,23 @@ body {
     line-height: 70px;
     left: 60px;
     top: 60px;
+}
+
+
+
+/* tool */
+.continent-down i{
+    transform: rotateZ(180deg);
+}
+
+.tool {
+    transition: 0.5s;
+}
+
+.tool.active {
+    transform: scale(1.2);
+}
+
+.rotate-range {
+    transform: rotateZ(90deg);
 }

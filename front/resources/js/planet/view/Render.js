@@ -50,7 +50,7 @@ export default class Render {
         this.mapCtx.fillStyle = "rgb(255,255,255)"
         this.mapCtx.fillRect(0, 0, 1000, 500)
 
-        this.bumpMapCtx.fillStyle = "rgb(0,0,0)"
+        this.bumpMapCtx.fillStyle = "rgb(127,127,127)"
         this.bumpMapCtx.fillRect(0, 0, 1000, 500)
     }
 

@@ -11,7 +11,7 @@ export default class DrawContinent extends Draw {
         this.lineWidth = 2
         this.init()
     }
-    
+
     setAble() {
         this.menuList.forEach(x=>{
             x.style.visibility = 'visible'
@@ -23,19 +23,13 @@ export default class DrawContinent extends Draw {
             x.style.visibility = 'hidden'
         })
     }
-
+    
     setUpTool = ()=> {
-        console.log('upTool')
-        this.strokeStyle = 'rgba(255,255,255,0.05)'
-        this.upTool.classList.add('active')
-        this.downTool.classList.remove('active')
+
     }
 
     setDownTool = ()=> {
-        console.log('downTool')
-        this.strokeStyle = 'rgba(0,0,0,0.05)'
-        this.downTool.classList.add('active')
-        this.upTool.classList.remove('active')
+
     }
 
     init() {
@@ -43,8 +37,6 @@ export default class DrawContinent extends Draw {
         this.downTool = document.querySelector('.continent-down')
         this.upTool.addEventListener('click', this.setUpTool)
         this.downTool.addEventListener('click', this.setDownTool)
-
-        this.menuList = document.querySelectorAll('.continent-tool-menu')
         
         this.setUpTool()
     }
