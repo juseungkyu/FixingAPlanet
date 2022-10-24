@@ -34,8 +34,8 @@ body {
 }
 
 .fix-full>* {
-    width: 150px;
-    height: 150px;
+    /* width: 150px;
+    height: 150px; */
     /* background-color: #555555; */
     color: white;
     gap: 10px;
@@ -157,5 +157,23 @@ body {
 }
 
 .rotate-range {
-    transform: rotateZ(90deg);
+    transform-origin: left top;
+    transform: rotateZ(270deg) translateY(-50%);
+    width: 150px;
+    margin-top: 150px;
+    margin-left: 50%;
+}
+
+.range-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    width: 50px;
+    height: 220px;
+}
+
+.right-bottom {
+    width: 150px;
+    height: 150px;
 }

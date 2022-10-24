@@ -9,7 +9,38 @@ export default class DrawContinent extends Draw {
         super(render)
 
         this.lineWidth = 2
+        this.color = 255
+        this.alpha = 0.01
         this.init()
+    }
+
+    init() {
+        this.upTool = document.querySelector('.continent-up')
+        this.downTool = document.querySelector('.continent-down')
+
+        this.menuList = document.querySelectorAll('.continent-tool-menu')
+        
+        this.continentSize = document.querySelector('.continent-size')
+        this.continentColor = document.querySelector('.continent-color')
+
+        this.lineWidth = parseInt(this.continentSize.value)
+        this.alpha = parseInt(this.continentColor.value)
+
+        this.addEvent()
+        this.setUpTool()
+    }
+
+    addEvent() {
+        this.upTool.addEventListener('click', this.setUpTool)
+        this.downTool.addEventListener('click', this.setDownTool)
+
+        this.continentSize.addEventListener('change', ()=>{
+            this.lineWidth = parseInt(this.continentSize.value)
+        })
+        this.continentColor.addEventListener('change', ()=>{
+            this.alpha = parseFloat(this.continentColor.value)
+            this.strokeStyle = this.getColor()
+        })
     }
     
     setAble() {
@@ -24,29 +55,24 @@ export default class DrawContinent extends Draw {
         })
     }
 
+    getColor() {
+        return `rgba(${this.color},${this.color},${this.color},${this.alpha})`
+    }
+
     setUpTool = ()=> {
         console.log('upTool')
-        this.strokeStyle = 'rgba(255,255,255,0.05)'
+        this.color = 255
+        this.strokeStyle = this.getColor()
         this.upTool.classList.add('active')
         this.downTool.classList.remove('active')
     }
 
     setDownTool = ()=> {
         console.log('downTool')
-        this.strokeStyle = 'rgba(0,0,0,0.05)'
+        this.color = 0
+        this.strokeStyle = this.getColor()
         this.downTool.classList.add('active')
         this.upTool.classList.remove('active')
-    }
-
-    init() {
-        this.upTool = document.querySelector('.continent-up')
-        this.downTool = document.querySelector('.continent-down')
-        this.upTool.addEventListener('click', this.setUpTool)
-        this.downTool.addEventListener('click', this.setDownTool)
-
-        this.menuList = document.querySelectorAll('.continent-tool-menu')
-        
-        this.setUpTool()
     }
 
     downProcess(event) {
@@ -104,6 +130,8 @@ export default class DrawContinent extends Draw {
 
         this.bumpCtx.lineWidth = this.lineWidth
         this.bumpCtx.strokeStyle = this.strokeStyle
+
+        console.log(this.strokeStyle)
 
         this.justDrawLine(this.bumpCtx, drawPoint1, drawPoint2)
 
