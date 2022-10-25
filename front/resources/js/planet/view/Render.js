@@ -37,21 +37,6 @@ export default class Render {
      * 텍스쳐에 넣을 캔버스 준비하는 함수
      */
     setCanvas() {
-        this.mapCanvas = document.createElement('canvas')
-        this.mapCanvas.width = 1000
-        this.mapCanvas.height = 500
-        this.bumpMapCanvas = document.createElement('canvas')
-        this.bumpMapCanvas.width = 1000
-        this.bumpMapCanvas.height = 500
-
-        this.mapCtx = this.mapCanvas.getContext('2d')
-        this.bumpMapCtx = this.bumpMapCanvas.getContext('2d')
-
-        this.mapCtx.fillStyle = "rgb(255,255,255)"
-        this.mapCtx.fillRect(0, 0, 1000, 500)
-
-        this.bumpMapCtx.fillStyle = "rgb(127,127,127)"
-        this.bumpMapCtx.fillRect(0, 0, 1000, 500)
     }
 
     /**
