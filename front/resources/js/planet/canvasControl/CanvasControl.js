@@ -47,57 +47,40 @@ export default class CanvasControl {
 
         this.pixelList = this.bumpMapCtx.getImageData(0,0,1000,500).data
 
-        for(let y = 0; y < 500; y+=20){
-            for(let x = 0; x < 1000; x+=20){
-                if(this.getPixel(x,y) < this.seaLevel){
-                    const pointList = this.find(x,y)
-                    this.setSea(pointList)
-                }
-            }
-        }
+        this.setSea(this.getPointList())
+
         this.render.setMapNeedUpdateTrue()
         this.render.setBumpMapNeedUpdateTrue()
         this.lastUpdate = new Date()
     }
 
-    find (x,y) {
-        const findNodes = []
-        const nextVisitList = []
-
-        nextVisitList.push([x,y])
-
-        while(nextVisitList.length !== 0) {
-            const node = nextVisitList.shift()
-            const [x,y] = node
-            if (this.rangeCheck(x,y) && this.getPixel(x,y) < this.seaLevel) {
-                this.pixelList[((y*1000) + x)*4] = 255
-                findNodes.push(node)
-
-                nextVisitList.unshift([x+1, y])
-                nextVisitList.unshift([x-1, y])
-                nextVisitList.unshift([x, y+1])
-                nextVisitList.unshift([x, y-1])
+    getPointList() {
+        const pointList = []
+        let node = []
+        let isPrevNodeTrue = false
+        // 모든 픽셀 검사
+        for(let y = 0; y < 500; y+=1){
+            for(let x = 0; x < 1000; x+=1){
+                if(this.getPixel(x,y) < this.seaLevel){
+                    // 저번 픽셀과 이어진다면
+                    if(isPrevNodeTrue) {
+                        // 색칠 길이 즐가
+                        node[2]++
+                    } else { // 아니라면
+                        // 노드 생성, 추가
+                        node = [x,y,1]
+                        pointList.push(node)
+                    }
+                    isPrevNodeTrue = true
+                } else {
+                    isPrevNodeTrue = false
+                }
             }
+            // 초기화
+            isPrevNodeTrue = false
         }
-
-        return findNodes
+        return pointList
     }
-
-    // dfs인데 콜 스택 터져서 임시저장 중
-    // find (x,y) {
-    //     if(this.rangeCheck(x,y) && this.getPixel(x,y) < this.seaLevel){
-    //         this.pointList.push([x,y])
-
-    //         this.pixelList[((y*1000) + x)*4] = 255
-
-    //         this.find.bind(this)(x+1, y)
-    //         this.find.bind(this)(x-1, y)
-    //         this.find.bind(this)(x, y+1)
-    //         this.find.bind(this)(x, y-1)
-
-    //         return this.pointList
-    //     }
-    // }
     
     rangeCheck(x,y) {
         if(x >= 0 && x < 1000 && y >= 0 && y < 500){
@@ -118,9 +101,9 @@ export default class CanvasControl {
         this.mapCtx.beginPath();
 
         for(let i = 0; i < pointList.length; i++){
-            const [x,y] = pointList[i]
-            this.bumpMapCtx.rect(x, y, 1, 1);
-            this.mapCtx.rect(x, y, 1, 1);
+            const [x,y,length] = pointList[i]
+            this.bumpMapCtx.rect(x, y, length, 1);
+            this.mapCtx.rect(x, y, length, 1);
         }
 
         this.bumpMapCtx.fill();
@@ -129,3 +112,47 @@ export default class CanvasControl {
         this.mapCtx.closePath();
     }
 }
+
+
+// 예전 코드 혹시 몰라서 저장
+
+// bfs인데 생각해보니까 걍 띄엄띄엄 검색하다가 바다 발견하면 실행하는거라
+// 정확하게 하려면 그냥 하나씩 해야할듯
+// find (x,y) {
+//     const findNodes = []
+//     const nextVisitList = []
+
+//     nextVisitList.push([x,y])
+
+//     while(nextVisitList.length !== 0) {
+//         const node = nextVisitList.shift()
+//         const [x,y] = node
+//         if (this.rangeCheck(x,y) && this.getPixel(x,y) < this.seaLevel) {
+//             this.pixelList[((y*1000) + x)*4] = 255
+//             findNodes.push(node)
+
+//             nextVisitList.unshift([x+1, y])
+//             nextVisitList.unshift([x-1, y])
+//             nextVisitList.unshift([x, y+1])
+//             nextVisitList.unshift([x, y-1])
+//         }
+//     }
+
+//     return findNodes
+// }
+
+// dfs인데 콜 스택 터져서 임시저장 중
+// find (x,y) {
+//     if(this.rangeCheck(x,y) && this.getPixel(x,y) < this.seaLevel){
+//         this.pointList.push([x,y])
+
+//         this.pixelList[((y*1000) + x)*4] = 255
+
+//         this.find.bind(this)(x+1, y)
+//         this.find.bind(this)(x-1, y)
+//         this.find.bind(this)(x, y+1)
+//         this.find.bind(this)(x, y-1)
+
+//         return this.pointList
+//     }
+// }
