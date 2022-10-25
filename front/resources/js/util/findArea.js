@@ -1,5 +1,5 @@
 class FindArea {
-    constructor(grid, key){
+    constructor(grid, seaLevel){
         this.grid = []
         this.pointList = []
         for(let i = 0; i < grid.length; i++){
@@ -17,7 +17,7 @@ class FindArea {
         }
     }
 
-    getSimbalSpacePointList = ()=>{
+    getAreaPointList (){
         const result = []
 
         this.grid.forEach((col, i) => {
@@ -37,22 +37,7 @@ class FindArea {
         return result
     }
 
-    getAvgPoint = (pointList)=>{
-        let xSum = 0
-        let ySum = 0
-
-        pointList.forEach(point=>{
-            xSum += point.x
-            ySum += point.y
-        })
-
-        return {
-            x : xSum / pointList.length,
-            y : ySum / pointList.length
-        }
-    }
-
-    find = (i,j) => {
+    find (i,j) {
         if(this.rangeCheck(i,j) && this.grid[i][j] === 1){
             this.pointList.push({
                 x : i,

@@ -38,33 +38,94 @@ export default class CanvasControl {
     }
     
     updateBumpMap() {
-        if(new Date() - this.lastUpdate < 60) {
+        if(new Date() - this.lastUpdate < 30) {
             return
         }
 
         this.bumpMapCtx.drawImage(this.continentBumpMapCanvas,0,0)
+        this.mapCtx.drawImage(this.colorMapCanvas,0,0)
 
-        const pixelList = this.bumpMapCtx.getImageData(0,0,1000,500).data
-        // console.log(end - start)
+        this.pixelList = this.bumpMapCtx.getImageData(0,0,1000,500).data
 
-        for(let y = 0; y < 500; y+=1){
-            for(let x = 0; x < 1000; x+=1){
-                const pixel = pixelList[((y*1000) + x)*4]
-                if(pixel < this.seaLevel){
-                    this.setSea(x, y)
+        for(let y = 0; y < 500; y+=20){
+            for(let x = 0; x < 1000; x+=20){
+                if(this.getPixel(x,y) < this.seaLevel){
+                    const pointList = this.find(x,y)
+                    this.setSea(pointList)
                 }
             }
         }
-
         this.render.setMapNeedUpdateTrue()
         this.render.setBumpMapNeedUpdateTrue()
         this.lastUpdate = new Date()
     }
 
-    setSea(x,y) {
-        this.bumpMapCtx.fillStyle = `rgb(${this.seaLevel}, ${this.seaLevel}, ${this.seaLevel})`
-        this.bumpMapCtx.fillRect(x,y,1,1)
+    find (x,y) {
+        const findNodes = []
+        const nextVisitList = []
+
+        nextVisitList.push([x,y])
+
+        while(nextVisitList.length !== 0) {
+            const node = nextVisitList.shift()
+            const [x,y] = node
+            if (this.rangeCheck(x,y) && this.getPixel(x,y) < this.seaLevel) {
+                this.pixelList[((y*1000) + x)*4] = 255
+                findNodes.push(node)
+
+                nextVisitList.unshift([x+1, y])
+                nextVisitList.unshift([x-1, y])
+                nextVisitList.unshift([x, y+1])
+                nextVisitList.unshift([x, y-1])
+            }
+        }
+
+        return findNodes
+    }
+
+    // dfs인데 콜 스택 터져서 임시저장 중
+    // find (x,y) {
+    //     if(this.rangeCheck(x,y) && this.getPixel(x,y) < this.seaLevel){
+    //         this.pointList.push([x,y])
+
+    //         this.pixelList[((y*1000) + x)*4] = 255
+
+    //         this.find.bind(this)(x+1, y)
+    //         this.find.bind(this)(x-1, y)
+    //         this.find.bind(this)(x, y+1)
+    //         this.find.bind(this)(x, y-1)
+
+    //         return this.pointList
+    //     }
+    // }
+    
+    rangeCheck(x,y) {
+        if(x >= 0 && x < 1000 && y >= 0 && y < 500){
+            return true
+        }
+
+        return false
+    }
+
+    getPixel(x,y) {
+        return this.pixelList[((y*1000) + x)*4]
+    }
+
+    setSea(pointList) {
+        this.bumpMapCtx.fillStyle = 'rgb(' + this.seaLevel + ',' + this.seaLevel + ',' + this.seaLevel + ')'
+        this.bumpMapCtx.beginPath();
         this.mapCtx.fillStyle = 'rgb(0,0,255)'
-        this.mapCtx.fillRect(x,y,1,1)
+        this.mapCtx.beginPath();
+
+        for(let i = 0; i < pointList.length; i++){
+            const [x,y] = pointList[i]
+            this.bumpMapCtx.rect(x, y, 1, 1);
+            this.mapCtx.rect(x, y, 1, 1);
+        }
+
+        this.bumpMapCtx.fill();
+        this.bumpMapCtx.closePath();
+        this.mapCtx.fill();
+        this.mapCtx.closePath();
     }
 }
