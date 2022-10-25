@@ -1,15 +1,18 @@
 import Render from './planet/view/Render.js';
 import ToolControl from './planet/tool/ToolControl.js';
+import CanvasControl from './planet/canvasControl/CanvasControl.js';
 
 class App {
     constructor() {
+        window.app = this
         this.init()
     }
 
     async init() {
+        this.canvasControl = new CanvasControl()
         this.container = document.querySelector('.canvas-container')
         this.render = new Render(this.container)
-        this.tool = new ToolControl(this.render, this.container)
+        this.tool = new ToolControl(this.canvasControl, this.render, this.container)
 
         document.querySelector('.map').appendChild(this.render.bumpMapCanvas)
 

@@ -31,12 +31,18 @@ export default class Render {
 
         this.renderer.render(this.scene, this.camera)
         this.animate()
+
+        window.app.canvasControl.render = this
     }
 
     /**
      * 텍스쳐에 넣을 캔버스 준비하는 함수
      */
     setCanvas() {
+        this.mapCanvas = window.app.canvasControl.mapCanvas
+        this.bumpMapCanvas = window.app.canvasControl.bumpMapCanvas
+        this.mapCtx = this.mapCanvas.getContext('2d')
+        this.bumpMapCtx = this.bumpMapCanvas.getContext('2d')
     }
 
     /**
@@ -134,7 +140,7 @@ export default class Render {
     /**
      * 카메라 설정
      */
-    setCamera(x = 200, y = 0, z = 0) {
+    setCamera(x = 1500 , y = 0, z = 0) {
         this.camera = new THREE.PerspectiveCamera(this.angle, this.aspect, this.near, this.far)
         this.camera.position.set(x, y, z)
         // this.moveCamera({x,y,z})
@@ -173,7 +179,7 @@ export default class Render {
      * 행성 도형 준비
      */
     setPlanet() {
-        this.planetGeo = new THREE.SphereGeometry(50, 50, 50)
+        this.planetGeo = new THREE.SphereGeometry(300, 300, 300)
         this.planetMat = new THREE.MeshPhongMaterial()
 
         this.setMap()

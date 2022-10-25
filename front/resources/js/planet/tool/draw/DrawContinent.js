@@ -5,9 +5,10 @@ export default class DrawContinent extends Draw {
      * onMouseDown 이벤트
      * @param {Render} render
      */
-    constructor(render) {
-        super(render)
+    constructor(render, canvasControl) {
+        super(render, canvasControl)
 
+        this.ctx = this.canvasControl.continentBumpMapCtx
         this.lineWidth = 2
         this.color = 255
         this.alpha = 0.01
@@ -120,23 +121,23 @@ export default class DrawContinent extends Draw {
     }
 
     drawLine(drawPoint1, drawPoint2) {
+        drawPoint1.x = Math.ceil(drawPoint1.x)
+        drawPoint1.y = Math.ceil(drawPoint1.y)
+        drawPoint2.x = Math.ceil(drawPoint2.x)
+        drawPoint2.y = Math.ceil(drawPoint2.y)
+        
         const reverseLine = Math.abs(drawPoint1.x - drawPoint2.x) > this.render.mapCanvas.width / 2
 
         if(reverseLine){
-            console.log(drawPoint1.x - drawPoint2.x)
             this.reverseDrawLine(drawPoint1, drawPoint2)
             return
         }
 
-        this.bumpCtx.lineWidth = this.lineWidth
-        this.bumpCtx.strokeStyle = this.strokeStyle
+        this.ctx.lineWidth = this.lineWidth
+        this.ctx.strokeStyle = this.strokeStyle
 
-        console.log(this.strokeStyle)
-
-        this.justDrawLine(this.bumpCtx, drawPoint1, drawPoint2)
-
-        this.render.setMapNeedUpdateTrue()
-        this.render.setBumpMapNeedUpdateTrue()
+        this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
+        this.canvasControl.updateBumpMap(drawPoint1, drawPoint2, this.lineWidth)
     }
 
     reverseDrawLine(drawPoint1, drawPoint2) {
@@ -148,11 +149,9 @@ export default class DrawContinent extends Draw {
 
         let centerY = (drawPoint1.y + drawPoint2.y) / 2
 
-        this.justDrawLine(this.bumpCtx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
-        this.justDrawLine(this.bumpCtx, drawPoint2, {x : 0, y : centerY})
-
-        this.render.setMapNeedUpdateTrue()
-        this.render.setBumpMapNeedUpdateTrue()
+        this.justDrawLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
+        this.justDrawLine(this.ctx, drawPoint2, {x : 0, y : centerY})
+        this.canvasControl.updateBumpMap()
     }
 
     drawDot (drawPoint) {

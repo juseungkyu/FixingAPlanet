@@ -5,7 +5,8 @@ import DrawWater from '/resources/js/planet/tool/draw/DrawWater.js';
 import MoveTool from '/resources/js/planet/tool/move/MoveTool.js';
 
 export default class ToolControl {
-    constructor(render, container) {
+    constructor(canvasControl, render, container) {
+        this.canvasControl = canvasControl
         this.render = render
         this.canvas = container.querySelector('canvas')
         this.mouseDown = false
@@ -13,9 +14,9 @@ export default class ToolControl {
     }
 
     init = () => {
-        this.drawCloudTool = new DrawCloud(this.render)
-        this.drawContinentTool = new DrawContinent(this.render)
-        this.drawWaterTool = new DrawWater(this.render)
+        this.drawCloudTool = new DrawCloud(this.render, this.canvasControl)
+        this.drawContinentTool = new DrawContinent(this.render, this.canvasControl)
+        this.drawWaterTool = new DrawWater(this.render, this.canvasControl)
         
         this.moveTool = new MoveTool(this.render)
 

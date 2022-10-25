@@ -1,10 +1,9 @@
 import Tool from "/resources/js/planet/tool/Tool.js"
 
 export default class Draw extends Tool {
-    constructor(render) {
+    constructor(render, canvasControl) {
         super(render)
-        this.ctx = this.render.getMapCtx()
-        this.bumpCtx = this.render.getBumpMapCtx()
+        this.canvasControl = canvasControl
         this.beforePoint = new THREE.Vector2(0,0)
         this.afterPoint = new THREE.Vector2(0,0)
     }

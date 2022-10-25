@@ -5,8 +5,8 @@ export default class DrawContinent extends Draw {
      * onMouseDown 이벤트
      * @param {Render} render
      */
-    constructor(render) {
-        super(render)
+    constructor(render, canvasControl) {
+        super(render, canvasControl)
 
         this.lineWidth = 2
         this.init()

@@ -13,8 +13,8 @@ export default class MoveTool extends Tool {
         this.controls.rotateSpeed = 0.5
         this.controls.zoomSpeed = 1
         this.controls.panSpeed = 0.8
-        this.controls.minDistance = 100
-        this.controls.maxDistance = 700
+        this.controls.minDistance = 900
+        this.controls.maxDistance = 1500
     }
 
     setAble() {

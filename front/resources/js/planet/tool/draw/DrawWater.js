@@ -5,8 +5,8 @@ export default class DrawWater extends Draw {
      * onMouseDown 이벤트
      * @param {Render} render
      */
-    constructor(render) {
-        super(render)
+    constructor(render, canvasControl) {
+        super(render, canvasControl)
 
         this.lineWidth = 2
         this.seaLevel = 0
@@ -16,8 +16,7 @@ export default class DrawWater extends Draw {
     init() {
         this.waterLevel = document.querySelector('.water-level')
 
-        this.addEvent()
-        this.setUpTool()
+        // this.addEvent()
     }
 
     addEvent() {
@@ -32,15 +31,7 @@ export default class DrawWater extends Draw {
     }
     
     changeSeaLevel() {
-        const bumpList = this.bumpMapToList()
-        
-        for(let i = 0; i < this.bumpList.length; i++) {
-            for(let j = 0; j < this.bumpList[i].length; j++) {
-                if(this.checkColor(bumpList[i][j])){
-                    changeBumpMap(i, j)
-                }
-            }
-        }
+        this.canvasControl.updateBumpMap()
     }
 
     checkColor(dot) {
