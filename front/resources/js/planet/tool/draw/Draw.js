@@ -23,12 +23,26 @@ export default class Draw extends Tool {
     }
 
     /**
-     * UV좌표를 지도좌표로 변환
+     * 그냥 라인 잇기
      * @param {CanvasRenderingContext2D} ctx
      * @param {Vector2} point1
      * @param {Vector2} point2
      */
     justDrawLine(ctx, point1, point2) {
+        ctx.beginPath()
+        ctx.moveTo(point1.x, point1.y)
+        ctx.lineTo(point2.x, point2.y)
+        ctx.stroke()
+    }
+
+    /**
+     * 라인에 랜덤 점을 뿌림
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {Vector2} point1
+     * @param {Vector2} point2
+     */
+     justDrawDotLine(ctx, point1, point2) {
+        ctx.strokeSize
         ctx.beginPath()
         ctx.moveTo(point1.x, point1.y)
         ctx.lineTo(point2.x, point2.y)
