@@ -48,6 +48,7 @@ export default class ToolControl {
     unsetAllTool() {
         this.moveToolUnSet()
         this.continentToolUnSet()
+        this.waterToolUnSet()
     }
 
     /**
@@ -58,10 +59,17 @@ export default class ToolControl {
     }
 
     /**
-     * 이동툴 취소
+     * 지형툴 취소
      */
     continentToolUnSet(){
         this.drawContinentTool.setDisable()
+    }
+
+    /**
+     * 바다툴 취소
+     */
+    waterToolUnSet(){
+        this.drawWaterTool.setDisable()
     }
 
     /**
@@ -106,6 +114,7 @@ export default class ToolControl {
         this.unsetAllTool()
         
         console.log('WaterTool')
+        this.drawWaterTool.setAble()
         this.currentTool = this.drawWaterTool
         this.rightBottom.appendChild(this.btns.drawWater)
     }

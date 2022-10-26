@@ -15,23 +15,36 @@ export default class DrawWater extends Draw {
 
     init() {
         this.waterLevel = document.querySelector('.water-level')
+        this.menuList = document.querySelectorAll('.water-tool-menu')
 
-        // this.addEvent()
+        this.addEvent()
     }
 
     addEvent() {
-        this.waterLevel.addEventListener('mousemove', ()=>{
-            const nextSeaLevel = parseFloat(this.waterLevel.value)
-
-            if(nextSeaLevel === this.seaLevel) {
-                this.seaLevel = nextSeaLevel
-                this.changeSeaLevel()
-            }            
-        })
+        this.waterLevel.addEventListener('mousemove', this.changeSeaLevel)
+        this.waterLevel.addEventListener('keydown', this.changeSeaLevel)
     }
     
-    changeSeaLevel() {
-        this.canvasControl.updateBumpMap()
+    setAble() {
+        this.menuList.forEach(x=>{
+            x.style.display = 'flex'
+        })
+    }
+
+    setDisable() {
+        this.menuList.forEach(x=>{
+            x.style.display = 'none'
+        })
+    }
+
+    changeSeaLevel = () => {
+        const nextSeaLevel = parseFloat(this.waterLevel.value)
+
+        if(nextSeaLevel !== this.seaLevel) {
+            this.seaLevel = nextSeaLevel
+            this.canvasControl.seaLevel = this.seaLevel
+            this.canvasControl.updateBumpMap(true)
+        }            
     }
 
     checkColor(dot) {

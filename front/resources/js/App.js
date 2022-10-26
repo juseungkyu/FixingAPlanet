@@ -20,7 +20,8 @@ class App {
         // console.log(await urlToImageDom('/resources/image/test.jpg'))
         // console.log(await urlToImageDom('/resources/image/test_bump.jpg'))
         // this.render.drawMap(await urlToImageDom('/resources/image/test.jpg'))
-        // this.render.drawBumpMap(await urlToImageDom('/resources/image/test_bump.jpg'))
+        // this.canvasControl.continentBumpMapCtx.drawImage(await urlToImageDom('/resources/image/test_bump.jpg'),0,0)
+        // this.canvasControl.updateBumpMap()
 
         this.addEvent()
     }

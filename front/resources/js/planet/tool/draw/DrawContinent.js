@@ -46,13 +46,13 @@ export default class DrawContinent extends Draw {
     
     setAble() {
         this.menuList.forEach(x=>{
-            x.style.visibility = 'visible'
+            x.style.display = 'flex'
         })
     }
 
     setDisable() {
         this.menuList.forEach(x=>{
-            x.style.visibility = 'hidden'
+            x.style.display = 'none'
         })
     }
 

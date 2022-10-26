@@ -5,7 +5,7 @@ export default class CanvasControl {
     }
 
     init() {
-        this.seaLevel = 100
+        this.seaLevel = 0
 
         this.mapCanvas = this.createCanvas()
         this.mapCtx = this.mapCanvas.getContext('2d')
@@ -37,8 +37,8 @@ export default class CanvasControl {
         return canvas
     }
     
-    updateBumpMap() {
-        if(new Date() - this.lastUpdate < 30) {
+    updateBumpMap(ignoreTime = false) {
+        if(new Date() - this.lastUpdate < 30 && !ignoreTime) {
             return
         }
 
@@ -51,6 +51,7 @@ export default class CanvasControl {
 
         this.render.setMapNeedUpdateTrue()
         this.render.setBumpMapNeedUpdateTrue()
+
         this.lastUpdate = new Date()
     }
 
