@@ -43,7 +43,7 @@ export default class DrawWater extends Draw {
         if(nextSeaLevel !== this.seaLevel) {
             this.seaLevel = nextSeaLevel
             this.canvasControl.seaLevel = this.seaLevel
-            this.canvasControl.updateBumpMap(true)
+            this.canvasControl.updateCanvas(true)
         }            
     }
 

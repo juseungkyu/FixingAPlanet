@@ -37,7 +37,7 @@ export default class CanvasControl {
         return canvas
     }
     
-    updateBumpMap(ignoreTime = false) { 
+    updateCanvas(ignoreTime = false) { 
         if(new Date() - this.lastUpdate < 40 && !ignoreTime) {
             return
         }

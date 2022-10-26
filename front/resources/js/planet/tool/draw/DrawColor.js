@@ -8,37 +8,71 @@ export default class DrawContinent extends Draw {
     constructor(render, canvasControl) {
         super(render, canvasControl)
 
+        this.ctx = this.canvasControl.colorMapCtx
         this.lineWidth = 2
         this.init()
     }
 
     setAble() {
         this.menuList.forEach(x=>{
-            x.style.visibility = 'visible'
+            x.style.display = 'flex'
         })
     }
 
     setDisable() {
         this.menuList.forEach(x=>{
-            x.style.visibility = 'hidden'
+            x.style.display = 'none'
         })
-    }
-    
-    setUpTool = ()=> {
-
-    }
-
-    setDownTool = ()=> {
-
     }
 
     init() {
-        this.upTool = document.querySelector('.continent-up')
-        this.downTool = document.querySelector('.continent-down')
-        this.upTool.addEventListener('click', this.setUpTool)
-        this.downTool.addEventListener('click', this.setDownTool)
-        
-        this.setUpTool()
+        this.menuList = document.querySelectorAll('.color-tool-menu')
+        this.colorSize = document.querySelector('.color-size')
+
+        this.rInput = document.querySelector('.color-r')
+        this.gInput = document.querySelector('.color-g')
+        this.bInput = document.querySelector('.color-b')
+        this.colorView = document.querySelector('.color-view')
+
+        this.color = 'rgb(0,0,0)'
+        this.r = 0
+        this.g = 0
+        this.b = 0
+        this.changeColor()
+
+        this.addEvent()
+    }
+
+    addEvent() {
+        // rgb set
+        this.rInput.addEventListener('mousemove', this.changeR)
+        this.rInput.addEventListener('keydown', this.changeR)
+        this.gInput.addEventListener('mousemove', this.changeG)
+        this.gInput.addEventListener('keydown', this.changeG)
+        this.bInput.addEventListener('mousemove', this.changeB)
+        this.bInput.addEventListener('keydown', this.changeB)
+
+        this.colorSize.addEventListener('change', ()=>{
+            this.lineWidth = parseInt(this.colorSize.value)
+        })
+    }
+
+    changeR = () => {
+        this.r = parseInt(this.rInput.value)
+        this.changeColor()
+    }
+    changeG = () => {
+        this.g = parseInt(this.gInput.value)
+        this.changeColor()
+    }
+    changeB = () => {
+        this.b = parseInt(this.bInput.value)
+        this.changeColor()
+    }
+
+    changeColor() {
+        this.color = `rgb(${this.r},${this.g},${this.b})`
+        this.colorView.style.backgroundColor = this.color
     }
 
     downProcess(event) {
@@ -70,6 +104,7 @@ export default class DrawContinent extends Draw {
 
     }
 
+
     getDrawPoint(event) {
         const raycaster = new THREE.Raycaster()
         const mouse = new THREE.Vector2(event.clientX/this.render.WIDTH * 2 - 1, event.clientY/this.render.HEIGHT * -2 + 1)
@@ -86,21 +121,23 @@ export default class DrawContinent extends Draw {
     }
 
     drawLine(drawPoint1, drawPoint2) {
+        drawPoint1.x = Math.ceil(drawPoint1.x)
+        drawPoint1.y = Math.ceil(drawPoint1.y)
+        drawPoint2.x = Math.ceil(drawPoint2.x)
+        drawPoint2.y = Math.ceil(drawPoint2.y)
+        
         const reverseLine = Math.abs(drawPoint1.x - drawPoint2.x) > this.render.mapCanvas.width / 2
 
         if(reverseLine){
-            console.log(drawPoint1.x - drawPoint2.x)
             this.reverseDrawLine(drawPoint1, drawPoint2)
             return
         }
 
-        this.bumpCtx.lineWidth = this.lineWidth
-        this.bumpCtx.strokeStyle = this.strokeStyle
+        this.ctx.lineWidth = this.lineWidth
+        this.ctx.strokeStyle = this.color
 
-        this.justDrawLine(this.bumpCtx, drawPoint1, drawPoint2)
-
-        this.render.setMapNeedUpdateTrue()
-        this.render.setBumpMapNeedUpdateTrue()
+        this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
+        this.canvasControl.updateCanvas(drawPoint1, drawPoint2, this.lineWidth)
     }
 
     reverseDrawLine(drawPoint1, drawPoint2) {
@@ -112,15 +149,9 @@ export default class DrawContinent extends Draw {
 
         let centerY = (drawPoint1.y + drawPoint2.y) / 2
 
-        this.justDrawLine(this.bumpCtx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
-        this.justDrawLine(this.bumpCtx, drawPoint2, {x : 0, y : centerY})
-
-        this.render.setMapNeedUpdateTrue()
-        this.render.setBumpMapNeedUpdateTrue()
+        this.justDrawLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
+        this.justDrawLine(this.ctx, drawPoint2, {x : 0, y : centerY})
+        this.canvasControl.updateCanvas()
     }
 
-    drawDot (drawPoint) {
-        const {x,y} = drawPoint
-        this.ctx.fillRect(x,y,2,2)
-    }
 }

@@ -1,6 +1,7 @@
 import DrawCloud from '/resources/js/planet/tool/draw/DrawCloud.js';
 import DrawContinent from '/resources/js/planet/tool/draw/DrawContinent.js';
 import DrawWater from '/resources/js/planet/tool/draw/DrawWater.js';
+import DrawColor from '/resources/js/planet/tool/draw/DrawColor.js';
 
 import MoveTool from '/resources/js/planet/tool/move/MoveTool.js';
 
@@ -17,20 +18,23 @@ export default class ToolControl {
         this.drawCloudTool = new DrawCloud(this.render, this.canvasControl)
         this.drawContinentTool = new DrawContinent(this.render, this.canvasControl)
         this.drawWaterTool = new DrawWater(this.render, this.canvasControl)
-        
+        this.drawColorTool = new DrawColor(this.render, this.canvasControl)
+
         this.moveTool = new MoveTool(this.render)
 
         this.btns = {
             move : document.querySelector('.move-tool'),
             drawCloud : document.querySelector('.draw-cloud-tool'),
             drawContinent : document.querySelector('.draw-continent-tool'),
-            drawWater : document.querySelector('.draw-water-tool')
+            drawWater : document.querySelector('.draw-water-tool'),
+            drawColor : document.querySelector('.draw-color-tool')
         }
 
         this.btns.move.addEventListener('click', this.moveToolSet)
         this.btns.drawCloud.addEventListener('click', this.drawCloudToolSet)
         this.btns.drawContinent.addEventListener('click', this.drawContinentToolSet)
         this.btns.drawWater.addEventListener('click', this.drawWaterToolSet)
+        this.btns.drawColor.addEventListener('click', this.drawColorToolSet)
 
         this.canvas.addEventListener('mousedown', this.onMouseDown)
         this.canvas.addEventListener('mousemove', this.onMouseMove)
@@ -49,6 +53,7 @@ export default class ToolControl {
         this.moveToolUnSet()
         this.continentToolUnSet()
         this.waterToolUnSet()
+        this.colorToolUnSet()
     }
 
     /**
@@ -70,6 +75,13 @@ export default class ToolControl {
      */
     waterToolUnSet(){
         this.drawWaterTool.setDisable()
+    }
+
+    /**
+     * 색칠툴 취소
+     */
+    colorToolUnSet(){
+        this.drawColorTool.setDisable()
     }
 
     /**
@@ -119,6 +131,17 @@ export default class ToolControl {
         this.rightBottom.appendChild(this.btns.drawWater)
     }
 
+    /**
+     * 색칠 툴 설정
+     */
+    drawColorToolSet = ()=> {
+        this.unsetAllTool()
+        
+        console.log('ColorTool')
+        this.drawColorTool.setAble()
+        this.currentTool = this.drawColorTool
+        this.rightBottom.appendChild(this.btns.drawColor)
+    }
 
     /**
      * onMouseDown 이벤트

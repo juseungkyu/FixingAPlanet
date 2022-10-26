@@ -25,7 +25,7 @@ export default class DrawContinent extends Draw {
         this.continentColor = document.querySelector('.continent-color')
 
         this.lineWidth = parseInt(this.continentSize.value)
-        this.alpha = parseInt(this.continentColor.value)
+        this.alpha = parseFloat(this.continentColor.value)
 
         this.addEvent()
         this.setUpTool()
@@ -137,7 +137,7 @@ export default class DrawContinent extends Draw {
         this.ctx.strokeStyle = this.strokeStyle
 
         this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
-        this.canvasControl.updateBumpMap(drawPoint1, drawPoint2, this.lineWidth)
+        this.canvasControl.updateCanvas(drawPoint1, drawPoint2, this.lineWidth)
     }
 
     reverseDrawLine(drawPoint1, drawPoint2) {
@@ -151,7 +151,7 @@ export default class DrawContinent extends Draw {
 
         this.justDrawLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
         this.justDrawLine(this.ctx, drawPoint2, {x : 0, y : centerY})
-        this.canvasControl.updateBumpMap()
+        this.canvasControl.updateCanvas()
     }
 
     drawDot (drawPoint) {
