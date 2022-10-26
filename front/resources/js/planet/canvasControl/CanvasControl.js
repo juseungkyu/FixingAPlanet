@@ -37,22 +37,21 @@ export default class CanvasControl {
         return canvas
     }
     
-    updateBumpMap(ignoreTime = false) {
-        if(new Date() - this.lastUpdate < 30 && !ignoreTime) {
+    updateBumpMap(ignoreTime = false) { 
+        if(new Date() - this.lastUpdate < 40 && !ignoreTime) {
             return
         }
-
         this.bumpMapCtx.drawImage(this.continentBumpMapCanvas,0,0)
         this.mapCtx.drawImage(this.colorMapCanvas,0,0)
 
         this.pixelList = this.bumpMapCtx.getImageData(0,0,1000,500).data
 
         this.setSea(this.getPointList())
+        
+        this.lastUpdate = new Date()
 
         this.render.setMapNeedUpdateTrue()
         this.render.setBumpMapNeedUpdateTrue()
-
-        this.lastUpdate = new Date()
     }
 
     getPointList() {

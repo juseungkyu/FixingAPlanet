@@ -119,20 +119,25 @@ body {
 
 .right-bottom .tool:nth-child(1) {
     left: 0px;
-    top: 90px;
+    top: 100px;
 }
 
 .right-bottom .tool:nth-child(2) {
-    left: 20px;
-    top: 20px;
+    left: 45px;
+    top: 10px;
 }
 
 .right-bottom .tool:nth-child(3) {
-    left: 90px;
-    top: 0px;
+    left: 10px;
+    top: 45px;
 }
 
 .right-bottom .tool:nth-child(4) {
+    left: 100px;
+    top: 0px;
+}
+
+.right-bottom .tool:last-child {
     width: 70px;
     height: 70px;
     font-size: 35px;
