@@ -15,6 +15,13 @@
     display: flex;
 }
 
+.d-block {
+    display: block;
+}
+.left-top .d-block {
+    display: block;
+}
+
 .gap-10 {
     gap: 10px;
 }
