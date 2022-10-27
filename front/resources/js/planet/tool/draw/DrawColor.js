@@ -136,7 +136,8 @@ export default class DrawContinent extends Draw {
         this.ctx.lineWidth = this.lineWidth
         this.ctx.strokeStyle = this.color
 
-        this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
+        this.justDrawDotLine(this.ctx, drawPoint1, drawPoint2, 1000, this.color)
+        // this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
         this.canvasControl.updateCanvas(drawPoint1, drawPoint2, this.lineWidth)
     }
 

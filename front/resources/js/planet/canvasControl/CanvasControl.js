@@ -26,6 +26,37 @@ export default class CanvasControl {
         this.continentBumpMapCtx = this.continentBumpMapCanvas.getContext('2d')
         this.continentBumpMapCtx.fillStyle = "rgb(127,127,127)"
         this.continentBumpMapCtx.fillRect(0, 0, 1000, 500)
+
+        this.randomDotCanvas = document.createElement('canvas')
+        this.randomDotCanvas.width = 200
+        this.randomDotCanvas.height = 50
+        this.randomDotCtx = this.randomDotCanvas.getContext('2d')
+    }
+
+    /**
+     * 랜덤하게 점이 찍혀있는 캔버스를 반환해줌
+     * @param {String} color 
+     * @param {Number} density 
+     * @param {Number} angle
+     * @returns 
+     */
+    getRandomDotCanvas(color, density) {
+        this.randomDotCtx.clearRect(0,0,200,50)
+        this.randomDotCtx.beginPath()
+        this.randomDotCtx.fillStyle = color
+
+        let randX = 0
+        let randY = 0
+        for(let i = 0; i < density; i++){
+            randX = Math.random() * this.randomDotCanvas.width
+            randY = Math.random() * this.randomDotCanvas.height
+            this.randomDotCtx.rect(randX, randY, 2, 2)
+        }
+
+        this.randomDotCtx.fill();
+        this.randomDotCtx.closePath();
+
+        return this.randomDotCanvas
     }
 
     createCanvas() {

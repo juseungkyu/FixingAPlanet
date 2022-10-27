@@ -37,15 +37,27 @@ export default class Draw extends Tool {
 
     /**
      * 라인에 랜덤 점을 뿌림
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Vector2} point1
-     * @param {Vector2} point2
+     * @param {CanvasRenderingContext2D} ctx 
+     * @param {Vector2} point1 
+     * @param {Vector2} point2 
+     * @param {Number} density 
+     * @param {String} color 
      */
-     justDrawDotLine(ctx, point1, point2) {
-        ctx.strokeSize
-        ctx.beginPath()
-        ctx.moveTo(point1.x, point1.y)
-        ctx.lineTo(point2.x, point2.y)
-        ctx.stroke()
+    justDrawDotLine(ctx, point1, point2, density, color) {
+        const angle = getTwoPointRadian(point1.x, point1.y, point2.x, point2.y)
+        const randomDotCanvas = this.canvasControl.getRandomDotCanvas(color, density)
+
+        const x = (point2.x+point1.x)/2
+        const y = (point2.y+point1.y)/2
+        const width = ctx.lineWidth
+        const height = getLength(point1, point2)
+
+        console.log(x, y)
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(90 + angle);
+        ctx.drawImage(randomDotCanvas, width/-2, height/-2, width, height)
+        ctx.restore();
     }
 }
