@@ -12,6 +12,7 @@ export default class DrawContinent extends Draw {
         this.lineWidth = 2
         this.color = 255
         this.alpha = 0.01
+        this.brashType = 'dot'
         this.init()
     }
 
@@ -27,6 +28,8 @@ export default class DrawContinent extends Draw {
         this.lineWidth = parseInt(this.continentSize.value)
         this.alpha = parseFloat(this.continentColor.value)
 
+        this.brashTypeSelect = document.querySelector('.continent-brash-type')
+        
         this.addEvent()
         this.setUpTool()
     }
@@ -41,6 +44,9 @@ export default class DrawContinent extends Draw {
         this.continentColor.addEventListener('change', ()=>{
             this.alpha = parseFloat(this.continentColor.value)
             this.strokeStyle = this.getColor()
+        })
+        this.brashTypeSelect.addEventListener('change', ()=>{
+            this.brashType = this.brashTypeSelect.querySelectorAll('option')[this.brashTypeSelect.selectedIndex].value
         })
     }
     
@@ -136,7 +142,12 @@ export default class DrawContinent extends Draw {
         this.ctx.lineWidth = this.lineWidth
         this.ctx.strokeStyle = this.strokeStyle
 
-        this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
+        if(this.brashType == 'dot'){
+            this.justDrawDotLine(this.ctx, drawPoint1, drawPoint2, 1000, this.strokeStyle)
+        } else {
+            this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
+        }
+
         this.canvasControl.updateCanvas(drawPoint1, drawPoint2, this.lineWidth)
     }
 
@@ -149,8 +160,13 @@ export default class DrawContinent extends Draw {
 
         let centerY = (drawPoint1.y + drawPoint2.y) / 2
 
-        this.justDrawLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
-        this.justDrawLine(this.ctx, drawPoint2, {x : 0, y : centerY})
+        if(this.brashType = 'dot'){
+            this.justDrawDotLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY}, 1000, this.color)
+            this.justDrawDotLine(this.ctx, drawPoint2, {x : 0, y : centerY}, 1000, this.color)
+        } else {
+            this.justDrawLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
+            this.justDrawLine(this.ctx, drawPoint2, {x : 0, y : centerY})
+        }
         this.canvasControl.updateCanvas()
     }
 

@@ -1,4 +1,4 @@
-import Draw from './Draw.js';
+import Draw from './Draw.js'
 
 export default class DrawContinent extends Draw {
     /**
@@ -10,6 +10,7 @@ export default class DrawContinent extends Draw {
 
         this.ctx = this.canvasControl.colorMapCtx
         this.lineWidth = 2
+        this.brashType = 'dot'
         this.init()
     }
 
@@ -34,6 +35,8 @@ export default class DrawContinent extends Draw {
         this.bInput = document.querySelector('.color-b')
         this.colorView = document.querySelector('.color-view')
 
+        this.brashTypeSelect = document.querySelector('.color-brash-type')
+
         this.color = 'rgb(0,0,0)'
         this.r = 0
         this.g = 0
@@ -54,6 +57,10 @@ export default class DrawContinent extends Draw {
 
         this.colorSize.addEventListener('change', ()=>{
             this.lineWidth = parseInt(this.colorSize.value)
+        })
+
+        this.brashTypeSelect.addEventListener('change', ()=>{
+            this.brashType = this.brashTypeSelect.querySelectorAll('option')[this.brashTypeSelect.selectedIndex].value
         })
     }
 
@@ -110,7 +117,7 @@ export default class DrawContinent extends Draw {
         const mouse = new THREE.Vector2(event.clientX/this.render.WIDTH * 2 - 1, event.clientY/this.render.HEIGHT * -2 + 1)
         raycaster.setFromCamera(mouse, this.render.camera)
         
-        const intersects = raycaster.intersectObjects(this.render.scene.children, true);
+        const intersects = raycaster.intersectObjects(this.render.scene.children, true)
 
         if(intersects.length == 0){
             return -1
@@ -136,8 +143,12 @@ export default class DrawContinent extends Draw {
         this.ctx.lineWidth = this.lineWidth
         this.ctx.strokeStyle = this.color
 
-        this.justDrawDotLine(this.ctx, drawPoint1, drawPoint2, 1000, this.color)
-        // this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
+        if(this.brashType == 'dot'){
+            this.justDrawDotLine(this.ctx, drawPoint1, drawPoint2, 1000, this.color)
+        } else {
+            this.justDrawLine(this.ctx, drawPoint1, drawPoint2)
+        }
+
         this.canvasControl.updateCanvas(drawPoint1, drawPoint2, this.lineWidth)
     }
 
@@ -150,8 +161,13 @@ export default class DrawContinent extends Draw {
 
         let centerY = (drawPoint1.y + drawPoint2.y) / 2
 
-        this.justDrawLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
-        this.justDrawLine(this.ctx, drawPoint2, {x : 0, y : centerY})
+        if(this.brashType = 'dot'){
+            this.justDrawDotLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY}, 1000, this.color)
+            this.justDrawDotLine(this.ctx, drawPoint2, {x : 0, y : centerY}, 1000, this.color)
+        } else {
+            this.justDrawLine(this.ctx, drawPoint1, {x : this.ctx.canvas.width, y : centerY})
+            this.justDrawLine(this.ctx, drawPoint2, {x : 0, y : centerY})
+        }
         this.canvasControl.updateCanvas()
     }
 
