@@ -22,6 +22,7 @@ export default class DrawWater extends Draw {
 
     addEvent() {
         this.waterLevel.addEventListener('mousemove', this.changeSeaLevel)
+        this.waterLevel.addEventListener('keyup', this.changeSeaLevel)
         this.waterLevel.addEventListener('keydown', this.changeSeaLevel)
     }
     
@@ -38,7 +39,7 @@ export default class DrawWater extends Draw {
     }
 
     changeSeaLevel = () => {
-        const nextSeaLevel = parseFloat(this.waterLevel.value)
+        const nextSeaLevel = parseInt(this.waterLevel.value)
 
         if(nextSeaLevel !== this.seaLevel) {
             this.seaLevel = nextSeaLevel

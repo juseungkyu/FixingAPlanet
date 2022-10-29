@@ -6,31 +6,44 @@ export default class CanvasControl {
 
     init() {
         this.seaLevel = 0
+        const option = {
+            powerPreference : 'high-performance',
+            antialias : true,
+            // 'willReadFrequently' : false
+        }
+        console.log(option)
 
         this.mapCanvas = this.createCanvas()
-        this.mapCtx = this.mapCanvas.getContext('2d')
+        this.mapCtx = this.mapCanvas.getContext('2d', option)
         this.mapCtx.fillStyle = "rgb(255,255,255)"
         this.mapCtx.fillRect(0, 0, 1000, 500)
 
         this.bumpMapCanvas = this.createCanvas()
-        this.bumpMapCtx = this.bumpMapCanvas.getContext('2d')
+        this.bumpMapCtx = this.bumpMapCanvas.getContext('2d', option)
         this.bumpMapCtx.fillStyle = "rgb(127,127,127)"
         this.bumpMapCtx.fillRect(0, 0, 1000, 500)
 
         this.colorMapCanvas = this.createCanvas()
-        this.colorMapCtx = this.colorMapCanvas.getContext('2d')
+        this.colorMapCtx = this.colorMapCanvas.getContext('2d', option)
         this.colorMapCtx.fillStyle = "rgb(255,255,255)"
         this.colorMapCtx.fillRect(0, 0, 1000, 500)
 
         this.continentBumpMapCanvas = this.createCanvas()
-        this.continentBumpMapCtx = this.continentBumpMapCanvas.getContext('2d')
+        this.continentBumpMapCtx = this.continentBumpMapCanvas.getContext('2d', option)
         this.continentBumpMapCtx.fillStyle = "rgb(127,127,127)"
         this.continentBumpMapCtx.fillRect(0, 0, 1000, 500)
+
+        this.cloudMapCanvas = this.createCanvas()
+        this.cloudMapCtx = this.cloudMapCanvas.getContext('2d', option)
+        this.cloudMapCtx.fillStyle = "rgb(0,0,0)"
+        this.cloudMapCtx.fillRect(0, 0, 1000, 500)
 
         this.randomDotCanvas = document.createElement('canvas')
         this.randomDotCanvas.width = 200
         this.randomDotCanvas.height = 50
-        this.randomDotCtx = this.randomDotCanvas.getContext('2d')
+        this.randomDotCtx = this.randomDotCanvas.getContext('2d', option)
+
+        console.log(this.cloudMapCtx.antialias)
     }
 
     /**
@@ -83,6 +96,10 @@ export default class CanvasControl {
 
         this.render.setMapNeedUpdateTrue()
         this.render.setBumpMapNeedUpdateTrue()
+    }
+
+    updateCloudCanvas() {
+        this.render.setCloudMapNeedUpdateTrue()
     }
 
     getPointList() {

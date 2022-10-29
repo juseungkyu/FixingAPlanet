@@ -14,7 +14,7 @@ export default class MoveTool extends Tool {
         this.controls.zoomSpeed = 1
         this.controls.panSpeed = 0.8
         this.controls.minDistance = 900
-        this.controls.maxDistance = 1500
+        this.controls.maxDistance = 3000
     }
 
     setAble() {

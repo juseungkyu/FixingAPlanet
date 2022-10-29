@@ -52,8 +52,6 @@ export default class Draw extends Tool {
         const width = ctx.lineWidth
         const height = getLength(point1, point2)
 
-        console.log(x, y)
-
         ctx.save();
         ctx.translate(x, y);
         ctx.rotate(90 + angle);

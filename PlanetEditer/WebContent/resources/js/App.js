@@ -20,8 +20,10 @@ class App {
         // console.log(await urlToImageDom('/resources/image/test.jpg'))
         // console.log(await urlToImageDom('/resources/image/test_bump.jpg'))
         // this.render.drawMap(await urlToImageDom('/resources/image/test.jpg'))
-        // this.canvasControl.continentBumpMapCtx.drawImage(await urlToImageDom('/resources/image/test_bump.jpg'),0,0)
-        // this.canvasControl.updateCanvas()
+        this.canvasControl.continentBumpMapCtx.drawImage(await urlToImageDom('/resources/image/test_bump.jpg'),0,0)
+        this.canvasControl.updateCanvas()
+        // this.canvasControl.cloudMapCtx.drawImage(await urlToImageDom('/resources/image/cloudMap.jpg'),0,0, 1000, 500)
+        // this.render.cloudMat.alphaMap.needsUpdate = true
 
         this.addEvent()
     }

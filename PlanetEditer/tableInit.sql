@@ -1,5 +1,5 @@
 CREATE TABLE planets(
-	planets_id number CONSTRAINT planets_id_pk primary key,
+	planet_id number CONSTRAINT planets_id_pk primary key,
 	player_id nvarchar2(2000),
 	planet_title nvarchar2(2000),
 	planet_content nvarchar2(2000),

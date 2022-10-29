@@ -18,13 +18,14 @@ export default class Render {
         this.angle = 45
         this.aspect = this.WIDTH / this.HEIGHT
         this.near = 0.1
-        this.far = 3000
+        this.far = 6500
 
         this.setCanvas()
 
         this.setScene()
         this.setLight()
         this.setPlanet()
+        this.setCloud()
         this.setCamera()
         this.setRenderer()
         this.setSkybox()
@@ -41,6 +42,8 @@ export default class Render {
     setCanvas() {
         this.mapCanvas = window.app.canvasControl.mapCanvas
         this.bumpMapCanvas = window.app.canvasControl.bumpMapCanvas
+        this.cloudMapCanvas = window.app.canvasControl.cloudMapCanvas
+        
         this.mapCtx = this.mapCanvas.getContext('2d')
         this.bumpMapCtx = this.bumpMapCanvas.getContext('2d')
     }
@@ -110,14 +113,20 @@ export default class Render {
         this.planetMat.bumpMap.needsUpdate = true
     }
 
+    setCloudMapNeedUpdateTrue() {
+        this.cloudMat.alphaMap.needsUpdate = true
+    }
+
     /**
      * Renderer 생성, 초기설정
      */
     setRenderer() {
-        this.renderer = new THREE.WebGLRenderer({ antialiasing: true })
+        const option = {
+            antialias: false
+        }
+        this.renderer = new THREE.WebGLRenderer(option)
 
         this.setRendererSize()
-        this.renderer.domElement.style.position = 'relative'
 
         this.container.insertBefore(this.renderer.domElement, document.querySelector('.left-top.ui'))
 
@@ -179,7 +188,7 @@ export default class Render {
      * 행성 도형 준비
      */
     setPlanet() {
-        this.planetGeo = new THREE.SphereGeometry(300, 300, 300)
+        this.planetGeo = new THREE.SphereGeometry(500, 500, 500)
         this.planetMat = new THREE.MeshPhongMaterial()
 
         this.setMap()
@@ -190,7 +199,27 @@ export default class Render {
 
         this.planetMesh.position.set(0, 0, 0)
 
+        console.log(this.planetMesh)
+
         this.scene.add(this.planetMesh)
+    }
+
+    /**
+     * 행성 구름 준비
+     */
+    setCloud() {
+        this.cloudGeo = new THREE.SphereGeometry(510, 510, 510)
+        this.cloudMat = new THREE.MeshPhongMaterial()
+
+        this.cloudMat.alphaMap = new THREE.CanvasTexture(this.cloudMapCanvas);
+        this.cloudMat.transparent = true
+
+        this.cloudMesh = new THREE.Mesh(this.cloudGeo, this.cloudMat)
+        this.cloudMesh.position.set(0, 0, 0)
+
+        console.log(this.cloudMesh)
+
+        this.scene.add(this.cloudMesh)
     }
 
     /**
@@ -215,7 +244,7 @@ export default class Render {
         for (let i = 0; i < 6; i++)
             materialArray[i].side = THREE.BackSide;
 
-        const skyboxGeo = new THREE.BoxGeometry(2000, 2000, 2000);
+        const skyboxGeo = new THREE.BoxGeometry(4000, 4000, 4000);
         this.skybox = new THREE.Mesh(skyboxGeo, materialArray);
         
         this.scene.add(this.skybox);
@@ -233,6 +262,8 @@ export default class Render {
      * 행성을 렌더
      */
     render() {
+        this.cloudMesh.rotation.y += 0.0005
+
         this.light.position.x = this.camera.position.x * 100
         this.light.position.y = this.camera.position.y * 100
         this.light.position.z = this.camera.position.z * 100

@@ -111,18 +111,19 @@ export default class DrawContinent extends Draw {
 
     }
 
+
     getDrawPoint(event) {
         const raycaster = new THREE.Raycaster()
         const mouse = new THREE.Vector2(event.clientX/this.render.WIDTH * 2 - 1, event.clientY/this.render.HEIGHT * -2 + 1)
         raycaster.setFromCamera(mouse, this.render.camera)
         
-        const intersects = raycaster.intersectObjects(this.render.scene.children, true);
+        const intersects = raycaster.intersectObjects(this.render.scene.children, true)
 
-        if(intersects.length == 0){
+        if(intersects.length < 3){
             return -1
         }
 
-        const uvPoint = intersects[0].uv
+        const uvPoint = intersects[1].uv
         return this.uvToDrawPoint(uvPoint)
     }
 

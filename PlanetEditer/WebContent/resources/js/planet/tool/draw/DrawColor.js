@@ -119,11 +119,11 @@ export default class DrawContinent extends Draw {
         
         const intersects = raycaster.intersectObjects(this.render.scene.children, true)
 
-        if(intersects.length == 0){
+        if(intersects.length < 3){
             return -1
         }
 
-        const uvPoint = intersects[0].uv
+        const uvPoint = intersects[1].uv
         return this.uvToDrawPoint(uvPoint)
     }
 

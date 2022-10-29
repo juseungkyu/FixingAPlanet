@@ -54,6 +54,7 @@ export default class ToolControl {
         this.continentToolUnSet()
         this.waterToolUnSet()
         this.colorToolUnSet()
+        this.cloudToolUnSet()
     }
 
     /**
@@ -82,6 +83,13 @@ export default class ToolControl {
      */
     colorToolUnSet(){
         this.drawColorTool.setDisable()
+    }
+
+    /**
+     * 구름툴 취소
+     */
+    cloudToolUnSet(){
+        this.drawCloudTool.setDisable()
     }
 
     /**
@@ -117,6 +125,18 @@ export default class ToolControl {
         this.drawContinentTool.setAble()
         this.currentTool = this.drawContinentTool
         this.rightBottom.appendChild(this.btns.drawContinent)
+    }
+
+    /**
+     * 구름 그리기 툴 설정
+     */
+    drawCloudToolSet = ()=>{
+        this.unsetAllTool()
+
+        console.log('CloudTool')
+        this.drawCloudTool.setAble()
+        this.currentTool = this.drawCloudTool
+        this.rightBottom.appendChild(this.btns.drawCloud)
     }
 
     /**
