@@ -18,7 +18,7 @@ export default class Render {
         this.angle = 45
         this.aspect = this.WIDTH / this.HEIGHT
         this.near = 0.1
-        this.far = 6500
+        this.far = 15000
 
         this.setCanvas()
 
@@ -244,7 +244,7 @@ export default class Render {
         for (let i = 0; i < 6; i++)
             materialArray[i].side = THREE.BackSide;
 
-        const skyboxGeo = new THREE.BoxGeometry(4000, 4000, 4000);
+        const skyboxGeo = new THREE.BoxGeometry(5500, 5500, 5500);
         this.skybox = new THREE.Mesh(skyboxGeo, materialArray);
         
         this.scene.add(this.skybox);

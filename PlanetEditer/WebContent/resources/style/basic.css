@@ -1,14 +1,9 @@
+/* 기본 설정 */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-.map{
-    background-color: #555555;
-    /* height: 150px; */
-    width: 150px;
-    position: relative;
 }
 
 .bottom-absolute {
@@ -48,9 +43,18 @@ body {
     position: absolute;
     left: 0;
     top: 0;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
 }
 
-.fix-full>* {
+.fix-full.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.canvas-container>* {
     /* width: 150px;
     height: 150px; */
     /* background-color: #555555; */
@@ -58,6 +62,16 @@ body {
     gap: 10px;
     display: flex;
     justify-content: center;
+}
+/* 기본 설정 끝 */
+
+/* UI */
+
+.map{
+    background-color: #555555;
+    /* height: 150px; */
+    width: 150px;
+    position: relative;
 }
 
 .tool {
@@ -166,6 +180,17 @@ body {
 
 
 /* tool */
+
+.tool {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #555555;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+}
+
 .continent-down i{
     transform: rotateZ(180deg);
 }
@@ -206,3 +231,34 @@ body {
     height: 60px;
     margin-bottom: 40px;
 }
+
+/*tool 종료*/
+/*ui 종료*/
+
+
+/*functional dom*/
+
+.wait {
+    visibility: hidden;
+    opacity: 0;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 40px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1000000;
+    transition: 1s;
+}
+
+.wait.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/*functional dom 종료*/
