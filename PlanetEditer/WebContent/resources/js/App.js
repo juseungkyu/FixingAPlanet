@@ -2,6 +2,7 @@ import Render from './planet/view/Render.js';
 import ToolControl from './planet/tool/ToolControl.js';
 import CanvasControl from './planet/canvasControl/CanvasControl.js';
 import MainPage from './page/MainPage.js';
+import PlanetListPage from './page/PlanetListPage.js';
 
 class App {
     constructor() {
@@ -24,6 +25,7 @@ class App {
         this.informationPage = document.querySelector('.information-container')
 
         this.mainPageControl = new MainPage(this)
+        this.planetListPageControl = new PlanetListPage(this)
 
         console.log(this.pageList)
 
@@ -85,6 +87,7 @@ class App {
     setListPage = () => {
         this.unsetPageAll()
         this.listPage.classList.add('active')
+        this.planetListPageControl.onCall()
     }
 
     /**

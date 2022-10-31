@@ -25,17 +25,17 @@ export default class Controller {
         return this.serverURL + this.rootURI + '/' + uri
     }
 
-    get = async (url) => {
-        const json = await (
-            await fetch(url, {
-                method: 'GET'
-            })
-        ).json
-
+    async get (url) {
         const result = {
             error: false,
             data: {}
         }
+        
+        const response = await fetch(this.createURL(url), {
+            method: 'GET'
+        })
+
+        const json = await (response).json
 
         if (json.err) {
             result.error = true
@@ -47,7 +47,7 @@ export default class Controller {
         return result;
     }
 
-    post = async (url, data, contentType = 'application/json;charset=utf-8') => {
+    async post (url, data, contentType = 'application/json;charset=utf-8') {
         let headers = {}
 
         if (contentType && contentType.length != 0) {
@@ -62,7 +62,7 @@ export default class Controller {
 
         if (contentType === 'application/json;charset=utf-8') {
             json = await (
-                await fetch(url, {
+                await fetch(this.createURL(url), {
                     method: 'POST',
                     headers,
                     body: JSON.stringify(data),
@@ -70,7 +70,7 @@ export default class Controller {
             ).json()
         } else {
             json = await (
-                await fetch(url, {
+                await fetch(this.createURL(url), {
                     method: 'POST',
                     headers,
                     body: data,
