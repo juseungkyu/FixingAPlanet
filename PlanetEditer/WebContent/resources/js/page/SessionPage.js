@@ -50,11 +50,8 @@ export default class PlanetListPage {
     }
 
     onScroll(e, test = false) {
-        if(this.table.clientHeight == this.table.scrollHeight){
-            if(!test){
-                alert('요소가 충분하지 않아 스크롤 할 수 없습니다.')
-            }
-            
+        if(!test && this.table.clientHeight == this.table.scrollHeight){
+            alert('요소가 충분하지 않아 스크롤 할 수 없습니다.')
             this.mouseDown = false
             return
         }
@@ -71,52 +68,6 @@ export default class PlanetListPage {
         const scrollValue = ratio * (-this.scrollPosition)
 
         this.table.scrollTo(0, scrollValue)
-    }
-
-    async onCall() {
-        this.table.scrollTo(0, 0)
-        this.app.setWaitMode()
-
-        const returnData = await this.controller.getPlanetListAll()
-        if(returnData.error){
-            alert('행성 리스트를 불러오는 중 오류가 발생했습니다.')
-        }
-        console.log(returnData)
-
-        // const testData = {
-        //     "error" : false,
-        //     "data": [
-        //         {
-        //             "planetTitle": "지구",
-        //             "canvas": {
-        //                 "canvasId": 2,
-        //                 "canvasBumpMapAddr": "/asdf.png",
-        //                 "canvasContinentMapAddr": "/asdf.png",
-        //                 "canvasMapAddr": "/asdf.png",
-        //                 "canvasCloudMapAddr": "/asdf.png"
-        //             },
-        //             "planetContent": "가장 아름다운 행성 - 지구는 내가 먼저 만듦 ㅅㄱ",
-        //             "planetId": 1,
-        //             "playerId": "admin"
-        //         },
-        //         {
-        //             "planetTitle": "지구",
-        //             "canvas": { "canvasId": 1, 
-        //                 "canvasBumpMapAddr": "/asdf.png",
-        //                 "canvasContinentMapAddr": "/asdf.png",
-        //                 "canvasMapAddr": "/asdf.png",
-        //                 "canvasCloudMapAddr": "/asdf.png" 
-        //             }, 
-        //             "planetContent": "가장 아름다운 행성 - 지구는 내가 먼저 만듦 ㅅㄱ", 
-        //             "planetId": 2,
-        //             "playerId": "admin"
-        //         }
-        //     ]
-        // }
-
-        this.setList(returnData.data)
-
-        this.app.unsetWaitMode()
     }
 
     setList(list) {
