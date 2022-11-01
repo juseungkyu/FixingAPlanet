@@ -7,15 +7,71 @@ export default class PlanetListPage {
         this.container = document.querySelector('.list-container')
         this.controller = new PlanetController()
 
+        this.scrollPosition = 0
+
         this.init()
     }
 
     init() {
         this.table = this.container.querySelector('.planet-table')
+        this.scroll = this.container.querySelector('.scroll-bar')
+        this.scrollBar = this.scroll.querySelector('i')
+
         this.addEvent()
     }
 
+    addEvent() {
+        this.mouseDown = false
+
+        this.scrollBar.addEventListener('mousedown', ()=>{
+            this.mouseDown = true
+        })
+        window.addEventListener('mousemove', (e)=>{
+            if(!this.mouseDown) {
+                return
+            }
+            e.preventDefault()
+            this.onScroll(e)
+        })
+        window.addEventListener('mouseup', (e)=>{
+            if(!this.mouseDown) {
+                return
+            }
+            this.mouseDown = false
+            this.onScroll(e)
+        })
+        window.addEventListener('mouseleave', ()=>{
+            this.mouseDown = false
+        })
+
+        window.addEventListener('resize', (e)=> {
+            this.onScroll({movementY : 0})
+        })
+    }
+
+    onScroll(e) {
+        if(this.table.clientHeight == this.table.scrollHeight){
+            alert('요소가 충분하지 않아 스크롤 할 수 없습니다.')
+            this.mouseDown = false
+            return
+        }
+        this.scrollPosition -= e.movementY
+
+        if(this.scrollPosition > 0){
+            this.scrollPosition = 0
+        } else if(this.scrollPosition < -this.scroll.clientHeight) {
+            this.scrollPosition = -this.scroll.clientHeight
+        }
+
+        this.scrollBar.style.transform = `rotateZ(270deg) translateX(${this.scrollPosition}px)`
+        const ratio = (this.table.scrollHeight - this.table.clientHeight) / this.scroll.clientHeight
+        const scrollValue = ratio * (-this.scrollPosition)
+
+        this.table.scrollTo(0, scrollValue)
+    }
+
     async onCall() {
+        this.table.scrollTo(0, 0)
         this.app.setWaitMode()
 
         // const a = await this.controller.getPlanetListAll()
@@ -85,10 +141,12 @@ export default class PlanetListPage {
             </div>
         `
 
+        this.cardAddEvent()
+
         return card
     }
 
-    addEvent() {
+    cardAddEvent() {
 
     }
 
