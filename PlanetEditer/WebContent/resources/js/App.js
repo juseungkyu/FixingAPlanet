@@ -20,14 +20,13 @@ class App {
 
         this.pageList = document.querySelectorAll('.fix-full')
 
+        this.canvasPage = document.querySelector('.canvas-container')
         this.mainPage = document.querySelector('.main-container')
         this.listPage = document.querySelector('.list-container')
         this.informationPage = document.querySelector('.information-container')
 
         this.mainPageControl = new MainPage(this)
         this.planetListPageControl = new PlanetListPage(this)
-
-        console.log(this.pageList)
 
         // document.querySelector('.map').appendChild(this.render.bumpMapCanvas)
 
@@ -79,6 +78,14 @@ class App {
     setMainPage = () => {
         this.unsetPageAll()
         this.mainPage.classList.add('active')
+    }
+
+    /**
+     * 캔버스 페이지 활성화
+     */
+    setCanvas = () => {
+        this.unsetPageAll()
+        this.render.classList.add('active')
     }
 
     /**

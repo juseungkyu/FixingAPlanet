@@ -8,6 +8,14 @@
 //     }
 // }
 
+// client message format
+// const data = {
+//     'error' = false
+//     'data' : {
+//         'tempList' : []
+//     }
+// }
+
 
 export default class Controller {
     constructor(rootURI = '', serverURL = '') {

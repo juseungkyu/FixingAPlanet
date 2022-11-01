@@ -1,21 +1,16 @@
 import PlanetController from '../ajax/PlanetController.js';
 
-export default class PlanetListPage {
+export default class CanvasPage {
     constructor(app) {
-        console.log('PlanetListPage start')
+        console.log('RenderPage start')
         this.app = app
         this.container = document.querySelector('.list-container')
         this.controller = new PlanetController()
-
-        this.scrollPosition = 0
 
         this.init()
     }
 
     init() {
-        this.table = this.container.querySelector('.planet-table')
-        this.scroll = this.container.querySelector('.scroll-bar')
-        this.scrollBar = this.scroll.querySelector('i')
 
         this.addEvent()
     }
@@ -73,53 +68,16 @@ export default class PlanetListPage {
         this.table.scrollTo(0, scrollValue)
     }
 
-    async onCall() {
-        this.table.scrollTo(0, 0)
-        this.scrollPosition = 0
-        this.scrollBar.style.transform = `rotateZ(270deg) translateX(0px)`
+    async onCall(planetId) {
+        if(planetId == null){
+            return false
+        }
 
-        this.app.setWaitMode()
-
-        const returnData = await this.controller.getPlanetListAll()
+        const returnData = await this.controller.getPlanet(planetId)
         if(returnData.error){
-            alert('행성 리스트를 불러오는 중 오류가 발생했습니다.')
+            alert('행성을 불러오는 중 오류가 발생했습니다.')
         }
         console.log(returnData)
-
-        // const testData = {
-        //     "error" : false,
-        //     "data": [
-        //         {
-        //             "planetTitle": "지구",
-        //             "canvas": {
-        //                 "canvasId": 2,
-        //                 "canvasBumpMapAddr": "/asdf.png",
-        //                 "canvasContinentMapAddr": "/asdf.png",
-        //                 "canvasMapAddr": "/asdf.png",
-        //                 "canvasCloudMapAddr": "/asdf.png"
-        //             },
-        //             "planetContent": "가장 아름다운 행성 - 지구는 내가 먼저 만듦 ㅅㄱ",
-        //             "planetId": 1,
-        //             "playerId": "admin"
-        //         },
-        //         {
-        //             "planetTitle": "지구",
-        //             "canvas": { "canvasId": 1, 
-        //                 "canvasBumpMapAddr": "/asdf.png",
-        //                 "canvasContinentMapAddr": "/asdf.png",
-        //                 "canvasMapAddr": "/asdf.png",
-        //                 "canvasCloudMapAddr": "/asdf.png" 
-        //             }, 
-        //             "planetContent": "가장 아름다운 행성 - 지구는 내가 먼저 만듦 ㅅㄱ", 
-        //             "planetId": 2,
-        //             "playerId": "admin"
-        //         }
-        //     ]
-        // }
-
-        this.setList(returnData.data)
-
-        this.app.unsetWaitMode()
     }
 
     setList(list) {
@@ -138,10 +96,8 @@ export default class PlanetListPage {
         const {canvas, planetContent, planetId, planetTitle, playerId} = cardData
         const {canvasBumpMapAddr, canvasCloudMapAddr, canvasContinentMapAddr, canvasId, canvasMapAddr} = canvas
 
-        const date = new Date()
-
         card.innerHTML = `
-            <img src="./resources/image/canvas/map/${canvasMapAddr}?${date.getTime()}" alt="지도">
+            <img src="./resources/image/canvas/map/${canvasMapAddr}" alt="지도">
             <div class="text">
                 <h3>${planetTitle}</h3>
                 <p>${planetContent}</p>
@@ -155,9 +111,7 @@ export default class PlanetListPage {
     }
 
     cardAddEvent(card, planetId) {
-        card.addEventListener('click', (e)=>{
-            // this.app.
-        })
+        
     }
 
     on = () => {
