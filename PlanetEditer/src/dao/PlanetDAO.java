@@ -7,9 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.JdbcUtil;
+import vo.Canvas;
 import vo.Planet;
 
 public class PlanetDAO {
+	private CanvasDAO canvasDao = new CanvasDAO();
+	
 	public ArrayList<Planet> getPlanetAll() {
 		ArrayList<Planet> output = new ArrayList<Planet>();
 				
@@ -19,27 +22,24 @@ public class PlanetDAO {
 
 		conn = JdbcUtil.getConnection();
 		try {
-			pstmt = conn.prepareStatement("SELECT * from planet");
+			pstmt = conn.prepareStatement("SELECT * from planets");
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
+				Canvas canvas = canvasDao.getCanvas(rs.getInt(5));
+				
 				Planet planet = new Planet(
 						rs.getInt(1), 
 						rs.getString(2), 
 						rs.getString(3), 
 						rs.getString(4), 
-						rs.getString(5),
-						rs.getString(6), 
-						rs.getString(7), 
-						rs.getString(8),
-						rs.getString(9)
+						canvas
 					);
 				output.add(planet);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			JdbcUtil.close(conn, pstmt, rs);
+			System.out.println("getPlanetAll error");
 		}
 		
 		return output;

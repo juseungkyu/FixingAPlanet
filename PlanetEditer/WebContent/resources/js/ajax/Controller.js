@@ -10,7 +10,7 @@
 
 
 export default class Controller {
-    constructor(rootURI, serverURL) {
+    constructor(rootURI = '', serverURL = '') {
         this.rootURI = rootURI
         this.serverURL = serverURL
 
@@ -21,21 +21,19 @@ export default class Controller {
 
     }
 
-    createURL(uri) {
-        return this.serverURL + this.rootURI + '/' + uri
-    }
-
     async get (url) {
         const result = {
             error: false,
             data: {}
         }
         
-        const response = await fetch(this.createURL(url), {
+        const response = await fetch(url, {
             method: 'GET'
         })
 
-        const json = await (response).json
+        const json = await (response).json()
+
+        console.log(JSON.stringify(json))
 
         if (json.err) {
             result.error = true
@@ -62,7 +60,7 @@ export default class Controller {
 
         if (contentType === 'application/json;charset=utf-8') {
             json = await (
-                await fetch(this.createURL(url), {
+                await fetch(url, {
                     method: 'POST',
                     headers,
                     body: JSON.stringify(data),
@@ -70,7 +68,7 @@ export default class Controller {
             ).json()
         } else {
             json = await (
-                await fetch(this.createURL(url), {
+                await fetch(url, {
                     method: 'POST',
                     headers,
                     body: data,

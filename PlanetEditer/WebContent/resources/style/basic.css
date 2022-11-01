@@ -7,6 +7,19 @@
     color: white;
 }
 
+h1 { 
+    font-size: 35px;
+}
+h2 { 
+    font-size: 25px;
+}
+h3 { 
+    font-size: 20px;
+}
+p {
+    font-size: 15px;
+}
+
 .btn {
     border: none;
     background-color: #fff;
@@ -319,3 +332,58 @@ body {
 }
 
 /* information-container 종료 */
+
+
+/*list-container*/
+
+.list-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.list-container .planet-table {
+    width: 1000px;
+    height: 80vh;
+    /* background-color: #555555; */
+    overflow-y: scroll;
+}
+
+.planet-table .card{
+    width: 95%;
+    margin: auto;
+    height: 150px;
+    border: 1px solid white;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.planet-table .card:last-child {
+    margin-bottom: 0px;
+}
+
+.planet-table .card img {
+    width: 300px;
+    height: 100%;
+}
+
+.planet-table .card .text {
+    width: calc(100% - 300px);
+    height: 100%;
+    padding: 20px;
+}
+
+.planet-table .card .text h3{
+    margin-bottom: 10px;
+}
+
+.planet-table .card .text .creater {
+    margin-top: 10px;
+    font-weight: 900;
+}
+
+/*list-container 종료*/

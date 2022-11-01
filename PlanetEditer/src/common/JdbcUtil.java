@@ -2,8 +2,6 @@ package common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class JdbcUtil {
 	public static Connection conn = null;
@@ -19,37 +17,5 @@ public class JdbcUtil {
 		}
 		
 		return conn;
-	}
-	
-	public static void close(Connection conn, PreparedStatement pstmt) {
-		if(pstmt != null) {
-			try {
-				pstmt.close();
-			} catch (Exception e) {
-				System.out.println("pstmt.close() 실패");
-				e.printStackTrace();
-			}
-		}
-		if(conn != null) {
-			try {
-				conn.close();
-			} catch (Exception e) {
-				System.out.println("conn.close() 실패");
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public static void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
-		if(rs != null) {
-			try {
-				rs.close();
-			} catch (Exception e) {
-				System.out.println("rs.close() 실패");
-				e.printStackTrace();
-			}
-		}
-		
-		JdbcUtil.close(conn, pstmt);
 	}
 }
