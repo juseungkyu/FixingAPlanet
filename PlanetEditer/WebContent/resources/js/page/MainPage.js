@@ -12,6 +12,8 @@ export default class MainPage {
         this.planetListBtn = this.container.querySelector('.planet-list-btn')
         this.informationBtn = this.container.querySelector('.information-btn')
 
+        this.mainBtn = document.querySelectorAll('.main-btn')
+
         this.addEvent()
     }
 
@@ -20,6 +22,11 @@ export default class MainPage {
         this.joinBtn.addEventListener('click', this.onJoin)
         this.planetListBtn.addEventListener('click', this.onPlanetList)
         this.informationBtn.addEventListener('click', this.onInformation)
+        this.mainBtn.forEach(x=>x.addEventListener('click', this.onMainBtn))
+    }
+
+    onMainBtn = ()=> {
+        this.app.setMainPage()
     }
 
     onLogin = () => {

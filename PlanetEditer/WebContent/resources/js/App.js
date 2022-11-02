@@ -3,6 +3,7 @@ import ToolControl from './planet/tool/ToolControl.js';
 import CanvasControl from './planet/canvasControl/CanvasControl.js';
 import MainPage from './page/MainPage.js';
 import PlanetListPage from './page/PlanetListPage.js';
+import CreatePage from './page/CreatePage.js';
 
 class App {
     constructor() {
@@ -27,6 +28,7 @@ class App {
 
         this.mainPageControl = new MainPage(this)
         this.planetListPageControl = new PlanetListPage(this)
+        this.createPageControl = new CreatePage(this)
 
         // document.querySelector('.map').appendChild(this.render.bumpMapCanvas)
 

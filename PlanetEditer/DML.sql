@@ -26,4 +26,6 @@ SELECT * FROM planets;
 SELECT * FROM players WHERE player_id=?; 
 SELECT * FROM canvas WHERE canvas_id=?;
 
+SELECT * FROM canvas WHERE canvas_id=(SELECT MAX(canvas_id) FROM canvas);
+
 

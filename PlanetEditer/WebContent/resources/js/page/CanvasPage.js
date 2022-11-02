@@ -2,7 +2,7 @@ import PlanetController from '../ajax/PlanetController.js';
 
 export default class CanvasPage {
     constructor(app) {
-        console.log('RenderPage start')
+        console.log('CanvasPage start')
         this.app = app
         this.container = document.querySelector('.list-container')
         this.controller = new PlanetController()

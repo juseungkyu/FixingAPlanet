@@ -20,18 +20,31 @@ export default class PlanetController extends Controller {
      * @returns const data = {
      *    'error' = false,
      *    'data' : {
-     *         'planetTitle' : string
+     *         'planetTitle' : string,
      *         'canvas' : {
-     *              'canvasBumpMapAddr' : url
-     *              'canvasContinentMapAddr' : url
-     *              'canvasCloudMapAddr' : url
-     *              'canvasMapAddr' : url
-     *         }
+     *              'canvasBumpMapAddr' : url,
+     *              'canvasContinentMapAddr' : url,
+     *              'canvasCloudMapAddr' : url,
+     *              'canvasMapAddr' : url,
+     *         },
+     *         'planetContent' : string,
+     *         'planetId' : number,
+     *         'playerId' : string,
      *     },
-     *     'planetContent' : string
-     *     'planetId' : number
-     *     'playerId' : string
      *  }
      */
     getPlanet = async (planetId) => await this.get(`/planet/get?planetId=${planetId}`)
+
+    /**
+     * 행성 하나를 생성함
+     * @param {String} title 
+     * @param {String} content 
+     * @returns const data = {
+     *    'error' = false,
+     *    'data' : {
+     *         'planetId' : number,
+     *     },
+     *  }
+     */
+    createPlanet = async (title, content) => await this.post(`/planet/create?title=${title}&content=${content}`)
 }

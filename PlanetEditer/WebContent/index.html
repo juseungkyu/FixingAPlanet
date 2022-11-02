@@ -162,14 +162,26 @@
         </div>
     </div>
 
-    <div class="fix-full my-planet-container">
-        <div class="planet-table">
-
+    <div class="fix-full planet-create-container active">
+        <h2 class="d-flex">새 행성 만들기</h2>           
+        <div class="d-flex flex-col gap-10">
+            <fieldset class="text-form">
+                <legend class="label">제목</legend>
+                <input type="text" id="planet-create-title">
+            </fieldset>
+            <fieldset class="textarea-form">
+                <legend class="label">설명</legend>
+                <textarea id="planet-create-content"></textarea>
+            </fieldset>
+            <div class="d-flex gap-10">
+                <button class="btn create-btn">행성 생성</button>
+                <button class="btn main-btn">메인화면으로</button>
+            </div>
         </div>
     </div>
 
     <div class="fix-full list-container">
-        <h2>행성 리스트</h2>
+        <h2 class="d-flex">행성 리스트</h2>           
         <div class="d-flex">
             <div class="planet-table grid-3-3 gap-10 ">
                 <div class="card d-flex">
@@ -185,15 +197,26 @@
                 <i class="fa-sharp fa-solid fa-shuttle-space"></i>
             </div>
         </div>
+        <div class="d-flex justify-end w-1000px">
+            <button class="btn main-btn">메인화면으로</button>
+        </div>
     </div>
 
     <div class="fix-full information-container">
         <div>
-
+            <div class="w-1000px">
+                설명설명설명설명설명설명설명설명<br>
+                설명설명설명설명설명설명설명설명<br>
+                설명설명설명설명설명설명설명설명<br>
+                설명설명설명설명설명설명설명설명<br>
+            </div>
+            <div class="d-flex justify-end w-1000px">
+                <button class="btn main-btn">메인화면으로</button>
+            </div>
         </div>
     </div>
 
-    <div class="fix-full main-container active">
+    <div class="fix-full main-container">
         <div>
             <div class="session">
                 <div class="d-flex gap-10">
@@ -204,6 +227,10 @@
 
             <div>
                 <button class="btn planet-list-btn">행성 리스트 조회</button>
+            </div>
+
+            <div>
+                <button class="btn planet-create-btn">새 행성 만들기</button>
             </div>
 
             <div>
