@@ -33,7 +33,7 @@ export default class PlanetController extends Controller {
      *     },
      *  }
      */
-    getPlanet = async (planetId) => await this.get(`/planet/get?planetId=${planetId}`)
+    getPlanet = async (planetId) => await this.get(`/planet?planetId=${planetId}`)
 
     /**
      * 행성 하나를 생성함
@@ -46,5 +46,5 @@ export default class PlanetController extends Controller {
      *     },
      *  }
      */
-    createPlanet = async (title, content) => await this.post(`/planet/create?title=${title}&content=${content}`)
+    createPlanet = async (title, content) => await this.post(`/planet?title=${title}&content=${content}`)
 }

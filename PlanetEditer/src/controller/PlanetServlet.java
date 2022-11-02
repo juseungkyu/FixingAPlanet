@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,17 +17,54 @@ import org.json.simple.JSONObject;
 import dao.PlanetDAO;
 import vo.Canvas;
 import vo.Planet;
+import vo.User;
 
-@WebServlet("/planet/get")
-public class GetPlanetServlet extends HttpServlet {
+@WebServlet("/planet")
+public class PlanetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static PlanetDAO planetDao;
-	
-    public GetPlanetServlet() {
+    private static PlanetDAO planetDao = new PlanetDAO(); 
+    public PlanetServlet() {
         super();
-        this.planetDao = new PlanetDAO();
     }
     
+	@Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter ps = response.getWriter();
+		
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+
+		if(title == null || title.length() == 0) {
+			ps.println("{'err' : {'message' : 'title이 비어있습니다.'}}");
+			return;
+		}
+		if(content == null || content.length() == 0) {
+			ps.println("{'err' : {'message' : 'content이 비어있습니다.'}}");
+			return;
+		}
+		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("userSession");
+		
+		if(user == null) {
+			ps.println("{'err' : {'message' : '유저의 세션이 확인되지 않습니다.'}}");
+			return;
+		}
+		
+		Planet createdPlanet = planetDao.createPlanet("/url", user.getUserName(), title, content);
+		
+		if(createdPlanet == null) {
+			ps.println("{'err' : {'message' : '행성 생성 중 오류가 발생했습니다.'}}");
+			return;
+		}
+
+		JSONObject json = new JSONObject();
+		json.put("result", this.planetToJSON(createdPlanet));
+		ps.println(json);
+	}
+
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter ps = response.getWriter();
@@ -54,8 +92,14 @@ public class GetPlanetServlet extends HttpServlet {
 		ps.println(json);
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doPut(req, resp);
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doDelete(req, resp);
 	}
 	
 	private JSONObject planetToJSON(Planet planet) {
