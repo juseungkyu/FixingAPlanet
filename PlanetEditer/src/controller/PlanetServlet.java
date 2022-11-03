@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +22,7 @@ import vo.User;
 public class PlanetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static PlanetDAO planetDao = new PlanetDAO(); 
+    
     public PlanetServlet() {
         super();
     }
@@ -68,7 +70,11 @@ public class PlanetServlet extends HttpServlet {
 		PrintWriter ps = response.getWriter();
 		
 		String planetId = request.getParameter("planetId");
-		
+
+		ServletContext application = getServletContext(); 
+	    String fileFolder = application.getRealPath("/image/canvas");
+	    ps.print(fileFolder);
+	    		
 		if(planetId == null) {
 			ps.println("{'err' : {'message' : 'planetId가 감지되지 않습니다.'}}");
 			return;
@@ -85,6 +91,11 @@ public class PlanetServlet extends HttpServlet {
 		
 		Planet planet = planetDao.getPlanet(planetIdNumber);
 		
+		if(planet == null) {
+			ps.println("{'err' : {'message' : '존재하지 않는 행성입니다.'}}");
+			return;
+		}
+		
 		JSONObject json = new JSONObject();
 		json.put("result", this.planetToJSON(planet));
 		ps.println(json);
@@ -93,6 +104,8 @@ public class PlanetServlet extends HttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		super.doPut(req, resp);
+		ServletContext application = getServletContext(); 
+	    String fileFolder = application.getRealPath("");
 	}
 	
 	@Override
