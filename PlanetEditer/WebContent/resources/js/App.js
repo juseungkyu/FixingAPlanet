@@ -25,6 +25,7 @@ class App {
         this.mainPage = document.querySelector('.main-container')
         this.listPage = document.querySelector('.list-container')
         this.informationPage = document.querySelector('.information-container')
+        this.createPlanetPage = document.querySelector('.planet-create-container')
 
         this.mainPageControl = new MainPage(this)
         this.planetListPageControl = new PlanetListPage(this)
@@ -113,6 +114,14 @@ class App {
     setInformationPage = () => {
         this.unsetPageAll()
         this.informationPage.classList.add('active')
+    }
+
+    /**
+     * 상세정보 페이지 활성화
+     */
+    setCreatePage = () => {
+        this.unsetPageAll()
+        this.createPlanetPage.classList.add('active')
     }
 
     /**
