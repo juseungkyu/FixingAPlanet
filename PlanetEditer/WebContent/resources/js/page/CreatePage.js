@@ -38,12 +38,16 @@ export default class CreatePage {
      * 생성 버튼 클릭
      * @param {Event} e
      */
-    onCreateBtnClick = () => {
+    onCreateBtnClick = async () => {
         if(!this.contentFormatCheck() || !this.titleFormatCheck()) {
             return false
         }
 
-
+        this.app.setWaitMode()
+        console.log('wait')
+        await this.controller.createPlanet(this.titleField.value, this.contentField.value)
+        this.app.unsetWaitMode()
+        console.log('unwait')
     }
 
     /**

@@ -55,5 +55,5 @@ export default class PlanetController extends Controller {
      *     },
      *  }
      */
-    createPlanet = async (title, content) => await this.post(`/planet?title=${title}&content=${content}`)
+    createPlanet = async (title, content) => await this.post(`/planet`, {title, content})
 }

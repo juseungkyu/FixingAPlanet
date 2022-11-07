@@ -26,7 +26,7 @@ import vo.Planet;
 import vo.User;
 
 @WebServlet("/planet")
-public class PlanetServlet extends HttpServlet {
+public class PlanetServlet extends DefaultServlet {
 	private static final long serialVersionUID = 1L;
     private static PlanetDAO planetDao = new PlanetDAO(); 
     
@@ -41,13 +41,15 @@ public class PlanetServlet extends HttpServlet {
 		
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
+		
+		System.out.println(title);
 
 		if(title == null || title.length() == 0) {
-			ps.println("{'err' : {'message' : 'title이 비어있습니다.'}}");
+			ps.println("{\"err\" : {\"message\" : \"title이 비어있습니다.\"}}");
 			return;
 		}
 		if(content == null || content.length() == 0) {
-			ps.println("{'err' : {'message' : 'content이 비어있습니다.'}}");
+			ps.println("{\"err\" : {\"message\" : \"content이 비어있습니다.\"}}");
 			return;
 		}
 		

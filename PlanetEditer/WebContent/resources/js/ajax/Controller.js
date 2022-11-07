@@ -41,8 +41,6 @@ export default class Controller {
 
         const json = await (response).json()
 
-        console.log(JSON.stringify(json))
-
         if (json.err) {
             result.error = true
             result.data = json.err.message
@@ -64,8 +62,6 @@ export default class Controller {
         })
 
         const json = await (response).json()
-
-        console.log(JSON.stringify(json))
 
         if (json.err) {
             result.error = true
@@ -89,6 +85,8 @@ export default class Controller {
         }
 
         let json = null
+
+        console.log(JSON.stringify(data))
 
         if (contentType === 'application/json;charset=utf-8') {
             json = await (
@@ -120,7 +118,9 @@ export default class Controller {
             result.data = json.result
         }
 
-        return output
+        console.log(result)
+
+        return result
     }
 
     async put (url, data, contentType = 'application/json;charset=utf-8') {
@@ -166,6 +166,6 @@ export default class Controller {
             result.data = json.result
         }
 
-        return output
+        return result
     }
 }

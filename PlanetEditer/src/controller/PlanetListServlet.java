@@ -18,7 +18,7 @@ import vo.Canvas;
 import vo.Planet;
 
 @WebServlet("/planet/all")
-public class PlanetListServlet extends HttpServlet {
+public class PlanetListServlet extends DefaultServlet {
 	private static final long serialVersionUID = 1L;
     private static PlanetDAO planetDao = new PlanetDAO();
 	
