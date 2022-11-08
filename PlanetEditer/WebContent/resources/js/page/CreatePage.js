@@ -14,6 +14,9 @@ export default class CreatePage {
         this.init()
     }
 
+    /**
+     * 초기설정
+     */
     init() {
         this.contentField = this.container.querySelector('#planet-create-content')
         this.titleField = this.container.querySelector('#planet-create-title')
@@ -22,6 +25,9 @@ export default class CreatePage {
         this.addEvent()
     }
 
+    /**
+     * 이벤트 설정
+     */
     addEvent() {
         this.contentField.addEventListener('input', this.contentFormatCheck)
         this.titleField.addEventListener('input', this.titleFormatCheck)

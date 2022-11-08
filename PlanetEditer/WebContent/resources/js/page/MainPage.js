@@ -11,6 +11,9 @@ export default class MainPage {
         this.init()
     }
 
+    /**
+     * 초기설정
+     */
     init(){
         this.loginBtn = this.container.querySelector('.login-btn')
         this.joinBtn = this.container.querySelector('.join-btn')
@@ -23,6 +26,9 @@ export default class MainPage {
         this.addEvent()
     }
 
+    /**
+     * 이벤트 설정
+     */
     addEvent() {
         this.loginBtn.addEventListener('click', this.onLogin)
         this.joinBtn.addEventListener('click', this.onJoin)

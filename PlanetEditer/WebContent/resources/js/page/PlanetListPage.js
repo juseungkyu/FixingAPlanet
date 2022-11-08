@@ -16,6 +16,9 @@ export default class PlanetListPage {
         this.init()
     }
 
+    /**
+     * 초기설정
+     */
     init() {
         this.table = this.container.querySelector('.planet-table')
         this.scroll = this.container.querySelector('.scroll-bar')
@@ -24,9 +27,13 @@ export default class PlanetListPage {
         this.addEvent()
     }
 
+    /**
+     * 이벤트 설정
+     */
     addEvent() {
         this.mouseDown = false
 
+        // 커스텀 스크롤바 설정
         this.scrollBar.addEventListener('mousedown', ()=>{
             this.mouseDown = true
         })
@@ -48,11 +55,17 @@ export default class PlanetListPage {
             this.mouseDown = false
         })
 
+        // 윈도우 크기 변경
         window.addEventListener('resize', (e)=> {
             this.onScroll({movementY : 0}, true)
         })
     }
 
+    /**
+     * 커스텀 스크롤바의 스크롤 이벤트
+     * @param {Event} e 
+     * @param {Boolean} test default : false
+     */
     onScroll(e, test = false) {
         if(this.table.clientHeight == this.table.scrollHeight){
             if(!test){
@@ -77,6 +90,10 @@ export default class PlanetListPage {
         this.table.scrollTo(0, scrollValue)
     }
 
+    /**
+     * 페이지가 호출될 시
+     * 행성 리스트를 서버에서 받아와 출력
+     */
     async onCall() {
         this.table.scrollTo(0, 0)
         this.scrollPosition = 0
@@ -126,6 +143,10 @@ export default class PlanetListPage {
         this.app.unsetWaitMode()
     }
 
+    /**
+     * 행성 리스트 설정
+     * @param {Array} list 
+     */
     setList(list) {
         this.table.innerHTML = ''
         
@@ -134,6 +155,11 @@ export default class PlanetListPage {
         })
     }
 
+    /**
+     * 행성 하나의 정보를 받아와 dom을 생성하고 이벤트를 추가함
+     * @param {Object} cardData 
+     * @returns HTMLElement card
+     */
     createCard(cardData) {
         const card = document.createElement('div')
         card.classList.add('card')
@@ -158,13 +184,14 @@ export default class PlanetListPage {
         return card
     }
 
+    /**
+     * 카드 하나에 이벤트를 추가함
+     * @param {HTMLElement} card 
+     * @param {Number} planetId 
+     */
     cardAddEvent(card, planetId) {
         card.addEventListener('click', (e)=>{
             // this.app.
         })
-    }
-
-    on = () => {
-
     }
 }
