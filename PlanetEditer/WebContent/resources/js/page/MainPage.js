@@ -1,3 +1,8 @@
+
+/**
+ * 메인 화면을 제어하는 페이지
+ * @param {App} app 이 페이지를 생성할 App
+ */
 export default class MainPage {
     constructor(app) {
         this.app = app

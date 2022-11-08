@@ -1,5 +1,9 @@
 import PlanetController from '../ajax/PlanetController.js';
 
+/**
+ * 행성 리스트 뷰어를 제어하는 페이지
+ * @param {App} app 이 페이지를 생성할 App
+ */
 export default class PlanetListPage {
     constructor(app) {
         console.log('PlanetListPage start')

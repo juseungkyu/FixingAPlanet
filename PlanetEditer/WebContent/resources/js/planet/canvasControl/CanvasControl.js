@@ -4,6 +4,9 @@ export default class CanvasControl {
         this.init()
     }
 
+    /**
+     * 캔버스 최초 생성등의 준비
+     */
     init() {
         this.seaLevel = 0
         const option = {
@@ -72,6 +75,10 @@ export default class CanvasControl {
         return this.randomDotCanvas
     }
 
+    /**
+     * 생성하고 기본 설정한 캔버스를 반환하는 함수
+     * @returns HTMLCanvasElement
+     */
     createCanvas() {
         const canvas = document.createElement('canvas')
         canvas.width = 1000
@@ -81,6 +88,10 @@ export default class CanvasControl {
         return canvas
     }
     
+    /**
+     * 바다인 부분을 구하는 등의 연산을 하고 최종 출력 canvas를 수정함
+     * @param {Boolean} ignoreTime defualt : false
+     */
     updateCanvas(ignoreTime = false) { 
         if(new Date() - this.lastUpdate < 40 && !ignoreTime) {
             return
@@ -98,10 +109,20 @@ export default class CanvasControl {
         this.render.setBumpMapNeedUpdateTrue()
     }
 
+    /**
+     * 렌더러에 cloudMap을 업데이트 해야한다고 전달
+     */
     updateCloudCanvas() {
         this.render.setCloudMapNeedUpdateTrue()
     }
 
+    /**
+     * 바다인 부분을 구하는 함수
+     * fill 횟수를 최대한 줄이는게 최적화에 좋기에, 연결된 좌표들을 구함
+     * @returns [
+     *      [x, y, size], [x, y, size],
+     * ]
+     */
     getPointList() {
         const pointList = []
         let node = []
@@ -130,6 +151,12 @@ export default class CanvasControl {
         return pointList
     }
     
+    /**
+     * 탐색좌표가 탐색구역 밖으로 나갔는지 확인
+     * @param {Number} x 
+     * @param {Number} y 
+     * @returns Boolean
+     */
     rangeCheck(x,y) {
         if(x >= 0 && x < 1000 && y >= 0 && y < 500){
             return true
@@ -138,10 +165,20 @@ export default class CanvasControl {
         return false
     }
 
+    /**
+     * Uint8ClampedArray 방식의 리스트에서 해당 좌표의 r값을 찾아주는 함수
+     * @param {Number} x 
+     * @param {Number} y 
+     * @returns Number
+     */
     getPixel(x,y) {
         return this.pixelList[((y*1000) + x)*4]
     }
 
+    /**
+     * 물이 있는 좌표의 리스트를 받아 바다를 그려줌
+     * @param {Array} x
+     */
     setSea(pointList) {
         this.bumpMapCtx.fillStyle = 'rgb(' + this.seaLevel + ',' + this.seaLevel + ',' + this.seaLevel + ')'
         this.bumpMapCtx.beginPath();

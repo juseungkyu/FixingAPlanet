@@ -18,17 +18,16 @@
 
 
 export default class Controller {
-    constructor(rootURI = '', serverURL = '') {
-        this.rootURI = rootURI
-        this.serverURL = serverURL
+    constructor() {}
 
-        this.init()
-    }
-
-    init() {
-
-    }
-
+    /**
+     * get 방식의 fetch를 보냄
+     * @param {String} url 
+     * @returns {
+     *      "error" : Boolean,
+     *      "data" : Object
+     * }
+     */
     async get (url) {
         const result = {
             error: false,
@@ -51,6 +50,14 @@ export default class Controller {
         return result;
     }
 
+    /**
+     * delete 방식의 fetch를 보냄
+     * @param {String} url 
+     * @returns {
+     *      "error" : Boolean,
+     *      "data" : Object
+     * }
+     */
     async delete (url) {
         const result = {
             error: false,
@@ -73,6 +80,16 @@ export default class Controller {
         return result;
     }
 
+    /**
+     * post 방식의 fetch를 보냄
+     * @param {String} url 
+     * @param {Object} data
+     * @param {String} contentType 'application/json;charset=utf-8'
+     * @returns {
+     *      "error" : Boolean,
+     *      "data" : Object
+     * }
+     */
     async post (url, data, contentType = 'application/json;charset=utf-8') {
         let headers = {}
 
@@ -123,6 +140,16 @@ export default class Controller {
         return result
     }
 
+    /**
+     * put 방식의 fetch를 보냄
+     * @param {String} url 
+     * @param {Object} data
+     * @param {String} contentType 'application/json;charset=utf-8'
+     * @returns {
+     *      "error" : Boolean,
+     *      "data" : Object
+     * }
+     */
     async put (url, data, contentType = 'application/json;charset=utf-8') {
         let headers = {}
 

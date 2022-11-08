@@ -1,5 +1,9 @@
 import UserController from '../ajax/UserController.js';
 
+/**
+ * 로그인, 회원가입 등 세션을 제어하는 페이지
+ * @param {App} app 이 페이지를 생성할 App
+ */
 export default class UserPage {
     constructor(app) {
         console.log('CanvasPage start')

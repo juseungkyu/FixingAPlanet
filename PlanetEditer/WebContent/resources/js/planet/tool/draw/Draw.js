@@ -23,7 +23,7 @@ export default class Draw extends Tool {
     }
 
     /**
-     * 그냥 라인 잇기
+     * 그냥 선 잇기
      * @param {CanvasRenderingContext2D} ctx
      * @param {Vector2} point1
      * @param {Vector2} point2
@@ -36,7 +36,7 @@ export default class Draw extends Tool {
     }
 
     /**
-     * 라인에 랜덤 점을 뿌림
+     * 선에 랜덤 점을 뿌림
      * @param {CanvasRenderingContext2D} ctx 
      * @param {Vector2} point1 
      * @param {Vector2} point2 

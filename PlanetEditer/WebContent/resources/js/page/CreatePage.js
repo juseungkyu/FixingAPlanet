@@ -1,5 +1,9 @@
 import PlanetController from '../ajax/PlanetController.js';
 
+/**
+ * 행성 생성을 제어하는 페이지
+ * @param {App} app 이 페이지를 생성할 App
+ */
 export default class CreatePage {
     constructor(app) {
         console.log('CreatePage start')
