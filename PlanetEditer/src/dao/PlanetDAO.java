@@ -13,6 +13,7 @@ import vo.Planet;
 public class PlanetDAO {
 	private CanvasDAO canvasDao = new CanvasDAO();
 
+	// 행성 리스트 불러오기
 	public ArrayList<Planet> getPlanetAll() {
 		ArrayList<Planet> output = new ArrayList<Planet>();
 				
@@ -45,6 +46,7 @@ public class PlanetDAO {
 		return output;
 	}
 	
+	// 행성 불러오기
 	public Planet getPlanet(int planetId) {
 		Planet output = null;
 				
@@ -77,6 +79,7 @@ public class PlanetDAO {
 		return output;
 	}
 	
+	// 행성 생성하기
 	public Planet createPlanet(String url, String playerId, String title, String content) {
 		Planet output = null;
 		Canvas canvas = this.canvasDao.createCanvas(url);

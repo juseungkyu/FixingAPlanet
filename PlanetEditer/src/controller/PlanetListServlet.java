@@ -26,6 +26,7 @@ public class PlanetListServlet extends DefaultServlet {
         super();
     }
     
+	// 행성 정보 리스트 불러오기
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		String start = request.getParameter("start");
@@ -50,6 +51,7 @@ public class PlanetListServlet extends DefaultServlet {
 		doGet(request, response);
 	}
 	
+	// 행성을 json으로
 	private JSONObject planetToJSON(Planet planet) {
 		JSONObject planetJson = new JSONObject();
 		planetJson.put("planetId", planet.getPlanetId());
@@ -64,6 +66,7 @@ public class PlanetListServlet extends DefaultServlet {
 		return planetJson;
 	}
 	
+	// canvas를 json으로
 	private JSONObject canvasToJSON(Canvas canvas) {
 		JSONObject canvasJson = new JSONObject();
 

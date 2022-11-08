@@ -9,7 +9,7 @@ import common.JdbcUtil;
 import vo.User;
 
 public class UserDAO {
-
+	// 유저 정보 가져오기
 	public User getUser(String playerId) {
 		User output = null;
 				
@@ -38,6 +38,7 @@ public class UserDAO {
 		return output;
 	}
 	
+	// 회원가입
 	// -1 : 이미 있는 아이디
 	//  0 : 생성 실패
 	//  1 : 생성 성공

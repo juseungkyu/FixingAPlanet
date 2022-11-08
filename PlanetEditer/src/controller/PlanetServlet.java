@@ -34,6 +34,7 @@ public class PlanetServlet extends DefaultServlet {
         super();
     }
     
+	// 행성 생성하기
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
@@ -73,6 +74,7 @@ public class PlanetServlet extends DefaultServlet {
 		ps.println(json);
 	}
 
+	// 행성정보 불러오기
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
@@ -106,6 +108,7 @@ public class PlanetServlet extends DefaultServlet {
 		ps.println(json);
 	}
 	
+	// 행성 업데이트
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		super.doPut(req, resp);
@@ -123,11 +126,13 @@ public class PlanetServlet extends DefaultServlet {
 		return;
 	}
 	
+	// 행성 삭제
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		super.doDelete(req, resp);
 	}
 	
+	// 캔버스 저장
 	private int saveCanvas(HttpServletRequest request) {
 		ServletContext application = getServletContext(); 
 	    String fileFolder = application.getRealPath("/image/canvas");
@@ -169,6 +174,7 @@ public class PlanetServlet extends DefaultServlet {
 		return 1;
 	}
 	
+	// 파일 저장
 	private boolean saveFile(String saveFolder, String type, File file, String fileName) {
 		String[] fileNameSplited = file.getName().split(".");
 		String extension = fileNameSplited[fileNameSplited.length-1];
@@ -178,6 +184,7 @@ public class PlanetServlet extends DefaultServlet {
 		return file.renameTo(realFile);
 	}
 	
+	// 행성을 json으로
 	private JSONObject planetToJSON(Planet planet) {
 		JSONObject planetJson = new JSONObject();
 		planetJson.put("planetId", planet.getPlanetId());
@@ -192,6 +199,7 @@ public class PlanetServlet extends DefaultServlet {
 		return planetJson;
 	}
 	
+	// 캔버스를 json으로
 	private JSONObject canvasToJSON(Canvas canvas) {
 		JSONObject canvasJson = new JSONObject();
 

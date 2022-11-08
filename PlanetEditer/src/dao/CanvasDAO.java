@@ -11,6 +11,7 @@ import vo.Canvas;
 import vo.Planet;
 
 public class CanvasDAO {
+	// 캔버스 하나 불러오기
 	public Canvas getCanvas(int canvasId) {
 		Canvas output = null;
 				
@@ -44,6 +45,7 @@ public class CanvasDAO {
 		
 	}
 	
+	// 캔버스 생성하기
 	public Canvas createCanvas(String url) {
 		Canvas output = null;
 				

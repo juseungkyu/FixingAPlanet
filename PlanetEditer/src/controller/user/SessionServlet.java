@@ -26,6 +26,7 @@ public class SessionServlet extends HttpServlet {
         super();
     }
     
+	// 로그인
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
@@ -55,6 +56,7 @@ public class SessionServlet extends HttpServlet {
 		ps.println("{'result' : {'message' : '로그인 되었습니다.'}}");
 	}
 
+	// 로그아웃
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
