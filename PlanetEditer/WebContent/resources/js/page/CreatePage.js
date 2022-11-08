@@ -55,7 +55,8 @@ export default class CreatePage {
 
         this.app.setWaitMode()
         console.log('wait')
-        await this.controller.createPlanet(this.titleField.value, this.contentField.value)
+        const data = await this.controller.createPlanet(this.titleField.value, this.contentField.value)
+        console.log(data)
         this.app.unsetWaitMode()
         console.log('unwait')
     }

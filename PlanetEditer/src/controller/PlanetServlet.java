@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.oreilly.servlet.MultipartRequest;
 
@@ -40,17 +42,33 @@ public class PlanetServlet extends DefaultServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter ps = response.getWriter();
 		
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
+		String requestData = request.getParameter("json");
 		
-		System.out.println(title);
+		if(requestData == null || requestData.length() == 0) {
+			ps.println(this.createErrorMessage("데이터가 비어있습니다."));
+			return;
+		}
+		
+		String title = "";
+		String content = "";
+		
+		try {
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse( requestData );
+			JSONObject requestJson = (JSONObject) obj;
+			title = (String) requestJson.get("title");
+			content = (String) requestJson.get("content");
+		} catch (ParseException e) {
+			ps.println(this.createErrorMessage("데이터가 json 형식이 아닙니다."));
+			return;
+		}
 
 		if(title == null || title.length() == 0) {
-			ps.println("{\"err\" : {\"message\" : \"title이 비어있습니다.\"}}");
+			ps.println(this.createErrorMessage("title이 비어있습니다."));
 			return;
 		}
 		if(content == null || content.length() == 0) {
-			ps.println("{\"err\" : {\"message\" : \"content이 비어있습니다.\"}}");
+			ps.println(this.createErrorMessage("content가 비어있습니다."));
 			return;
 		}
 		
@@ -58,14 +76,14 @@ public class PlanetServlet extends DefaultServlet {
 		User user = (User) session.getAttribute("userSession");
 		
 		if(user == null) {
-			ps.println("{'err' : {'message' : '유저의 세션이 확인되지 않습니다.'}}");
+			ps.println(this.createErrorMessage("유저의 세션이 확인되지 않습니다."));
 			return;
 		}
 		
 		Planet createdPlanet = planetDao.createPlanet("/url", user.getUserName(), title, content);
 		
 		if(createdPlanet == null) {
-			ps.println("{'err' : {'message' : '행성 생성 중 오류가 발생했습니다.'}}");
+			ps.println(this.createErrorMessage("행성 생성 중 오류가 발생했습니다."));
 			return;
 		}
 
@@ -83,7 +101,7 @@ public class PlanetServlet extends DefaultServlet {
 		String planetId = request.getParameter("planetId");
 	    		
 		if(planetId == null) {
-			ps.println("{'err' : {'message' : 'planetId가 감지되지 않습니다.'}}");
+			ps.println(this.createErrorMessage("planetId가 감지되지 않습니다."));
 			return;
 		}
 
@@ -92,14 +110,14 @@ public class PlanetServlet extends DefaultServlet {
 		try {
 			planetIdNumber = Integer.parseInt(planetId);
 		} catch (Exception e) {
-			ps.println("{'err' : {'message' : 'planetId가 숫자가 아닙니다.'}}");
+			ps.println(this.createErrorMessage("planetId가 숫자가 아닙니다."));
 			return;
 		}
 		
 		Planet planet = planetDao.getPlanet(planetIdNumber);
 		
 		if(planet == null) {
-			ps.println("{'err' : {'message' : '존재하지 않는 행성입니다.'}}");
+			ps.println(this.createErrorMessage("존재하지 않는 행성입니다."));
 			return;
 		}
 		
@@ -117,12 +135,12 @@ public class PlanetServlet extends DefaultServlet {
 		int result = this.saveCanvas(req);
 		
 		if(result == 0) {
-			ps.println("{'err' : {'message' : '저장을 실패했습니다.'}}");
+			ps.println(this.createErrorMessage("저장을 실패했습니다."));
 			return;
 		}
 		
 
-		ps.println("{'result' : {'message' : '저장을 성공했습니다.'}}");
+		ps.println(this.createSuccessMessage("저장을 성공했습니다."));
 		return;
 	}
 	

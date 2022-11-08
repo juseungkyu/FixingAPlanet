@@ -21,6 +21,22 @@ export default class Controller {
     constructor() {}
 
     /**
+     * Object를 FormData로 만들어 반환합니다.
+     * @param {Object} obj
+     * @return FormData
+     */
+    objectToFormData(obj) {
+        const formData = new FormData()
+        const keyList = Object.keys(obj)
+
+        keyList.forEach(x => {
+            formData.set(x, obj[x]) 
+        })
+
+        return formData
+    }
+
+    /**
      * get 방식의 fetch를 보냄
      * @param {String} url 
      * @returns {
@@ -84,44 +100,22 @@ export default class Controller {
      * post 방식의 fetch를 보냄
      * @param {String} url 
      * @param {Object} data
-     * @param {String} contentType 'application/json;charset=utf-8'
      * @returns {
      *      "error" : Boolean,
      *      "data" : Object
      * }
      */
-    async post (url, data, contentType = 'application/json;charset=utf-8') {
-        let headers = {}
-
-        if (contentType && contentType.length != 0) {
-            headers = { 'Content-type': contentType }
-        }
-
-        if (contentType == 'file') {
-            headers = {}
-        }
-
-        let json = null
-
+    async post (url, data) {
+        const formData = this.objectToFormData(data)
         console.log(JSON.stringify(data))
-
-        if (contentType === 'application/json;charset=utf-8') {
-            json = await (
-                await fetch(url, {
-                    method: 'POST',
-                    headers,
-                    body: JSON.stringify(data),
-                })
-            ).json()
-        } else {
-            json = await (
-                await fetch(url, {
-                    method: 'POST',
-                    headers,
-                    body: data,
-                })
-            ).json()
-        }
+        
+        const json = await (
+            await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                body: 'json='+JSON.stringify(data),
+            })
+        ).json()
 
         const result = {
             error: false,
@@ -135,8 +129,6 @@ export default class Controller {
             result.data = json.result
         }
 
-        console.log(result)
-
         return result
     }
 
@@ -144,42 +136,18 @@ export default class Controller {
      * put 방식의 fetch를 보냄
      * @param {String} url 
      * @param {Object} data
-     * @param {String} contentType 'application/json;charset=utf-8'
      * @returns {
      *      "error" : Boolean,
      *      "data" : Object
      * }
      */
-    async put (url, data, contentType = 'application/json;charset=utf-8') {
-        let headers = {}
-
-        if (contentType && contentType.length != 0) {
-            headers = { 'Content-type': contentType }
-        }
-
-        if (contentType == 'file') {
-            headers = {}
-        }
-
-        let json = null
-
-        if (contentType === 'application/json;charset=utf-8') {
-            json = await (
-                await fetch(url, {
-                    method: 'PUT',
-                    headers,
-                    body: JSON.stringify(data),
-                })
-            ).json()
-        } else {
-            json = await (
-                await fetch(url, {
-                    method: 'POST',
-                    headers,
-                    body: data,
-                })
-            ).json()
-        }
+    async put (url, data) {
+        const json = await (
+            await fetch(url, {
+                method: 'POST',
+                body: this.objectToFormData(data),
+            })
+        ).json()
 
         const result = {
             error: false,
