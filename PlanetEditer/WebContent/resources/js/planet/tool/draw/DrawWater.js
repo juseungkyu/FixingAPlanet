@@ -8,7 +8,7 @@ export default class DrawWater extends Draw {
     constructor(render, canvasControl) {
         super(render, canvasControl)
 
-        this.lineWidth = 2
+        // 해수면
         this.seaLevel = 0
         this.init()
     }
@@ -21,23 +21,33 @@ export default class DrawWater extends Draw {
     }
 
     addEvent() {
+        // 해수면 변경 감지 이벤트
         this.waterLevel.addEventListener('mousemove', this.changeSeaLevel)
         this.waterLevel.addEventListener('keyup', this.changeSeaLevel)
         this.waterLevel.addEventListener('keydown', this.changeSeaLevel)
     }
     
+    /**
+     * 툴 활성화
+     */
     setAble() {
         this.menuList.forEach(x=>{
             x.style.display = 'flex'
         })
     }
 
+    /**
+     * 툴 비활성화
+     */
     setDisable() {
         this.menuList.forEach(x=>{
             x.style.display = 'none'
         })
     }
 
+    /**
+     * 해수면 변경
+     */
     changeSeaLevel = () => {
         const nextSeaLevel = parseInt(this.waterLevel.value)
 
@@ -47,15 +57,4 @@ export default class DrawWater extends Draw {
             this.canvasControl.updateCanvas(true)
         }            
     }
-
-    checkColor(dot) {
-        return dot.color[0] > this.seaLevel
-    }
-
-    changeBumpMap(i, j) {
-        this.bumpctx.fillStyle = `rgb(${this.seaLevel}, ${this.seaLevel}, ${this.seaLevel})`
-        this.bumpctx.fillRect(i,j,1,1)        
-    }
-
-
 }

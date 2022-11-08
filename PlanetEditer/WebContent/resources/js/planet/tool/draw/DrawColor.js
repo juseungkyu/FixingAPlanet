@@ -14,12 +14,18 @@ export default class DrawContinent extends Draw {
         this.init()
     }
 
+    /**
+     * 툴 활성화
+     */
     setAble() {
         this.menuList.forEach(x=>{
             x.style.display = 'flex'
         })
     }
 
+    /**
+     * 툴 비활성화
+     */
     setDisable() {
         this.menuList.forEach(x=>{
             x.style.display = 'none'
@@ -64,24 +70,41 @@ export default class DrawContinent extends Draw {
         })
     }
 
+    /**
+     * 설정된 색의 빨강값을 변경
+     */
     changeR = () => {
         this.r = parseInt(this.rInput.value)
         this.changeColor()
     }
+    /**
+     * 설정된 색의 초록값을 변경
+     */
     changeG = () => {
         this.g = parseInt(this.gInput.value)
         this.changeColor()
     }
+    /**
+     * 설정된 색의 파랑값을 변경
+     */
     changeB = () => {
         this.b = parseInt(this.bInput.value)
         this.changeColor()
     }
 
+    /**
+     * r, g, b 각각 따로 저장되어 있는 색을 합쳐 설정함
+     * 설정된 색을 유저에게 보여줌
+     */
     changeColor() {
         this.color = `rgb(${this.r},${this.g},${this.b})`
         this.colorView.style.backgroundColor = this.color
     }
 
+    /**
+     * mouse down event
+     * @param {Event} event 
+     */
     downProcess(event) {
         const drawPoint = this.getDrawPoint(event)
         if(drawPoint === -1) {
@@ -92,6 +115,10 @@ export default class DrawContinent extends Draw {
         this.drawLine(this.beforePoint, this.beforePoint)
     }
 
+    /**
+     * mouse move event
+     * @param {Event} event 
+     */
     moveProcess(event) {
         const drawPoint =  this.getDrawPoint(event)
         if(drawPoint === -1) {
@@ -111,7 +138,12 @@ export default class DrawContinent extends Draw {
 
     }
 
-
+    /**
+     * 클릭 좌표와 raycaster 알고리즘을 이용하여
+     * uv좌표를 구하고 구한 uv좌표를 캔버스 상의 실제 좌표로 변환해서 반환
+     * @param {Event} event
+     * @returns Vector2[x,y]
+     */
     getDrawPoint(event) {
         const raycaster = new THREE.Raycaster()
         const mouse = new THREE.Vector2(event.clientX/this.render.WIDTH * 2 - 1, event.clientY/this.render.HEIGHT * -2 + 1)
@@ -127,6 +159,13 @@ export default class DrawContinent extends Draw {
         return this.uvToDrawPoint(uvPoint)
     }
 
+    /**
+     * 지도상의 두 좌표를 이어줌 
+     * 만약 두 좌표가 끝에서 끝을 통과하여 이어져 있다면 (x 좌표 차이가 지도의 절반보다 크다면 )
+     * 지도상에선 반대로 이어 올바르게 이어진 것처럼 보이게 해줌
+     * @param {Vector2} drawPoint1 
+     * @param {Vector2} drawPoint2 
+     */
     drawLine(drawPoint1, drawPoint2) {
         drawPoint1.x = Math.ceil(drawPoint1.x)
         drawPoint1.y = Math.ceil(drawPoint1.y)
@@ -152,6 +191,11 @@ export default class DrawContinent extends Draw {
         this.canvasControl.updateCanvas(drawPoint1, drawPoint2, this.lineWidth)
     }
 
+    /**
+     * 선을 반대로 이음
+     * @param {Vector2} drawPoint1 
+     * @param {Vector2} drawPoint2 
+     */
     reverseDrawLine(drawPoint1, drawPoint2) {
         if(drawPoint1.x < drawPoint2.x) {
             let temp = drawPoint1

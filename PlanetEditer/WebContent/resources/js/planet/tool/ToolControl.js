@@ -14,7 +14,11 @@ export default class ToolControl {
         this.init()
     }
 
+    /**
+     * 초기 설정
+     */
     init = () => {
+        // Tool 설정
         this.drawCloudTool = new DrawCloud(this.render, this.canvasControl)
         this.drawContinentTool = new DrawContinent(this.render, this.canvasControl)
         this.drawWaterTool = new DrawWater(this.render, this.canvasControl)
@@ -22,6 +26,8 @@ export default class ToolControl {
 
         this.moveTool = new MoveTool(this.render)
 
+
+        // 툴 버튼 저장
         this.btns = {
             move : document.querySelector('.move-tool'),
             drawCloud : document.querySelector('.draw-cloud-tool'),
@@ -30,17 +36,20 @@ export default class ToolControl {
             drawColor : document.querySelector('.draw-color-tool')
         }
 
+        // 툴 버튼 클릭 이벤트
         this.btns.move.addEventListener('click', this.moveToolSet)
         this.btns.drawCloud.addEventListener('click', this.drawCloudToolSet)
         this.btns.drawContinent.addEventListener('click', this.drawContinentToolSet)
         this.btns.drawWater.addEventListener('click', this.drawWaterToolSet)
         this.btns.drawColor.addEventListener('click', this.drawColorToolSet)
 
+        // 캔버스 마우스 이벤트
         this.canvas.addEventListener('mousedown', this.onMouseDown)
         this.canvas.addEventListener('mousemove', this.onMouseMove)
         this.canvas.addEventListener('mouseup', this.onMouseUp)
         this.canvas.addEventListener('mouseleave', this.onMouseLeave)
 
+        // 툴 버튼이 있는 곳
         this.rightBottom = document.querySelector('.right-bottom')
 
         this.moveToolSet()

@@ -113,6 +113,9 @@ export default class Render {
         this.planetMat.bumpMap.needsUpdate = true
     }
 
+    /**
+     * CloudMap이 업데이트가 필요하다고 설정
+     */
     setCloudMapNeedUpdateTrue() {
         this.cloudMat.alphaMap.needsUpdate = true
     }
