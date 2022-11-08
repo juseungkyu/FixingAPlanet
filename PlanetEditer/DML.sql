@@ -25,7 +25,8 @@ DELETE FROM canvas WHERE canvas_id=?;
 SELECT * FROM planets;
 SELECT * FROM players WHERE player_id=?; 
 SELECT * FROM canvas WHERE canvas_id=?;
+SELECT * FROM canvas;
 
 SELECT * FROM canvas WHERE canvas_id=(SELECT MAX(canvas_id) FROM canvas);
 
-
+INSERT INTO canvas(canvas_id, canvas_map_addr, canvas_bump_map_addr, canvas_color_map_addr, canvas_continent_map_addr, canvas_cloud_map_addr) VALUES(CANVAS_SEQ.NEXTVAL, ?, ?, ?, ?, ?)

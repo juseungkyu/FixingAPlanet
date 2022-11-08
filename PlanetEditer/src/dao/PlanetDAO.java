@@ -80,8 +80,8 @@ public class PlanetDAO {
 	}
 	
 	// 행성 생성하기
-	public Planet createPlanet(String url, String playerId, String title, String content) {
-		Planet output = null;
+	public int createPlanet(String url, String playerId, String title, String content) {
+		int output = 0;
 		Canvas canvas = this.canvasDao.createCanvas(url);
 		
 		if(canvas == null) {
@@ -94,25 +94,13 @@ public class PlanetDAO {
 
 		conn = JdbcUtil.getConnection();
 		try {
-			pstmt = conn.prepareStatement("INSERT INTO planets(planet_id, player_id, planet_title, planet_content, canvas_id)\r\n" + 
+			pstmt = conn.prepareStatement("INSERT INTO planets(planet_id, player_id, planet_title, planet_content, canvas_id) " + 
 					"VALUES(PLANTES_SEQ.NEXTVAL, ?, ?, ?, ?)");
 			pstmt.setString(1, playerId);
 			pstmt.setString(2, title);
 			pstmt.setString(3, content);
 			pstmt.setInt(4, canvas.getCanvasId());
-			
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				output = new Planet(
-						rs.getInt(1), 
-						rs.getString(2), 
-						rs.getString(3), 
-						rs.getString(4), 
-						canvas
-					);
-				
-			}
+			int result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("createPlanet error");

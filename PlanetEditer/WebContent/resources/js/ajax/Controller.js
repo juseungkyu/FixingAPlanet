@@ -12,6 +12,7 @@
 // const data = {
 //     'error' = false
 //     'data' : {
+//         'temp' : String
 //         'tempList' : []
 //     }
 // }
@@ -106,9 +107,6 @@ export default class Controller {
      * }
      */
     async post (url, data) {
-        const formData = this.objectToFormData(data)
-        console.log(JSON.stringify(data))
-        
         const json = await (
             await fetch(url, {
                 method: 'POST',
@@ -145,7 +143,8 @@ export default class Controller {
         const json = await (
             await fetch(url, {
                 method: 'POST',
-                body: this.objectToFormData(data),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                body: 'json='+JSON.stringify(data),
             })
         ).json()
 

@@ -75,21 +75,21 @@ public class PlanetServlet extends DefaultServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("userSession");
 		
+		user = new User("test", "hi", "world");
+		
 		if(user == null) {
 			ps.println(this.createErrorMessage("유저의 세션이 확인되지 않습니다."));
 			return;
 		}
 		
-		Planet createdPlanet = planetDao.createPlanet("/url", user.getUserName(), title, content);
+		int result = planetDao.createPlanet("url", user.getUserName(), title, content);
 		
-		if(createdPlanet == null) {
+		if(result == 0) {
 			ps.println(this.createErrorMessage("행성 생성 중 오류가 발생했습니다."));
 			return;
 		}
 
-		JSONObject json = new JSONObject();
-		json.put("result", this.planetToJSON(createdPlanet));
-		ps.println(json);
+		ps.println(this.createSuccessMessage("행성 생성을 성공했습니다. "));
 	}
 
 	// 행성정보 불러오기

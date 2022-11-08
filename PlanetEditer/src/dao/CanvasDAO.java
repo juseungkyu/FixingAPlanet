@@ -55,8 +55,8 @@ public class CanvasDAO {
 
 		conn = JdbcUtil.getConnection();
 		try {
-			pstmt = conn.prepareStatement("INSERT INTO canvas(canvas_id, canvas_map_addr, canvas_bump_map_addr, canvas_color_map_addr, canvas_continent_map_addr, canvas_cloud_map_addr) " + 
-					"VALUES(CANVAS_SEQ.NEXTVAL, ?, ?, ?, ?, ?)");
+			pstmt = conn.prepareStatement("INSERT INTO canvas(canvas_id, canvas_map_addr, canvas_bump_map_addr, canvas_color_map_addr, canvas_continent_map_addr, canvas_cloud_map_addr) "
+					+ "VALUES(CANVAS_SEQ.NEXTVAL, ?, ?, ?, ?, ?)");
 			pstmt.setString(1, url);
 			pstmt.setString(2, url);
 			pstmt.setString(3, url);
@@ -68,7 +68,7 @@ public class CanvasDAO {
 				return null;
 			}
 			
-			pstmt = conn.prepareStatement("SELECT * FROM canvas WHERE canvas_id=(SELECT MAX(canvas_id) FROM canvas);");
+			pstmt = conn.prepareStatement("SELECT * FROM canvas WHERE canvas_id=(SELECT MAX(canvas_id) FROM canvas)");
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
