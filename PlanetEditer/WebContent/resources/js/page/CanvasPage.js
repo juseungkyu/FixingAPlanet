@@ -14,5 +14,5 @@ export default class CanvasPage {
         this.init()
     }
 
-
+    
 }

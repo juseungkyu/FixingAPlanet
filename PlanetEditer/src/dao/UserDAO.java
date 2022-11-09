@@ -19,7 +19,7 @@ public class UserDAO {
 
 		conn = JdbcUtil.getConnection();
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM players WHERE planet_id=?");
+			pstmt = conn.prepareStatement("SELECT * FROM players WHERE player_id=?");
 			pstmt.setString(1, playerId);
 			rs = pstmt.executeQuery();
 
@@ -57,7 +57,7 @@ public class UserDAO {
 		conn = JdbcUtil.getConnection();
 		try {
 			pstmt = conn.prepareStatement("INSERT INTO players(player_id, player_pw, player_name) " + 
-					"VALUES(?,?,?);");
+					"VALUES(?,?,?)");
 			pstmt.setString(1, playerId);
 			pstmt.setString(2, playerPw);
 			pstmt.setString(3, playerName);
