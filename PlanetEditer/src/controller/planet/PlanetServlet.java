@@ -1,4 +1,4 @@
-package controller;
+package controller.planet;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,8 +74,6 @@ public class PlanetServlet extends DefaultServlet {
 		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("userSession");
-		
-		user = new User("test", "hi", "world");
 		
 		if(user == null) {
 			ps.println(this.createErrorMessage("유저의 세션이 확인되지 않습니다."));

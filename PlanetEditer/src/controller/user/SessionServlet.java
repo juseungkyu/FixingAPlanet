@@ -19,7 +19,7 @@ import vo.Planet;
 import vo.User;
 
 @WebServlet("/session")
-public class SessionServlet extends HttpServlet {
+public class SessionServlet extends DefaultServlet {
 	private static final long serialVersionUID = 1L;
     private static UserDAO userDao = new UserDAO(); 
     public SessionServlet() {
@@ -36,24 +36,24 @@ public class SessionServlet extends HttpServlet {
 		String playerPw = request.getParameter("playerPw");
 
 		if(playerId == null) {
-			ps.println("{'err' : {'message' : 'playerId가 감지되지 않습니다.'}}");
+			ps.println(this.createErrorMessage("playerId가 감지되지 않습니다."));
 			return;
 		}
 		if(playerPw == null) {
-			ps.println("{'err' : {'message' : 'playerPw가 감지되지 않습니다.'}}");
+			ps.println(this.createErrorMessage("playerPw가 감지되지 않습니다."));
 			return;
 		}
 		
 		User user = this.userDao.getUser(playerId);
 		if(!user.getUserPw().equals(playerPw)) {
-			ps.println("{'err' : {'message' : '올바르지 않은 비밀번호입니다.'}}");
+			ps.println(this.createErrorMessage("올바르지 않은 비밀번호입니다."));
 			return;
 		}
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("userSession", user);
 
-		ps.println("{'result' : {'message' : '로그인 되었습니다.'}}");
+		ps.println(this.createSuccessMessage("로그인 성공했습니다."));
 	}
 
 	// 로그아웃
