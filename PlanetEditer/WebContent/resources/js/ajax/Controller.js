@@ -38,6 +38,25 @@ export default class Controller {
     }
 
     /**
+     * 
+     * @return
+     */
+    createFileForm(file) {
+        const form = document.createElement('form')
+        form.setAttribute('enctype', 'multipart/form-data')
+
+        this.createFileInput
+
+        return form
+    }
+
+    createFileInput(key, value) {
+        const input = document.createElement('input')
+        input.setAttribute('name', key)
+        input.setAttribute('type', 'file')
+    }
+
+    /**
      * get 방식의 fetch를 보냄
      * @param {String} url 
      * @returns {
@@ -162,4 +181,41 @@ export default class Controller {
 
         return result
     }
+
+    /**
+     * put 방식의 fetch를 보냄
+     * @param {String} url 
+     * @param {Object} data
+     * @param {Object} fileData
+     * @returns {
+     *      "error" : Boolean,
+     *      "data" : Object
+     * }
+     */
+    async putWithImageFile(url, data, fileData) {
+        fileData
+
+        const json = await (
+            await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                body: 'json='+JSON.stringify(data),
+            })
+        ).json()
+
+        const result = {
+            error: false,
+            data: {}
+        }
+
+if (json.err) {
+            result.error = true
+            result.data = json.err.message
+        } else {
+            result.data = json.result
+        }
+        
+        return result
+    }
+
 }

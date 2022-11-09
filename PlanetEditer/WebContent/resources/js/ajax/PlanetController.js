@@ -56,4 +56,30 @@ export default class PlanetController extends Controller {
      *  }
      */
     createPlanet = async (title, content) => await this.post(`/planet`, {title, content})
+
+    /**
+     * 행성 하나를 생성함
+     * @param {Number} planetId
+     * @param {
+     *      "bumpMap" : img,
+     *      "cloudMap" : img,
+     *      "colorMap" : img,
+     *      "continentMap" : img, 
+     *      "map" : img,
+     * } planetMaps
+     * @returns {
+     *    'error' = false,
+     *    'data' : {
+     *          "message" : "저장되었습니다."
+     *     },
+     *  }
+     * @returns {
+     *    'error' = true,
+     *    'data' : {
+     *          "message" : "저장을 실패했습니다."
+     *     },
+     *  } 
+     */
+    putPlanet = async (planetId, planetMaps) => await this.putWithImageFile('/planet', {planetId}, planetMaps)
+
 }
