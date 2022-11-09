@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
+import controller.DefaultServlet;
 import dao.PlanetDAO;
 import dao.UserDAO;
 import vo.Canvas;

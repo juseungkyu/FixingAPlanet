@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import controller.DefaultServlet;
 import dao.PlanetDAO;
 import vo.Canvas;
 import vo.Planet;

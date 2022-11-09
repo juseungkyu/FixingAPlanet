@@ -1,4 +1,4 @@
-import Controller from "./Controller";
+import Controller from "./Controller.js";
 
 export default class UserController extends Controller{
     constructor() {
@@ -32,7 +32,7 @@ export default class UserController extends Controller{
      *     }
      *  }
      */
-    login = async (id, pw) => await this.post('/user/login', {id, pw})
+    login = async (id, pw) => await this.post('/user/login1', {id, pw})
 
     /**
      * 유저 정보를 반환
@@ -71,5 +71,3 @@ export default class UserController extends Controller{
      */
     join = async (id, pw, name) => await this.post('/user/logout', {id, pw})
 }
-
-new UserController().login('123', '1234')

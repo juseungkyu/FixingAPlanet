@@ -45,10 +45,14 @@ export default class MainPage {
     }
 
     onLogin = () => {
-        
+        this.app.setUserPage('login')
     }
     onJoin = () => {
-        
+        this.app.setUserPage('join')
+    }
+
+    onLogout = async () => {
+
     }
     onPlanetList = () => {
         this.app.setListPage()

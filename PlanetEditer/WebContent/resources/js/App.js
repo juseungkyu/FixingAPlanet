@@ -4,6 +4,7 @@ import CanvasControl from './planet/canvasControl/CanvasControl.js';
 import MainPage from './page/MainPage.js';
 import PlanetListPage from './page/PlanetListPage.js';
 import CreatePage from './page/CreatePage.js';
+import UserPage from './page/UserPage.js';
 
 class App {
     constructor() {
@@ -11,7 +12,7 @@ class App {
         this.init()
     }
 
-    async init() {
+    init() {
         this.lodingScreen = document.querySelector('.wait')
 
         // this.canvasControl = new CanvasControl()
@@ -21,12 +22,15 @@ class App {
 
         this.pageList = document.querySelectorAll('.fix-full')
 
+        
         this.canvasPage = document.querySelector('.canvas-container')
         this.mainPage = document.querySelector('.main-container')
         this.listPage = document.querySelector('.list-container')
         this.informationPage = document.querySelector('.information-container')
         this.createPlanetPage = document.querySelector('.planet-create-container')
+        this.userPage = document.querySelector('.user-container')
 
+        this.userPageControl = new UserPage(this)
         this.mainPageControl = new MainPage(this)
         this.planetListPageControl = new PlanetListPage(this)
         this.createPageControl = new CreatePage(this)
@@ -103,9 +107,10 @@ class App {
     /**
      * 유저 페이지 활성화
      */
-    setUserPage = () => {
+    setUserPage = (type) => {
         this.unsetPageAll()
         this.userPage.classList.add('active')
+        this.userPageControl.onCall(type)
     }
 
     /**
