@@ -20,10 +20,44 @@ export default class UserPage {
             join : this.container.querySelector('.join')
         }
 
+        this.logTabChangeBtn = this.container.querySelector('.login-btn')
+        this.joinTabChangeBtn = this.container.querySelector('.join-btn')
+
+        this.loginSubmit = this.container.querySelector('.user-login-btn')
+        this.joinSubmit = this.container.querySelector('.create-user-btn')
+
+        this.loginForms = {
+            id : this.container.querySelector('.user-login-id'),
+            pw : this.container.querySelector('.user-login-pw'),
+        }
+
+        this.joinForms = {
+            id : this.container.querySelector('.user-join-id'),
+            pw : this.container.querySelector('.user-join-pw'),
+            name : this.container.querySelector('.user-join-name'),
+        }
+
         this.addEvent()
     }
 
     addEvent() {
+        // TAB 변경
+        this.logTabChangeBtn.addEventListener('click', ()=>{
+            this.changeTab('login')   
+        })
+        this.joinTabChangeBtn.addEventListener('click', ()=>{
+            this.changeTab('join')   
+        })
+
+        this.loginSubmit.addEventListener('click', this.login)
+        this.joinSubmit.addEventListener('click', this.join)
+    }
+
+    login(){
+
+    }
+
+    join(){
 
     }
 
