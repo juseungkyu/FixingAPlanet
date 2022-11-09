@@ -7,6 +7,7 @@ import PlanetController from '../ajax/PlanetController.js';
 export default class CreatePage {
     constructor(app) {
         console.log('CreatePage start')
+        this.isCreateProcessing = false
         this.app = app
         this.container = document.querySelector('.planet-create-container')
         this.controller = new PlanetController()
@@ -50,19 +51,30 @@ export default class CreatePage {
      */
     onCreateBtnClick = async () => {
         if(!this.contentFormatCheck() || !this.titleFormatCheck()) {
-            return false
+            return
         }
-
+        if(this.isCreateProcessing) {
+            return
+        }
+        this.isCreateProcessing = true
         this.app.setWaitMode()
-        console.log('wait')
         const data = await this.controller.createPlanet(this.titleField.value, this.contentField.value)
-        console.log(data)
+        
+        if(data.error){
+            alert(data.data)
+        } else {
+            alert('생성 되었습니다.')
+            this.isCreateProcessing = false
+            return
+        }
         this.app.unsetWaitMode()
-        console.log('unwait')
+        this.isCreateProcessing = false
     }
 
     /**
      * 150자 이하, 한글 또는 영어 또는 숫자인지 검사
+     * @param {Event} e
+     * @returns Boolean
      */
     contentFormatCheck = (e) => {
         let content = this.getContent()
@@ -82,6 +94,8 @@ export default class CreatePage {
 
     /**
      * 15자 이하, 한글 또는 영어 또는 숫자인지 검사
+     * @param {Event} e;
+     * @returns Boolean
      */
     titleFormatCheck = (e) => {
         let title = this.getTitle()
