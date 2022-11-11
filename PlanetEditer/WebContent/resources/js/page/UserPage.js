@@ -33,9 +33,9 @@ export default class UserPage {
         }
 
         this.joinForms = {
-            id : this.container.querySelector('.user-join-id'),
-            pw : this.container.querySelector('.user-join-pw'),
-            name : this.container.querySelector('.user-join-name'),
+            id : this.container.querySelector('#user-join-id'),
+            pw : this.container.querySelector('#user-join-pw'),
+            name : this.container.querySelector('#user-join-name'),
         }
 
         this.addEvent()
@@ -75,14 +75,7 @@ export default class UserPage {
             return
         }
 
-        if(!data.data.loginSuccess) {
-            alert('로그인 실패')
-            this.app.unsetWaitMode()
-            this.isProcessing = false
-            return
-        }
-
-        alert('로그인 성공')
+        alert(data.data.message)
         this.app.session = data.data.user
 
         this.app.unsetWaitMode()
@@ -97,25 +90,19 @@ export default class UserPage {
 
         const id = this.joinForms.id.value
         const pw = this.joinForms.pw.value
+        const name = this.joinForms.name.value
 
         this.app.setWaitMode()
         const data = await this.controller.join(id, pw, name)
 
-        if(!data.error) {
+        if(data.error) {
             alert(data.data)
             this.app.unsetWaitMode()
             this.isProcessing = false
             return
         }
 
-        if(!data.data.joinSuccess) {
-            alert('회원가입 실패')
-            this.app.unsetWaitMode()
-            this.isProcessing = false
-            return
-        }
-
-        alert('회원가입 성공')
+        alert(data.data.message)
         this.changeTab('login')
 
         this.app.unsetWaitMode()
@@ -123,7 +110,21 @@ export default class UserPage {
 
     }
 
+    resetField() {
+        const loginFormsKeys = Object.keys(this.loginForms)
+        loginFormsKeys.forEach(x => {
+            this.loginForms[x].value = ''
+        });
+
+        const joinFormsKeys = Object.keys(this.joinForms)
+        joinFormsKeys.forEach(x => {
+            this.joinForms[x].value = ''
+        });
+    }
+
     changeTab(type) {
+        this.resetField()
+
         const keys = Object.keys(this.tab)
         keys.forEach(x=> {
             this.tab[x].classList.remove('active')

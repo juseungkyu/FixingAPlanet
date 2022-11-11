@@ -85,6 +85,7 @@ public class PlanetDAO {
 		Canvas canvas = this.canvasDao.createCanvas(url);
 		
 		if(canvas == null) {
+			System.out.println("캔버스 생성 실패");
 			return output;
 		}
 

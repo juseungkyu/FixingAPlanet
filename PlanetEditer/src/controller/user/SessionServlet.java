@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import common.DefaultMessage;
 import dao.PlanetDAO;
@@ -33,8 +35,26 @@ public class SessionServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter ps = response.getWriter();
 
-		String playerId = request.getParameter("playerId");
-		String playerPw = request.getParameter("playerPw");
+		String requestData = request.getParameter("json");
+		
+		if(requestData == null || requestData.length() == 0) {
+			ps.println(DefaultMessage.createErrorMessage("데이터가 비어있습니다."));
+			return;
+		}
+		
+		String playerId = "";
+		String playerPw = "";
+		
+		try {
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse( requestData );
+			JSONObject requestJson = (JSONObject) obj;
+			playerId = (String) requestJson.get("id");
+			playerPw = (String) requestJson.get("pw");
+		} catch (ParseException e) {
+			ps.println(DefaultMessage.createErrorMessage("데이터가 json 형식이 아닙니다."));
+			return;
+		}
 
 		if(playerId == null) {
 			ps.println(DefaultMessage.createErrorMessage("playerId가 감지되지 않습니다."));
@@ -46,6 +66,10 @@ public class SessionServlet extends HttpServlet {
 		}
 		
 		User user = this.userDao.getUser(playerId);
+		if(user == null) {
+			ps.println(DefaultMessage.createErrorMessage("확인 되지 않는 회원입니다."));
+			return;
+		}
 		if(!user.getUserPw().equals(playerPw)) {
 			ps.println(DefaultMessage.createErrorMessage("올바르지 않은 비밀번호입니다."));
 			return;

@@ -139,6 +139,8 @@ export default class Controller {
             data: {}
         }
 
+        console.log(json)
+
         if (json.err) {
             result.error = true
             result.data = json.err.message

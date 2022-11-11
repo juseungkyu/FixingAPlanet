@@ -69,5 +69,5 @@ export default class UserController extends Controller{
      *     }
      * }
      */
-    join = async (id, pw, name) => await this.post('/user/logout', {id, pw})
+    join = async (id, pw, name) => await this.post('/join', {id, pw, name})
 }
