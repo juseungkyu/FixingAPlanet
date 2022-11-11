@@ -32,7 +32,7 @@ export default class UserController extends Controller{
      *     }
      *  }
      */
-    login = async (id, pw) => await this.post('/user/login1', {id, pw})
+    login = async (id, pw) => await this.post('/session', {id, pw})
 
     /**
      * 유저 정보를 반환
@@ -48,7 +48,7 @@ export default class UserController extends Controller{
      *     }
      *  }
      */
-    logout = async () => await this.get('/user/logout')
+    logout = async () => await this.get('/session')
 
 
     /**

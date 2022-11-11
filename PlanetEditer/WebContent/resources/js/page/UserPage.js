@@ -28,8 +28,8 @@ export default class UserPage {
         this.joinSubmit = this.container.querySelector('.create-user-btn')
 
         this.loginForms = {
-            id : this.container.querySelector('.user-login-id'),
-            pw : this.container.querySelector('.user-login-pw'),
+            id : this.container.querySelector('#user-login-id'),
+            pw : this.container.querySelector('#user-login-pw'),
         }
 
         this.joinForms = {
@@ -54,11 +54,13 @@ export default class UserPage {
         this.joinSubmit.addEventListener('click', this.join)
     }
 
-    async login(){
+    login = async () =>{
         if(this.isProcessing){
             return
         }
         this.isProcessing = true
+
+        console.log(this.loginForms.id)
 
         const id = this.loginForms.id.value
         const pw = this.loginForms.pw.value
@@ -87,7 +89,7 @@ export default class UserPage {
         this.isProcessing = false
     }
 
-    async join(){
+    join = async () => {
         if(this.isProcessing){
             return
         }
