@@ -13,13 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import controller.DefaultServlet;
 import dao.PlanetDAO;
 import vo.Canvas;
 import vo.Planet;
 
 @WebServlet("/planet/all")
-public class PlanetListServlet extends DefaultServlet {
+public class PlanetListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static PlanetDAO planetDao = new PlanetDAO();
 	
