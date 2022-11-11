@@ -12,6 +12,7 @@ export default class UserPage {
     }
 
     init() {
+        this.isProcessing = false
         this.container = document.querySelector('.user-container')
         this.controller = new UserController()
 
@@ -53,11 +54,70 @@ export default class UserPage {
         this.joinSubmit.addEventListener('click', this.join)
     }
 
-    login(){
+    async login(){
+        if(this.isProcessing){
+            return
+        }
+        this.isProcessing = true
 
+        const id = this.loginForms.id.value
+        const pw = this.loginForms.pw.value
+
+        this.app.setWaitMode()
+        const data = await this.controller.login(id, pw)
+
+        if(data.error) {
+            alert(data.data)
+            this.app.unsetWaitMode()
+            this.isProcessing = false
+            return
+        }
+
+        if(!data.data.loginSuccess) {
+            alert('로그인 실패')
+            this.app.unsetWaitMode()
+            this.isProcessing = false
+            return
+        }
+
+        alert('로그인 성공')
+        this.app.session = data.data.user
+
+        this.app.unsetWaitMode()
+        this.isProcessing = false
     }
 
-    join(){
+    async join(){
+        if(this.isProcessing){
+            return
+        }
+        this.isProcessing = true
+
+        const id = this.joinForms.id.value
+        const pw = this.joinForms.pw.value
+
+        this.app.setWaitMode()
+        const data = await this.controller.join(id, pw, name)
+
+        if(!data.error) {
+            alert(data.data)
+            this.app.unsetWaitMode()
+            this.isProcessing = false
+            return
+        }
+
+        if(!data.data.joinSuccess) {
+            alert('회원가입 실패')
+            this.app.unsetWaitMode()
+            this.isProcessing = false
+            return
+        }
+
+        alert('회원가입 성공')
+        this.changeTab('login')
+
+        this.app.unsetWaitMode()
+        this.isProcessing = false
 
     }
 
