@@ -22,6 +22,7 @@ class App {
 
         this.pageList = document.querySelectorAll('.fix-full')
 
+        this.sessionTab = document.querySelectorAll('.session-btns')
         
         this.canvasPage = document.querySelector('.canvas-container')
         this.mainPage = document.querySelector('.main-container')
@@ -127,6 +128,19 @@ class App {
     setCreatePage = () => {
         this.unsetPageAll()
         this.createPlanetPage.classList.add('active')
+    }
+
+
+    /**
+     * 세션에 따라 ui 제어 
+     */
+    setLogoutBtn() {
+        this.sessionTab[0].classList.remove('active')
+        this.sessionTab[1].classList.add('active')
+    }
+    unsetLogoutBtn() {
+        this.sessionTab[1].classList.remove('active')
+        this.sessionTab[0].classList.add('active')
     }
 
     /**

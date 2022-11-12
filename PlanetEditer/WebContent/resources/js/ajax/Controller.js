@@ -65,16 +65,23 @@ export default class Controller {
      * }
      */
     async get (url) {
+        let json = null
         const result = {
             error: false,
             data: {}
         }
-        
-        const response = await fetch(url, {
-            method: 'GET'
-        })
 
-        const json = await (response).json()
+        try {
+            json = await (
+                await fetch(url, {method: 'GET'})
+            ).json()
+        } catch (error) {
+            result.error = true
+            result.data = '올바르지 않거나 구현되지 않은 요청입니다. 문제가 없다면 인터넷 연결 상태를 확인해보세요.'
+            return result 
+        }
+
+        console.log('서버 메시지 :', json)
 
         if (json.err) {
             result.error = true
@@ -95,16 +102,23 @@ export default class Controller {
      * }
      */
     async delete (url) {
+        let json = null
         const result = {
             error: false,
             data: {}
         }
-        
-        const response = await fetch(url, {
-            method: 'DELETE'
-        })
 
-        const json = await (response).json()
+        try {
+            json = await (
+                await fetch(url, {method: 'DELETE'})
+            ).json()
+        } catch (error) {
+            result.error = true
+            result.data = '올바르지 않거나 구현되지 않은 요청입니다. 문제가 없다면 인터넷 연결 상태를 확인해보세요.'
+            return result 
+        }
+
+        console.log('서버 메시지 :', json)
 
         if (json.err) {
             result.error = true
@@ -113,7 +127,7 @@ export default class Controller {
             result.data = json.result
         }
 
-        return result;
+        return result
     }
 
     /**
@@ -126,20 +140,27 @@ export default class Controller {
      * }
      */
     async post (url, data) {
-        const json = await (
-            await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
-                body: 'json='+JSON.stringify(data),
-            })
-        ).json()
-
+        let json = null
         const result = {
             error: false,
             data: {}
         }
 
-        console.log(json)
+        try {
+            json = await (
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                    body: 'json='+JSON.stringify(data),
+                })
+            ).json()
+        } catch (error) {
+            result.error = true
+            result.data = '올바르지 않거나 구현되지 않은 요청입니다. 문제가 없다면 인터넷 연결 상태를 확인해보세요.'
+            return result
+        }
+
+        console.log('서버 메시지 :', json)
 
         if (json.err) {
             result.error = true
@@ -161,18 +182,27 @@ export default class Controller {
      * }
      */
     async put (url, data) {
-        const json = await (
-            await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
-                body: 'json='+JSON.stringify(data),
-            })
-        ).json()
-
+        let json = null
         const result = {
             error: false,
             data: {}
         }
+
+        try {
+            json = await (
+                await fetch(url, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                    body: 'json='+JSON.stringify(data),
+                })
+            ).json()
+        } catch (error) {
+            result.error = true
+            result.data = '올바르지 않거나 구현되지 않은 요청입니다. 문제가 없다면 인터넷 연결 상태를 확인해보세요.'
+            return result 
+        }
+
+        console.log('서버 메시지 :', json)
 
         if (json.err) {
             result.error = true

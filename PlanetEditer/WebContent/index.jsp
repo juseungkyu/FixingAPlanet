@@ -1,3 +1,8 @@
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="vo.User"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,6 +18,24 @@
     <script src="/resources/js/App.js" type="module"></script>
 </head>
 <body>
+	<div id="init-data">
+	<%
+		User user = (User) session.getAttribute("userSession");
+	
+		if(user != null){ 
+			JSONObject userJSON = new JSONObject();
+			userJSON.put("userId", user.getUserId());
+			userJSON.put("userName", user.getUserName());
+			userJSON.put("userPw", user.getUserPw());
+			
+			out.println(userJSON);
+		}
+	%>
+	</div>
+
+	
+
+
     <!-- 로딩창 -->
     <div class="wait active">
         <h1>잠시만 기다려주세요</h1>

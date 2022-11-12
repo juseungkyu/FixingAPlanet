@@ -81,14 +81,18 @@ public class PlanetServlet extends HttpServlet {
 			return;
 		}
 		
-		int result = planetDao.createPlanet("url", user.getUserName(), title, content);
-		
+		int result = planetDao.createPlanet("/default.png", user.getUserName(), title, content);
+
+		if(result == -1) {
+			ps.println(DefaultMessage.createErrorMessage("캔버스 생성 실패"));
+			return;
+		}
 		if(result == 0) {
 			ps.println(DefaultMessage.createErrorMessage("행성 생성 중 오류가 발생했습니다."));
 			return;
 		}
 
-		ps.println(DefaultMessage.createSuccessMessage("행성 생성을 성공했습니다. "));
+		ps.println(DefaultMessage.createSuccessMessage("행성 생성을 성공했습니다."));
 	}
 
 	// 행성정보 불러오기

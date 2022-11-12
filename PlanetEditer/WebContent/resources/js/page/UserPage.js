@@ -77,8 +77,10 @@ export default class UserPage {
 
         alert(data.data.message)
         this.app.session = data.data.user
-
+        this.app.setLogoutBtn()
         this.app.unsetWaitMode()
+        this.app.setMainPage()
+
         this.isProcessing = false
     }
 

@@ -59,7 +59,7 @@ export default class CreatePage {
         this.isCreateProcessing = true
         this.app.setWaitMode()
         const data = await this.controller.createPlanet(this.titleField.value, this.contentField.value)
-        
+
         if(data.error){
             alert(data.data)
         } else {

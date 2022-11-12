@@ -90,6 +90,6 @@ public class SessionServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.removeAttribute("userSession");
 
-		ps.println("{'result' : {'message' : '로그아웃 되었습니다.'}}");
+		ps.println(DefaultMessage.createSuccessMessage("로그아웃 성공"));
 	}
 }

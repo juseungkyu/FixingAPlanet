@@ -86,6 +86,7 @@ public class PlanetDAO {
 		
 		if(canvas == null) {
 			System.out.println("캔버스 생성 실패");
+			output = -1;
 			return output;
 		}
 
