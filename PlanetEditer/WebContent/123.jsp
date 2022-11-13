@@ -8,6 +8,7 @@
 </head>
 <body>
     <form action="/planet/save" method="post" enctype="multipart/form-data">
+        <input type="text" name="planetId" value="1">
         <input type="submit" value="123">
     </form>
 </body>

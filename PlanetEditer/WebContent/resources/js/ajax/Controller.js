@@ -197,27 +197,19 @@ export default class Controller {
         const formData = this.objectToFormData(fileData)
         this.appendFormDataValues(formData, data)
         
+        let json = null
         const result = {
             error: false,
             data: {}
         }
 
         try {
-            console.log(await (await fetch(url, {
+            const response = await fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'multipart/form-data' },
-                body : formData 
+                body : formData ,
                 // headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
-            })).text())
-
-            json = await (
-                await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'multipart/form-data' },
-                    body : formData 
-                    // headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
-                })
-            ).json()
+            })
+            json = await (response).json()
         } catch (error) {
             console.log(error)
             result.error = true

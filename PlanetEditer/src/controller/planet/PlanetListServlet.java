@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,13 +14,13 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import controller.DefaultServlet;
+import common.Util;
 import dao.PlanetDAO;
 import vo.Planet;
 import vo.User;
 
 @WebServlet("/planet/all")
-public class PlanetListServlet extends DefaultServlet {
+public class PlanetListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static PlanetDAO planetDao = new PlanetDAO();
 	
@@ -47,7 +48,7 @@ public class PlanetListServlet extends DefaultServlet {
 			User user = (User) session.getAttribute("userSession");
 			
 			if(user == null) {
-				ps.println(this.createErrorMessage("유저의 세션이 확인되지 않습니다."));
+				ps.println(Util.createErrorMessage("유저의 세션이 확인되지 않습니다."));
 				return;
 			}
 			
@@ -58,7 +59,7 @@ public class PlanetListServlet extends DefaultServlet {
 		JSONArray planetList = new JSONArray();
 		
 		for (Planet planet : list) {
-			planetList.add(this.planetToJSON(planet)); 
+			planetList.add(Util.planetToJSON(planet)); 
 		}
 		
 		json.put("result", planetList);
