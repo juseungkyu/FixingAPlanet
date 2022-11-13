@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-123123123
+    <form action="/planet/save" method="post" enctype="multipart/form-data">
+        <input type="submit" value="123">
+    </form>
 </body>
 </html>

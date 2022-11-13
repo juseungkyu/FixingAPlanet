@@ -46,7 +46,7 @@ export default class CanvasPage {
         this.isProcessing = true
         this.app.setWaitMode()
 
-        const data = await this.controller.putPlanet(this.currentPlanetInfo.planetId, {
+        const data = await this.controller.savePlanet(this.currentPlanetInfo.planetId, {
             "bumpMap" : this.canvasControl.bumpMapCanvas, 
             "cloudMap" : this.canvasControl.cloudMapCanvas, 
             "colorMap" : this.canvasControl.colorMapCanvas, 

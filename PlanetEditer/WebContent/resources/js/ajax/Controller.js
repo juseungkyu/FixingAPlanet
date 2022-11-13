@@ -49,6 +49,7 @@ export default class Controller {
         console.log('서버 메시지 :', json)
 
         if (json.err) {
+            console.log(error)
             result.error = true
             result.data = json.err.message
         } else {
@@ -86,6 +87,7 @@ export default class Controller {
         console.log('서버 메시지 :', json)
 
         if (json.err) {
+            console.log(error)
             result.error = true
             result.data = json.err.message
         } else {
@@ -120,6 +122,7 @@ export default class Controller {
                 })
             ).json()
         } catch (error) {
+            console.log(error)
             result.error = true
             result.data = '올바르지 않거나 구현되지 않은 요청입니다. 문제가 없다면 인터넷 연결 상태를 확인해보세요.'
             return result
@@ -162,6 +165,7 @@ export default class Controller {
                 })
             ).json()
         } catch (error) {
+            console.log(error)
             result.error = true
             result.data = '올바르지 않거나 구현되지 않은 요청입니다. 문제가 없다면 인터넷 연결 상태를 확인해보세요.'
             return result 
@@ -189,19 +193,33 @@ export default class Controller {
      *      "data" : Object
      * }
      */
-    async putWithImageFile(url, data, fileData) {
+    async postWithImageFile(url, data, fileData) {
         const formData = this.objectToFormData(fileData)
         this.appendFormDataValues(formData, data)
+        
+        const result = {
+            error: false,
+            data: {}
+        }
 
         try {
+            console.log(await (await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'multipart/form-data' },
+                body : formData 
+                // headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+            })).text())
+
             json = await (
                 await fetch(url, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'multipart/form-data' }, 
-                    body: formData
+                    method: 'POST',
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                    body : formData 
+                    // headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
                 })
             ).json()
         } catch (error) {
+            console.log(error)
             result.error = true
             result.data = '올바르지 않거나 구현되지 않은 요청입니다. 문제가 없다면 인터넷 연결 상태를 확인해보세요.'
             return result 
