@@ -35,6 +35,7 @@ public class PlanetSaveServlet extends HttpServlet {
 	// 행성 생성하기
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter ps = response.getWriter();
 		

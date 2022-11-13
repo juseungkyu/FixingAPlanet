@@ -32,6 +32,7 @@ public class JoinServlet extends HttpServlet {
 	// 회원가입
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter ps = response.getWriter();
 

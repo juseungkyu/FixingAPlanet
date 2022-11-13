@@ -120,8 +120,7 @@ public class PlanetDAO {
 	public int createPlanet(String url, String playerId, String title, String content) {
 		int output = 0;
 		Canvas canvas = this.canvasDao.createCanvas(url);
-
-		System.out.println(canvas.getCanvasId());
+		
 		if(canvas == null) {
 			System.out.println("캔버스 생성 실패");
 			output = -1;
@@ -130,8 +129,7 @@ public class PlanetDAO {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
+		
 		conn = JdbcUtil.getConnection();
 		try {
 			pstmt = conn.prepareStatement("INSERT INTO planets(planet_id, player_id, planet_title, planet_content, canvas_id) " + 
@@ -154,11 +152,10 @@ public class PlanetDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 
 		conn = JdbcUtil.getConnection();
 		try {
-			pstmt = conn.prepareStatement("UPDATE canvas " + 
+			pstmt = conn.prepareStatement("UPDATE planets " + 
 					"SET planet_sea_level=? " + 
 					"WHERE planet_id=?");
 			pstmt.setInt(1, seaLevel);
@@ -166,7 +163,27 @@ public class PlanetDAO {
 			output = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("createPlanet error");
+			System.out.println("updatePlanet error");
+		}
+		
+		return output;
+	}
+
+	public int deletePlanet(int planetId) {
+		int output = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = JdbcUtil.getConnection();
+		try {
+			pstmt = conn.prepareStatement("DELETE FROM planets " + 
+					"WHERE planet_id=?");
+			pstmt.setInt(1, planetId);
+			output = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("deletePlanet error");
 		}
 		
 		return output;

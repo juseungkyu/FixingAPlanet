@@ -30,6 +30,7 @@ public class PlanetListServlet extends HttpServlet {
     
 	// 행성 정보 리스트 불러오기
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter ps = response.getWriter();
 		

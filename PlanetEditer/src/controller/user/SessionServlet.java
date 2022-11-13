@@ -32,6 +32,7 @@ public class SessionServlet extends HttpServlet {
 	// 로그인
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter ps = response.getWriter();
 
@@ -70,6 +71,10 @@ public class SessionServlet extends HttpServlet {
 			ps.println(Util.createErrorMessage("확인 되지 않는 회원입니다."));
 			return;
 		}
+
+		System.out.println(user.getUserPw());
+		System.out.println(playerPw);
+		
 		if(!user.getUserPw().equals(playerPw)) {
 			ps.println(Util.createErrorMessage("올바르지 않은 비밀번호입니다."));
 			return;
@@ -78,7 +83,9 @@ public class SessionServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("userSession", user);
 
-		ps.println(Util.createSuccessMessage("로그인 성공했습니다."));
+		JSONObject json = new JSONObject();
+		json.put("result", Util.UserToJSON(user));
+		ps.println(json);
 	}
 
 	// 로그아웃

@@ -1,10 +1,10 @@
 import Controller from "./Controller.js";
 
-export default class UserController extends Controller{
+export default class UserController extends Controller {
     constructor() {
         super()
     }
-    
+
     /**
      * 유저 정보를 반환
      * @param {String} id 
@@ -24,15 +24,12 @@ export default class UserController extends Controller{
      * @returns {
      *    'error' = false
      *    'data' : {
-     *         "loginSuccess" : true 
-     *         "user" : {
-     *              userId : String,
-     *              userName : String,          
-     *         }
+     *         userId : String,
+     *         userName : String,   
      *     }
      *  }
      */
-    login = async (id, pw) => await this.post('/session', {id, pw})
+    login = async (id, pw) => await this.post('/session', { id, pw })
 
     /**
      * 유저 정보를 반환
@@ -69,5 +66,5 @@ export default class UserController extends Controller{
      *     }
      * }
      */
-    join = async (id, pw, name) => await this.post('/join', {id, pw, name})
+    join = async (id, pw, name) => await this.post('/join', { id, pw, name })
 }

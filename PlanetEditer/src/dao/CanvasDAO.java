@@ -111,7 +111,7 @@ public class CanvasDAO {
 			output = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("createPlanet error");
+			System.out.println("putCanvas error");
 		}
 		
 		return output;

@@ -309,6 +309,10 @@ body {
     margin-left: 10px;
 }
 
+.color-brash-type {
+    color: black;
+}
+
 /* tool */
 
 .tool {

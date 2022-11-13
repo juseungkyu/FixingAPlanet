@@ -28,6 +28,7 @@ export default class CanvasPage {
 
         this.saveAndExitBtn = this.container.querySelector('.save-btn')
         this.exitBtn = this.container.querySelector('.exit-btn')
+        this.ui = this.container.querySelectorAll('.ui')
 
         this.render.stopAnimate()
     }
@@ -46,7 +47,7 @@ export default class CanvasPage {
         this.isProcessing = true
         this.app.setWaitMode()
 
-        const data = await this.controller.savePlanet(this.currentPlanetInfo.planetId, this.tool.drawWaterTool.waterLevel, {
+        const data = await this.controller.savePlanet(this.currentPlanetInfo.planetId, this.tool.drawWaterTool.waterLevel.value, {
             "bumpMap" : this.canvasControl.bumpMapCanvas, 
             "cloudMap" : this.canvasControl.cloudMapCanvas, 
             "colorMap" : this.canvasControl.colorMapCanvas, 
@@ -69,7 +70,8 @@ export default class CanvasPage {
     }
 
     exit = ()=>{
-
+        this.render.stopAnimate()
+        this.app.setMainPage()
     }
 
     async onCall(planetId) {
@@ -90,14 +92,50 @@ export default class CanvasPage {
         }
 
         this.currentPlanetInfo = data.data
-        await this.drawCanvas(this.currentPlanetInfo)
         
+        this.sessionCheck(this.currentPlanetInfo.playerId)
+
+        await this.drawCanvas(this.currentPlanetInfo)
         this.tool.drawWaterTool.waterLevel.value = this.currentPlanetInfo.planetSeaLevel
         this.tool.drawWaterTool.changeSeaLevel()
-
         this.render.animate()
+        
         this.app.unsetWaitMode()
         this.isProcessing = false
+    }
+
+    sessionCheck(playerId) {
+        console.log(this.app.session, playerId)
+
+        if(this.app.session == null){
+            this.setViewer()
+            return
+        }
+        if(this.app.session.playerId != playerId){
+            this.setViewer()
+            return
+        }
+
+        this.setEditer()
+    }
+
+    setViewer() {
+        console.log('open Viewer')
+        this.tool.moveToolSet()
+        this.ui.forEach(x=>{
+            x.style.visibility = 'hidden'
+        })
+        this.container.querySelector('.right-top').style.visibility = 'visible'
+        this.saveAndExitBtn.style.visibility = 'hidden'
+    }
+
+    setEditer() {
+        console.log('open Editer')
+        this.tool.moveToolSet()
+        this.ui.forEach(x=>{
+            x.style.visibility = 'visible'
+        })
+        this.saveAndExitBtn.style.visibility = 'visible'
     }
 
     async drawCanvas(planetInfo) {

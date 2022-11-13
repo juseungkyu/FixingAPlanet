@@ -5,7 +5,7 @@ public class User {
 	private String userName;
 	private String userPw;
 	
-	public User(String userId, String userName, String userPw) {
+	public User(String userId, String userPw, String userName) {
 		super();
 		this.userId = userId;
 		this.userName = userName;

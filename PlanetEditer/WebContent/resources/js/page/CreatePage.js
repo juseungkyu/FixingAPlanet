@@ -68,6 +68,7 @@ export default class CreatePage {
         }
 
         alert('생성 되었습니다.')
+        this.app.setMainPage()
         this.app.unsetWaitMode()
         this.isCreateProcessing = false
     }
@@ -79,10 +80,10 @@ export default class CreatePage {
      */
     contentFormatCheck = (e) => {
         let content = this.getContent()
-        const reg = /^[0-9a-zA-Zㄱ-ㅎ가-힣ㅏ-ㅣ]*$/
+        const reg = /^[0-9a-zA-Zㄱ-ㅎ가-힣ㅏ-ㅣ\s]*$/
         if(!reg.test(content) || content.length > 150) {
             content = content.substr(0, 150)
-            content = content.replace(/[^0-9a-zA-Zㄱ-ㅎ가-힣ㅏ-ㅣ]/g, '')
+            content = content.replace(/[^0-9a-zA-Zㄱ-ㅎ가-힣ㅏ-ㅣ\s]/g, '')
             alert('150자 이하 한글 또는 영어 또는 숫자만 입력 가능합니다.')
 
             this.setContent(content)
@@ -100,10 +101,10 @@ export default class CreatePage {
      */
     titleFormatCheck = (e) => {
         let title = this.getTitle()
-        const reg = /^[0-9a-zA-Zㄱ-ㅎ가-힣ㅏ-ㅣ]*$/
+        const reg = /^[0-9a-zA-Zㄱ-ㅎ가-힣ㅏ-ㅣ\s]*$/
         if(!reg.test(title) || title.length > 15) {
             title = title.substr(0, 15)
-            title = title.replace(/[^0-9a-zA-Zㄱ-ㅎ가-힣ㅏ-ㅣ]/g, '')
+            title = title.replace(/[^0-9a-zA-Zㄱ-ㅎ가-힣ㅏ-ㅣ\s]/g, '')
             alert('15자 이하 한글 또는 영어 또는 숫자만 입력 가능합니다.')
 
             this.setTitle(title)

@@ -23,6 +23,7 @@ DELETE FROM canvas WHERE canvas_id=?;
 
 -- 조회
 SELECT * FROM planets;
+SELECT * FROM players;
 SELECT * FROM players WHERE player_id=?; 
 SELECT * FROM canvas WHERE canvas_id=?;
 SELECT * FROM canvas;

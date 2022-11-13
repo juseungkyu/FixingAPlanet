@@ -15,8 +15,17 @@ import com.oreilly.servlet.MultipartRequest;
 
 import vo.Canvas;
 import vo.Planet;
+import vo.User;
 
 public class Util {
+	
+	// 유저를 json으로
+	public static JSONObject UserToJSON(User user) {
+		JSONObject userJson = new JSONObject();
+		userJson.put("playerId", user.getUserId());
+		userJson.put("playerName", user.getUserName());
+		return userJson;
+	}
 
 	// 행성을 json으로
 	public static JSONObject planetToJSON(Planet planet) {
@@ -26,7 +35,7 @@ public class Util {
 		planetJson.put("planetContent", planet.getPlanetContent());
 		planetJson.put("playerId", planet.getPlayerId());
 		planetJson.put("planetSeaLevel", planet.getSeaLevel());
-
+		
 		Canvas canvas = planet.getCanvas();
 		planetJson.put("canvas", canvasToJSON(canvas));
 

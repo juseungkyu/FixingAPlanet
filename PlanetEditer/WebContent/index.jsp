@@ -1,3 +1,4 @@
+<%@page import="common.Util"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -24,12 +25,7 @@
 		User user = (User) session.getAttribute("userSession");
 	
 		if(user != null){ 
-			JSONObject userJSON = new JSONObject();
-			userJSON.put("userId", user.getUserId());
-			userJSON.put("userName", user.getUserName());
-			userJSON.put("userPw", user.getUserPw());
-			
-			out.println(userJSON);
+			out.println(Util.UserToJSON(user));
 		} else {
             out.println("null");
         }

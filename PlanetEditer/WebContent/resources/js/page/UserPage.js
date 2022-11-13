@@ -74,9 +74,12 @@ export default class UserPage {
             this.isProcessing = false
             return
         }
+        console.log(data)
 
-        alert(data.data.message)
-        this.app.session = data.data.user
+        alert('로그인 성공')
+        this.app.session = data.data
+        console.log(this.app.session)
+
         this.app.setLogoutBtn()
         this.app.unsetWaitMode()
         this.app.setMainPage()
