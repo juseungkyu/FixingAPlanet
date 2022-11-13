@@ -94,53 +94,37 @@ export default class PlanetListPage {
      * 페이지가 호출될 시
      * 행성 리스트를 서버에서 받아와 출력
      */
-    async onCall() {
+    async onCall(type) {
         this.table.scrollTo(0, 0)
         this.scrollPosition = 0
         this.scrollBar.style.transform = `rotateZ(270deg) translateX(0px)`
 
         this.app.setWaitMode()
 
-        const returnData = await this.controller.getPlanetListAll()
-        if(returnData.error){
-            alert('행성 리스트를 불러오는 중 오류가 발생했습니다.')
+        let returnData = []
+        
+        if(type === 'all') {
+            returnData = await this.controller.getPlanetListAll()
+        } else if(type === 'my'){
+            returnData = await this.controller.getMyPlanetList()
+        } else {
+            return
         }
-        console.log(returnData)
+        
 
-        // const testData = {
-        //     "error" : false,
-        //     "data": [
-        //         {
-        //             "planetTitle": "지구",
-        //             "canvas": {
-        //                 "canvasId": 2,
-        //                 "canvasBumpMapAddr": "/asdf.png",
-        //                 "canvasContinentMapAddr": "/asdf.png",
-        //                 "canvasMapAddr": "/asdf.png",
-        //                 "canvasCloudMapAddr": "/asdf.png"
-        //             },
-        //             "planetContent": "가장 아름다운 행성 - 지구는 내가 먼저 만듦 ㅅㄱ",
-        //             "planetId": 1,
-        //             "playerId": "admin"
-        //         },
-        //         {
-        //             "planetTitle": "지구",
-        //             "canvas": { "canvasId": 1, 
-        //                 "canvasBumpMapAddr": "/asdf.png",
-        //                 "canvasContinentMapAddr": "/asdf.png",
-        //                 "canvasMapAddr": "/asdf.png",
-        //                 "canvasCloudMapAddr": "/asdf.png" 
-        //             }, 
-        //             "planetContent": "가장 아름다운 행성 - 지구는 내가 먼저 만듦 ㅅㄱ", 
-        //             "planetId": 2,
-        //             "playerId": "admin"
-        //         }
-        //     ]
-        // }
+        if(returnData.error){
+            alert(returnData.data)
+            this.app.setMainPage()
+            this.app.unsetWaitMode()
+            return
+        }
 
         this.setList(returnData.data)
-
         this.app.unsetWaitMode()
+    }
+
+    async getAll() {
+
     }
 
     /**
@@ -191,7 +175,7 @@ export default class PlanetListPage {
      */
     cardAddEvent(card, planetId) {
         card.addEventListener('click', (e)=>{
-            // this.app.
+            this.app.setCanvas(planetId)
         })
     }
 }

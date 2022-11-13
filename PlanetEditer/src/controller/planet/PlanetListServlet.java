@@ -6,19 +6,20 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import controller.DefaultServlet;
 import dao.PlanetDAO;
-import vo.Canvas;
 import vo.Planet;
+import vo.User;
 
 @WebServlet("/planet/all")
-public class PlanetListServlet extends HttpServlet {
+public class PlanetListServlet extends DefaultServlet {
 	private static final long serialVersionUID = 1L;
     private static PlanetDAO planetDao = new PlanetDAO();
 	
@@ -29,10 +30,29 @@ public class PlanetListServlet extends HttpServlet {
 	// 행성 정보 리스트 불러오기
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		String start = request.getParameter("start");
-		String end = request.getParameter("end");
+		PrintWriter ps = response.getWriter();
 		
-		ArrayList<Planet> list = planetDao.getPlanetAll();
+		String type = request.getParameter("type");
+		
+		ArrayList<Planet> list = null;
+
+		if(type == null) {
+			return;
+		}
+		if(type.equals("all")) {
+			list = planetDao.getPlanetAll();
+		}
+		if(type.equals("my")) {
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("userSession");
+			
+			if(user == null) {
+				ps.println(this.createErrorMessage("유저의 세션이 확인되지 않습니다."));
+				return;
+			}
+			
+			list = planetDao.getMyPlanetList(user.getUserId());
+		}
 		
 		JSONObject json = new JSONObject();
 		JSONArray planetList = new JSONArray();
@@ -42,41 +62,10 @@ public class PlanetListServlet extends HttpServlet {
 		}
 		
 		json.put("result", planetList);
-		
-		PrintWriter ps = response.getWriter();
 		ps.println(json);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-	
-	// 행성을 json으로
-	private JSONObject planetToJSON(Planet planet) {
-		JSONObject planetJson = new JSONObject();
-		planetJson.put("planetId", planet.getPlanetId());
-		planetJson.put("planetTitle", planet.getPlanetTitle());
-		planetJson.put("planetContent", planet.getPlanetContent());
-		planetJson.put("playerId", planet.getPlayerId());
-		
-
-		Canvas canvas = planet.getCanvas();
-		planetJson.put("canvas", this.canvasToJSON(canvas));
-		
-		return planetJson;
-	}
-	
-	// canvas를 json으로
-	private JSONObject canvasToJSON(Canvas canvas) {
-		JSONObject canvasJson = new JSONObject();
-
-		canvasJson.put("canvasId", canvas.getCanvasId());
-		canvasJson.put("canvasMapAddr", canvas.getCanvasMapAddr());
-		canvasJson.put("canvasBumpMapAddr", canvas.getCanvasBumpMapAddr());
-		canvasJson.put("canvasContinentMapAddr", canvas.getCanvasContinentMapAddr());
-		canvasJson.put("canvasCloudMapAddr", canvas.getCanvasCloudMapAddr());
-		
-		return canvasJson;
-	}
-
 }

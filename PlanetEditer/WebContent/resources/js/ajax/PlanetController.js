@@ -12,7 +12,16 @@ export default class PlanetController extends Controller {
      *    'data' : []
      *  }
      */
-    getPlanetListAll = async () => await this.get('/planet/all')
+    getPlanetListAll = async () => await this.get('/planet/all?type=all')
+
+    /**
+     * 행성 리스트를 반환
+     * @returns  {
+     *    'error' = false
+     *    'data' : []
+     *  }
+     */
+    getMyPlanetList = async () => await this.get('/planet/all?type=my')
 
     /**
      * 행성 하나의 정보를 가져옴
@@ -61,11 +70,11 @@ export default class PlanetController extends Controller {
      * 행성 하나를 생성함
      * @param {Number} planetId
      * @param {
-     *      "bumpMap" : img,
-     *      "cloudMap" : img,
-     *      "colorMap" : img,
-     *      "continentMap" : img, 
-     *      "map" : img,
+     *      "bumpMap" : Canvas,
+     *      "cloudMap" : Canvas,
+     *      "colorMap" : Canvas,
+     *      "continentMap" : Canvas, 
+     *      "map" : Canvas,
      * } planetMaps
      * @returns {
      *    'error' = false,
@@ -80,6 +89,15 @@ export default class PlanetController extends Controller {
      *     },
      *  } 
      */
-    putPlanet = async (planetId, planetMaps) => await this.putWithImageFile('/planet', {planetId}, planetMaps)
+    async putPlanet(planetId, planetMaps)  {
+        const planetKeys = Object.keys(planetMaps)
+        const planetFiles = {}
+        planetKeys.forEach(x=>{
+            planetFiles[x] = convertCanvasToFile(planetMaps[x], x+'.png')
+        })
+
+        console.log(planetFiles)
+        return await this.putWithImageFile('/planet', {planetId}, planetFiles)
+    }
 
 }

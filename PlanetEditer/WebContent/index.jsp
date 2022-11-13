@@ -18,6 +18,7 @@
     <script src="/resources/js/App.js" type="module"></script>
 </head>
 <body>
+
 	<div id="init-data">
 	<%
 		User user = (User) session.getAttribute("userSession");
@@ -29,7 +30,9 @@
 			userJSON.put("userPw", user.getUserPw());
 			
 			out.println(userJSON);
-		}
+		} else {
+            out.println("null");
+        }
 	%>
 	</div>
 
@@ -42,11 +45,72 @@
     </div>
     <!-- 로딩창 -->
     
+    <!-- 메인페이지 -->
+    <div class="fix-full main-container active">
+        <div>
+            <div class="session">
+                <div class="d-flex gap-10 session-btns active">
+                    <button class="btn login-btn">로그인</button>
+                    <button class="btn join-btn">회원가입</button>
+                </div>
+                <div class="session-btns">
+                    <button class="btn logout-btn">로그아웃</button>
+                </div>
+            </div>
+
+            <div>
+                <button class="btn planet-list-btn">행성 리스트 조회</button>
+            </div>
+
+            <div>
+                <button class="btn my-planet-list-btn">내 행성 조회</button>
+            </div>
+
+            <div>
+                <button class="btn planet-create-btn">새 행성 만들기</button>
+            </div>
+
+            <div>
+                <button class="btn information-btn">상세정보</button>
+            </div>
+        </div>
+    </div>
+    <!-- 메인페이지 -->
+    
+    <!-- 행성 리스트 뷰어 -->
+    <div class="fix-full list-container">
+        <h2 class="d-flex">행성 리스트</h2>           
+        <div class="d-flex">
+            <div class="planet-table grid-3-3 gap-10 ">
+                <div class="card d-flex">
+                    <img src="./resources/image/canvas/map/test.png" alt="지도">
+                    <div class="text">
+                        <h3>지구</h3>
+                        <p>가장 아름다운 행성 - 지구는 내가 먼저 선점했다 ㅅㄱ</p>
+                        <p class="creater">제작자 : 주승규</p>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-bar">
+                <i class="fa-sharp fa-solid fa-shuttle-space"></i>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="w-1000px">
+                <button class="btn main-btn">메인화면으로</button>    
+            </div>
+            <div class="w-10px"></div>
+        </div>
+    </div>
+    <!-- 행성 리스트 뷰어 -->
+
     <!-- 행성 편집기 -->
     <div class="fix-full canvas-container">
         <div class="left-top ui d-block">
-            <p>※ 개발자도구를 열고 있으면 랙이 걸릴 수 있습니다.</p>
-            <p>※ 현재 시점 기준 행성 가장자리에서 작업하는 걸 권장하지 않습니다.</p>
+            <div>
+                <p>※ 개발자도구를 열고 있으면 랙이 걸릴 수 있습니다.</p>
+                <p>※ 현재 시점 기준 행성 가장자리에서 작업하는 걸 권장하지 않습니다.</p>
+            </div>
         </div>
         <div class="center-top ui">
             <div class="d-flex gap-10 continent-tool-menu">
@@ -67,7 +131,8 @@
             </div>
         </div>
         <div class="right-top ui">
-
+            <button class="small btn save-btn">저장하고 나가기</button>
+            <button class="small btn exit-btn">나가기</button>
         </div>
         <div class="left-center ui">
             <div class="d-flex gap-10 continent-tool-menu">
@@ -239,30 +304,6 @@
     </div>
     <!-- 새 행성 추가 -->
 
-    <!-- 행성 리스트 뷰어 -->
-    <div class="fix-full list-container">
-        <h2 class="d-flex">행성 리스트</h2>           
-        <div class="d-flex">
-            <div class="planet-table grid-3-3 gap-10 ">
-                <div class="card d-flex">
-                    <img src="./resources/image/canvas/map/test.png" alt="지도">
-                    <div class="text">
-                        <h3>지구</h3>
-                        <p>가장 아름다운 행성 - 지구는 내가 먼저 선점했다 ㅅㄱ</p>
-                        <p class="creater">제작자 : 주승규</p>
-                    </div>
-                </div>
-            </div>
-            <div class="scroll-bar">
-                <i class="fa-sharp fa-solid fa-shuttle-space"></i>
-            </div>
-        </div>
-        <div class="d-flex justify-end w-1000px">
-            <button class="btn main-btn">메인화면으로</button>
-        </div>
-    </div>
-    <!-- 행성 리스트 뷰어 -->
-
     <!-- 상세설명 페이지 -->
     <div class="fix-full information-container">
         <div>
@@ -280,32 +321,5 @@
     <!-- 상세설명 페이지 -->
     
 
-    <!-- 메인페이지 -->
-    <div class="fix-full main-container active">
-        <div>
-            <div class="session">
-                <div class="d-flex gap-10 session-btns active">
-                    <button class="btn login-btn">로그인</button>
-                    <button class="btn join-btn">회원가입</button>
-                </div>
-                <div class="session-btns">
-                    <button class="btn logout-btn">로그아웃</button>
-                </div>
-            </div>
-
-            <div>
-                <button class="btn planet-list-btn">행성 리스트 조회</button>
-            </div>
-
-            <div>
-                <button class="btn planet-create-btn">새 행성 만들기</button>
-            </div>
-
-            <div>
-                <button class="btn information-btn">상세정보</button>
-            </div>
-        </div>
-    </div>
-    <!-- 메인페이지 -->
 </body>
 </html>

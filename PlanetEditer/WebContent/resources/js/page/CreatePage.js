@@ -62,11 +62,12 @@ export default class CreatePage {
 
         if(data.error){
             alert(data.data)
-        } else {
-            alert('생성 되었습니다.')
+            this.app.unsetWaitMode()
             this.isCreateProcessing = false
             return
         }
+
+        alert('생성 되었습니다.')
         this.app.unsetWaitMode()
         this.isCreateProcessing = false
     }

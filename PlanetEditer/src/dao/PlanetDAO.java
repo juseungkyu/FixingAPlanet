@@ -27,13 +27,49 @@ public class PlanetDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Canvas canvas = canvasDao.getCanvas(rs.getInt(5));
+				Canvas canvas = canvasDao.getCanvas(rs.getInt(6));
 				
 				Planet planet = new Planet(
 						rs.getInt(1), 
 						rs.getString(2), 
 						rs.getString(3), 
 						rs.getString(4), 
+						rs.getInt(5), 
+						canvas
+					);
+				output.add(planet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("getPlanetAll error");
+		}
+		
+		return output;
+	}
+	
+	// 자신의 행성 리스트 불러오기
+	public ArrayList<Planet> getMyPlanetList(String userId) {
+		ArrayList<Planet> output = new ArrayList<Planet>();
+				
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		conn = JdbcUtil.getConnection();
+		try {
+			pstmt = conn.prepareStatement("SELECT * from planets WHERE player_id=?");
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Canvas canvas = canvasDao.getCanvas(rs.getInt(6));
+				
+				Planet planet = new Planet(
+						rs.getInt(1), 
+						rs.getString(2), 
+						rs.getString(3), 
+						rs.getString(4), 
+						rs.getInt(5), 
 						canvas
 					);
 				output.add(planet);
@@ -61,13 +97,14 @@ public class PlanetDAO {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				Canvas canvas = canvasDao.getCanvas(rs.getInt(5));
+				Canvas canvas = canvasDao.getCanvas(rs.getInt(6));
 				
 				output = new Planet(
 						rs.getInt(1), 
 						rs.getString(2), 
 						rs.getString(3), 
 						rs.getString(4), 
+						rs.getInt(5), 
 						canvas
 					);
 			}
@@ -83,7 +120,8 @@ public class PlanetDAO {
 	public int createPlanet(String url, String playerId, String title, String content) {
 		int output = 0;
 		Canvas canvas = this.canvasDao.createCanvas(url);
-		
+
+		System.out.println(canvas.getCanvasId());
 		if(canvas == null) {
 			System.out.println("캔버스 생성 실패");
 			output = -1;
@@ -102,7 +140,7 @@ public class PlanetDAO {
 			pstmt.setString(2, title);
 			pstmt.setString(3, content);
 			pstmt.setInt(4, canvas.getCanvasId());
-			int result = pstmt.executeUpdate();
+			output = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("createPlanet error");

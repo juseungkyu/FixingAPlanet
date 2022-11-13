@@ -23,6 +23,7 @@ export default class MainPage {
         this.joinBtn = this.container.querySelector('.join-btn')
         this.logoutBtn = this.container.querySelector('.logout-btn')
         this.planetListBtn = this.container.querySelector('.planet-list-btn')
+        this.myPlanetListBtn = this.container.querySelector('.my-planet-list-btn')
         this.informationBtn = this.container.querySelector('.information-btn')
         this.createBtn = this.container.querySelector('.planet-create-btn')
 
@@ -39,6 +40,7 @@ export default class MainPage {
         this.joinBtn.addEventListener('click', this.onJoin)
         this.logoutBtn.addEventListener('click', this.onLogout)
         this.planetListBtn.addEventListener('click', this.onPlanetList)
+        this.myPlanetListBtn.addEventListener('click', this.onMyPlanetList)
         this.informationBtn.addEventListener('click', this.onInformation)
         this.createBtn.addEventListener('click', this.onCreatePlanet)
 
@@ -79,7 +81,10 @@ export default class MainPage {
         this.isProcessing = false
     }
     onPlanetList = () => {
-        this.app.setListPage()
+        this.app.setListPage('all')
+    }
+    onMyPlanetList = () => {
+        this.app.setListPage('my')
     }
     onInformation = () => {
         this.app.setInformationPage()

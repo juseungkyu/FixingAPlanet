@@ -1,10 +1,8 @@
-import Render from './planet/view/Render.js';
-import ToolControl from './planet/tool/ToolControl.js';
-import CanvasControl from './planet/canvasControl/CanvasControl.js';
 import MainPage from './page/MainPage.js';
 import PlanetListPage from './page/PlanetListPage.js';
 import CreatePage from './page/CreatePage.js';
 import UserPage from './page/UserPage.js';
+import CanvasPage from './page/CanvasPage.js';
 
 class App {
     constructor() {
@@ -14,11 +12,6 @@ class App {
 
     init() {
         this.lodingScreen = document.querySelector('.wait')
-
-        // this.canvasControl = new CanvasControl()
-        // this.container = document.querySelector('.canvas-container')
-        // this.render = new Render(this.container)
-        // this.tool = new ToolControl(this.canvasControl, this.render, this.container)
 
         this.pageList = document.querySelectorAll('.fix-full')
 
@@ -35,15 +28,26 @@ class App {
         this.mainPageControl = new MainPage(this)
         this.planetListPageControl = new PlanetListPage(this)
         this.createPageControl = new CreatePage(this)
-
-        // document.querySelector('.map').appendChild(this.render.bumpMapCanvas)
+        this.canvasPageControl = new CanvasPage(this)
 
         // test
-        this.test()
+        // this.test()
 
+        this.getInitData()
         this.addEvent()
-
         this.unsetWaitMode()
+    }
+
+    /**
+     * 서버에서 설정한 기본 데이터 받아오기
+     */
+    getInitData() {
+        const data = document.querySelector('#init-data').innerHTML
+        this.session = JSON.parse(data)
+
+        if(this.session) {
+            this.setLogoutBtn()
+        }
     }
 
     /**
@@ -91,22 +95,25 @@ class App {
     /**
      * 캔버스 페이지 활성화
      */
-    setCanvas = () => {
+    setCanvas = (planetId) => {
         this.unsetPageAll()
-        this.render.classList.add('active')
+        this.canvasPage.classList.add('active')
+        this.canvasPageControl.onCall(planetId)
     }
 
     /**
      * 리스트 페이지 활성화
+     * @param {String} type all or my
      */
-    setListPage = () => {
+    setListPage = (type) => {
         this.unsetPageAll()
         this.listPage.classList.add('active')
-        this.planetListPageControl.onCall()
+        this.planetListPageControl.onCall(type)
     }
 
     /**
      * 유저 페이지 활성화
+     * @param {String} type login or join
      */
     setUserPage = (type) => {
         this.unsetPageAll()
@@ -147,8 +154,6 @@ class App {
      * 이벤트 제어
      */
     addEvent() {
-
-        // window.addEventListener('resize', this.render.setRendererSize)
         // this.container.addEventListener('mousedown', this.mouseDown)
         // this.container.addEventListener('mousemove', this.mouseMove)
         // this.container.addEventListener('mouseup', this.mouseUp)

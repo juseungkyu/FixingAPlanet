@@ -5,13 +5,15 @@ public class Planet {
 	private String playerId;
 	private String planetTitle;
 	private String planetContent;
+	private int seaLevel;
 	private Canvas canvas;
-	public Planet(int planetId, String playerId, String planetTitle, String planetContent, Canvas canvas) {
+	public Planet(int planetId, String playerId, String planetTitle, String planetContent, int seaLevel, Canvas canvas) {
 		super();
 		this.planetId = planetId;
 		this.playerId = playerId;
 		this.planetTitle = planetTitle;
 		this.planetContent = planetContent;
+		this.seaLevel = seaLevel;
 		this.canvas = canvas;
 	}
 	
@@ -45,5 +47,10 @@ public class Planet {
 	public void setCanvas(Canvas canvas) {
 		this.canvas = canvas;
 	}
-
+	public int getSeaLevelId() {
+		return seaLevel;
+	}
+	public void setSeaLevel(int seaLevel) {
+		this.seaLevel = seaLevel;
+	}
 }

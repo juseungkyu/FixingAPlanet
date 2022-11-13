@@ -1,6 +1,7 @@
 export default class Render {
-    constructor(container) {
+    constructor(container, canvasPage) {
         this.container = container
+        this.canvasPage = canvasPage
         this.init()
     }
 
@@ -33,16 +34,16 @@ export default class Render {
         this.renderer.render(this.scene, this.camera)
         this.animate()
 
-        window.app.canvasControl.render = this
+        this.canvasPage.canvasControl.render = this
     }
 
     /**
      * 텍스쳐에 넣을 캔버스 준비하는 함수
      */
     setCanvas() {
-        this.mapCanvas = window.app.canvasControl.mapCanvas
-        this.bumpMapCanvas = window.app.canvasControl.bumpMapCanvas
-        this.cloudMapCanvas = window.app.canvasControl.cloudMapCanvas
+        this.mapCanvas = this.canvasPage.canvasControl.mapCanvas
+        this.bumpMapCanvas = this.canvasPage.canvasControl.bumpMapCanvas
+        this.cloudMapCanvas = this.canvasPage.canvasControl.cloudMapCanvas
         
         this.mapCtx = this.mapCanvas.getContext('2d')
         this.bumpMapCtx = this.bumpMapCanvas.getContext('2d')
@@ -254,11 +255,18 @@ export default class Render {
     }
 
     /**
-     * 프레임마다 렌더
+     * 렌더 루프
      */
     animate = () => {
         this.render()
-        requestAnimationFrame(this.animate)
+        this.animationRequest = requestAnimationFrame(this.animate)
+    }
+
+    /**
+     * 랜더 중지시키기
+     */
+    stopAnimate() {
+        cancelAnimationFrame(this.animationRequest)
     }
 
     /**

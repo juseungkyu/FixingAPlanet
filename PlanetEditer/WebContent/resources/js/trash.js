@@ -1,8 +1,8 @@
-// 버리는 코드 모음
+// 버리거나 임시 저장 중인 코드 모음
 
 // bfs인데 생각해보니까 걍 띄엄띄엄 검색하다가 바다 발견하면 실행하는거라
 // 정확하게 하려면 그냥 하나씩 해야할듯
-bfsFind (x,y) {
+function bfsFind (x,y) {
     const findNodes = []
     const nextVisitList = []
 
@@ -27,7 +27,7 @@ bfsFind (x,y) {
 
 // dfs인데 콜 스택 터져서 임시저장 중
 
-dfsFind (x,y) {
+function dfsFind (x,y) {
     if(this.rangeCheck(x,y) && this.getPixel(x,y) < this.seaLevel){
         this.pointList.push([x,y])
 
@@ -75,4 +75,23 @@ function vectorSubtract(a, b) {
 function normalize(v) {
     const length = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     return length > 0.001 ? [v[0] / length, v[1] / length, v[2] / length] : [0,0,0]
+}
+
+/**
+ * 
+ * @return
+ */
+createFileForm(file) {
+    const form = document.createElement('form')
+    form.setAttribute('enctype', 'multipart/form-data')
+
+    this.createFileInput
+
+    return form
+}
+
+createFileInput(key, value) {
+    const input = document.createElement('input')
+    input.setAttribute('name', key)
+    input.setAttribute('type', 'file')
 }
