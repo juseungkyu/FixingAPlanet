@@ -25,6 +25,7 @@ public class Util {
 		planetJson.put("planetTitle", planet.getPlanetTitle());
 		planetJson.put("planetContent", planet.getPlanetContent());
 		planetJson.put("playerId", planet.getPlayerId());
+		planetJson.put("planetSeaLevel", planet.getSeaLevel());
 
 		Canvas canvas = planet.getCanvas();
 		planetJson.put("canvas", canvasToJSON(canvas));
@@ -41,6 +42,7 @@ public class Util {
 		canvasJson.put("canvasBumpMapAddr", canvas.getCanvasBumpMapAddr());
 		canvasJson.put("canvasContinentMapAddr", canvas.getCanvasContinentMapAddr());
 		canvasJson.put("canvasCloudMapAddr", canvas.getCanvasCloudMapAddr());
+		canvasJson.put("canvasColorMapAddr", canvas.getCanvasColorMapAddr());
 
 		return canvasJson;
 	}

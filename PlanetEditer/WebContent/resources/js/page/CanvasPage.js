@@ -46,7 +46,7 @@ export default class CanvasPage {
         this.isProcessing = true
         this.app.setWaitMode()
 
-        const data = await this.controller.savePlanet(this.currentPlanetInfo.planetId, {
+        const data = await this.controller.savePlanet(this.currentPlanetInfo.planetId, this.tool.drawWaterTool.waterLevel, {
             "bumpMap" : this.canvasControl.bumpMapCanvas, 
             "cloudMap" : this.canvasControl.cloudMapCanvas, 
             "colorMap" : this.canvasControl.colorMapCanvas, 
@@ -64,7 +64,7 @@ export default class CanvasPage {
         alert(data.data.message)
         this.exit()
 
-        this.app.unsetWaitMode()
+        this.app.unsetWaitMode(true)
         this.isProcessing = false
     }
 
@@ -90,10 +90,31 @@ export default class CanvasPage {
         }
 
         this.currentPlanetInfo = data.data
+        await this.drawCanvas(this.currentPlanetInfo)
+        
+        this.tool.drawWaterTool.waterLevel.value = this.currentPlanetInfo.planetSeaLevel
+        this.tool.drawWaterTool.changeSeaLevel()
 
         this.render.animate()
         this.app.unsetWaitMode()
         this.isProcessing = false
+    }
+
+    async drawCanvas(planetInfo) {
+        const {canvas} = planetInfo
+        const {
+            canvasBumpMapAddr,
+            canvasContinentMapAddr,
+            canvasColorMapAddr,
+            canvasCloudMapAddr,
+            canvasMapAddr,
+        } = canvas
+        const url = '/resources/image/canvas/'
+        this.canvasControl.bumpMapCtx.drawImage(await urlToImageDom(`${url}bumpmap${canvasBumpMapAddr}`), 0, 0)
+        this.canvasControl.cloudMapCtx.drawImage(await urlToImageDom(`${url}cloudmap${canvasCloudMapAddr}`), 0, 0)
+        this.canvasControl.colorMapCtx.drawImage(await urlToImageDom(`${url}colormap${canvasColorMapAddr}`), 0, 0)
+        this.canvasControl.continentBumpMapCtx.drawImage(await urlToImageDom(`${url}continent${canvasContinentMapAddr}`), 0, 0)
+        this.canvasControl.mapCtx.drawImage(await urlToImageDom(`${url}map${canvasMapAddr}`), 0, 0)
     }
 }
 
@@ -110,6 +131,7 @@ export default class CanvasPage {
 //         },
 //         "planetContent": "ddd",
 //         "planetId": 22,
-//         "playerId": "1234"
+//         "playerId": "1234",
+//         "planetSeaLevel": 10
 //     }
 // }

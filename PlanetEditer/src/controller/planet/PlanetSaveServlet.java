@@ -22,6 +22,7 @@ import org.json.simple.parser.ParseException;
 import com.oreilly.servlet.MultipartRequest;
 
 import common.Util;
+import dao.CanvasDAO;
 import dao.PlanetDAO;
 import vo.User;
 
@@ -29,6 +30,7 @@ import vo.User;
 @WebServlet("/planet/save")
 public class PlanetSaveServlet extends HttpServlet {
     private static PlanetDAO planetDao = new PlanetDAO();
+    private static CanvasDAO canvasDao = new CanvasDAO();
 
 	// 행성 생성하기
 	@Override
@@ -57,12 +59,13 @@ public class PlanetSaveServlet extends HttpServlet {
 		try {
 			File file = new File(tempPath);
 			if(!file.exists()) { // 파일 경로가 존재하지 않을 경우
-				file.mkdirs(); // 파일 경로 만들기
+				file.mkdirs(); // 파일 경로 만들기	
 			}
 			
 			MultipartRequest multipart = new MultipartRequest(request, tempPath, MAX_SIZE, "UTF-8");
-			
-			String planetId = multipart.getParameter("planetId");
+
+			int planetId = Integer.parseInt(multipart.getParameter("planetId"));
+			int seaLevel = Integer.parseInt(multipart.getParameter("seaLevel"));
 			System.out.println(planetId);
 			
 			String fileId = (new Date().getTime()) + "" + (new Random().ints(1000, 9999).findAny().getAsInt());
@@ -83,6 +86,8 @@ public class PlanetSaveServlet extends HttpServlet {
 				return 0;
 			}
 			
+			this.planetDao.changeSeaLevel(planetId, seaLevel);
+			this.canvasDao.putCanvas(planetId, "/"+fileId+".png");
 		} catch (IOException e) {
 			e.printStackTrace();
 			return 0;

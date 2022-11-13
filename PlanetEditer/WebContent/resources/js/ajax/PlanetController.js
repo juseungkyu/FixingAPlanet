@@ -89,7 +89,7 @@ export default class PlanetController extends Controller {
      *     },
      *  } 
      */
-    async savePlanet(planetId, planetMaps)  {
+    async savePlanet(planetId, seaLevel, planetMaps)  {
         const planetKeys = Object.keys(planetMaps)
         const planetFiles = {}
         planetKeys.forEach(x=>{
@@ -97,7 +97,7 @@ export default class PlanetController extends Controller {
         })
 
         console.log(planetFiles)
-        return await this.postWithImageFile('/planet/save', {planetId}, planetFiles)
+        return await this.postWithImageFile('/planet/save', {planetId, seaLevel}, planetFiles)
     }
 
 }

@@ -47,7 +47,7 @@ public class Planet {
 	public void setCanvas(Canvas canvas) {
 		this.canvas = canvas;
 	}
-	public int getSeaLevelId() {
+	public int getSeaLevel() {
 		return seaLevel;
 	}
 	public void setSeaLevel(int seaLevel) {

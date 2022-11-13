@@ -148,4 +148,27 @@ public class PlanetDAO {
 		
 		return output;
 	}
+
+	public int changeSeaLevel(int planetId, int seaLevel) {
+		int output = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		conn = JdbcUtil.getConnection();
+		try {
+			pstmt = conn.prepareStatement("UPDATE canvas " + 
+					"SET planet_sea_level=? " + 
+					"WHERE planet_id=?");
+			pstmt.setInt(1, seaLevel);
+			pstmt.setInt(2, planetId);
+			output = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("createPlanet error");
+		}
+		
+		return output;
+	}	
 }

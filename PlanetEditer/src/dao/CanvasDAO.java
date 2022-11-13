@@ -88,4 +88,32 @@ public class CanvasDAO {
 		
 		return output;
 	}
+	
+	// 행성 저장하기
+	public int putCanvas(int canvasId, String url) {
+		int output = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		conn = JdbcUtil.getConnection();
+		try {
+			pstmt = conn.prepareStatement("UPDATE canvas " + 
+					"SET canvas_map_addr=?, canvas_bump_map_addr=?, canvas_color_map_addr=?, canvas_continent_map_addr=?, canvas_cloud_map_addr=? " + 
+					"WHERE canvas_id=?");
+			pstmt.setString(1, url);
+			pstmt.setString(2, url);
+			pstmt.setString(3, url);
+			pstmt.setString(4, url);
+			pstmt.setString(5, url);
+			pstmt.setInt(6, canvasId);
+			output = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("createPlanet error");
+		}
+		
+		return output;
+	}
 }
