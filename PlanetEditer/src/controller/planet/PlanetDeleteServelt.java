@@ -60,6 +60,17 @@ public class PlanetDeleteServelt extends HttpServlet {
 			return;
 		}
 		
+		Planet planet = this.planetDao.getPlanet(planetIdNumber);
+		if(planet == null) {
+			ps.println(Util.createErrorMessage("행성이 이미 삭제 됐거나 존재하지 않습니다."));
+			return;
+		}
+		
+		if(user.getUserId() == planet.getPlayerId()) {
+			ps.println(Util.createErrorMessage("행성의 소유자가 아닙니다."));
+			return;
+		}
+		
 		int result = this.planetDao.deletePlanet(planetIdNumber);
 		
 		if(result == 0) {

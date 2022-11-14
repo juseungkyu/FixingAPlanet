@@ -134,6 +134,7 @@ class App {
      */
     setCreatePage = () => {
         this.unsetPageAll()
+        this.createPageControl.onCall()
         this.createPlanetPage.classList.add('active')
     }
 

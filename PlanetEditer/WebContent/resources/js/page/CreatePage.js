@@ -16,6 +16,14 @@ export default class CreatePage {
     }
 
     /**
+     * 페이지 호출 시 실행
+     */
+    onCall() {
+        this.setContent('')
+        this.setTitle('')
+    }
+
+    /**
      * 초기설정
      */
     init() {
@@ -68,6 +76,10 @@ export default class CreatePage {
         }
 
         alert('생성 되었습니다.')
+
+        this.setContent('')
+        this.setTitle('')
+
         this.app.setMainPage()
         this.app.unsetWaitMode()
         this.isCreateProcessing = false
