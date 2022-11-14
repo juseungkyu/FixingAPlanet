@@ -32,9 +32,6 @@
 	%>
 	</div>
 
-	
-
-
     <!-- 로딩창 -->
     <div class="wait active">
         <h1>잠시만 기다려주세요</h1>
@@ -251,7 +248,7 @@
             </fieldset>
             <fieldset class="text-form">
                 <legend class="label">비밀번호</legend>
-                <input type="text" id="user-join-pw">
+                <input type="password" id="user-join-pw">
             </fieldset>
             <fieldset class="text-form">
                 <legend class="label">이름</legend>
@@ -270,7 +267,7 @@
             </fieldset>
             <fieldset class="text-form">
                 <legend class="label">비밀번호</legend>
-                <input type="name" id="user-login-pw">
+                <input type="password" id="user-login-pw">
             </fieldset>
             <div class="d-flex gap-10 mt-10">
                 <button class="btn user-login-btn">로그인하기</button>
@@ -304,10 +301,7 @@
     <div class="fix-full information-container">
         <div>
             <div class="w-1000px">
-                설명설명설명설명설명설명설명설명<br>
-                설명설명설명설명설명설명설명설명<br>
-                설명설명설명설명설명설명설명설명<br>
-                설명설명설명설명설명설명설명설명<br>
+
             </div>
             <div class="d-flex justify-end w-1000px">
                 <button class="btn main-btn">메인화면으로</button>

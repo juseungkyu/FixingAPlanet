@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import common.HashUtil;
 import common.Util;
 import dao.UserDAO;
 
@@ -71,8 +72,11 @@ public class JoinServlet extends HttpServlet {
 			ps.println(Util.createErrorMessage("playerName가 감지되지 않습니다."));
 			return;
 		}
+		System.out.println(playerPw);
+
+		String playerPwHash = HashUtil.stringTohash(playerPw);
 		
-		int result = this.userDao.createUser(playerId, playerPw, playerName);
+		int result = this.userDao.createUser(playerId, playerPwHash, playerName);
 		if(result == -1) {
 			ps.println(Util.createErrorMessage("이미 존재하는 아이디입니다."));
 			return;
