@@ -470,6 +470,7 @@ body {
     overflow: hidden;
     cursor: pointer;
     margin-bottom: 20px;
+    position: relative;
 }
 
 .planet-table .card:last-child {
@@ -494,6 +495,15 @@ body {
 .planet-table .card .text .creater {
     margin-top: 10px;
     font-weight: 900;
+}
+
+.planet-table .card .text .remove-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
 }
 
 .scroll-bar {

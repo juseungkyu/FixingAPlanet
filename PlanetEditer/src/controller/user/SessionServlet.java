@@ -29,11 +29,11 @@ public class SessionServlet extends HttpServlet {
         super();
     }
     
-	// 로그인
+	// 로그인															
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html; charset=UTF-8");
+		response.setContentType("text/html; charset=UTF-8");								
 		PrintWriter ps = response.getWriter();
 
 		String requestData = request.getParameter("json");

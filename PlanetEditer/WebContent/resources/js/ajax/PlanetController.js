@@ -100,4 +100,21 @@ export default class PlanetController extends Controller {
         return await this.postWithImageFile('/planet/save', {planetId, seaLevel}, planetFiles)
     }
 
+    /**
+     * 행성 하나를 생성함
+     * @param {Number} planetId
+     * @returns {
+     *    'error' = false,
+     *    'data' : {
+     *          "message" : "삭제를 성공했습니다."
+     *     },
+     *  }
+     * @returns {
+     *    'error' = true,
+     *    'data' : {
+     *          "message" : "삭제를 실패했습니다."
+     *     },
+     *  } 
+     */
+    deletePlanet = async (planetId) => await this.get(`/planet/delete?planetId=${planetId}`)
 }

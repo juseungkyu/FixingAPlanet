@@ -41,6 +41,7 @@ export default class Controller {
                 await fetch(url, {method: 'GET'})
             ).json()
         } catch (error) {
+            console.log(error)
             result.error = true
             result.data = '올바르지 않거나 구현되지 않은 요청입니다. 문제가 없다면 인터넷 연결 상태를 확인해보세요.'
             return result 
@@ -49,7 +50,6 @@ export default class Controller {
         console.log('서버 메시지 :', json)
 
         if (json.err) {
-            console.log(error)
             result.error = true
             result.data = json.err.message
         } else {
@@ -79,6 +79,7 @@ export default class Controller {
                 await fetch(url, {method: 'DELETE'})
             ).json()
         } catch (error) {
+            console.log(error)
             result.error = true
             result.data = '올바르지 않거나 구현되지 않은 요청입니다. 문제가 없다면 인터넷 연결 상태를 확인해보세요.'
             return result 
@@ -87,7 +88,6 @@ export default class Controller {
         console.log('서버 메시지 :', json)
 
         if (json.err) {
-            console.log(error)
             result.error = true
             result.data = json.err.message
         } else {

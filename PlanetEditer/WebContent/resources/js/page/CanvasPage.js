@@ -148,11 +148,20 @@ export default class CanvasPage {
             canvasMapAddr,
         } = canvas
         const url = '/resources/image/canvas/'
-        this.canvasControl.bumpMapCtx.drawImage(await urlToImageDom(`${url}bumpmap${canvasBumpMapAddr}`), 0, 0)
-        this.canvasControl.cloudMapCtx.drawImage(await urlToImageDom(`${url}cloudmap${canvasCloudMapAddr}`), 0, 0)
-        this.canvasControl.colorMapCtx.drawImage(await urlToImageDom(`${url}colormap${canvasColorMapAddr}`), 0, 0)
-        this.canvasControl.continentBumpMapCtx.drawImage(await urlToImageDom(`${url}continent${canvasContinentMapAddr}`), 0, 0)
-        this.canvasControl.mapCtx.drawImage(await urlToImageDom(`${url}map${canvasMapAddr}`), 0, 0)
+        try {
+            this.canvasControl.bumpMapCtx.drawImage(await urlToImageDom(`${url}bumpmap${canvasBumpMapAddr}`), 0, 0)
+            this.canvasControl.cloudMapCtx.drawImage(await urlToImageDom(`${url}cloudmap${canvasCloudMapAddr}`), 0, 0)
+            this.canvasControl.colorMapCtx.drawImage(await urlToImageDom(`${url}colormap${canvasColorMapAddr}`), 0, 0)
+            this.canvasControl.continentBumpMapCtx.drawImage(await urlToImageDom(`${url}continent${canvasContinentMapAddr}`), 0, 0)
+            this.canvasControl.mapCtx.drawImage(await urlToImageDom(`${url}map${canvasMapAddr}`), 0, 0)   
+        } catch (error) {
+            const defaultAddr = '/default.png'
+            this.canvasControl.bumpMapCtx.drawImage(await urlToImageDom(`${url}bumpmap${defaultAddr}`), 0, 0)
+            this.canvasControl.cloudMapCtx.drawImage(await urlToImageDom(`${url}cloudmap${defaultAddr}`), 0, 0)
+            this.canvasControl.colorMapCtx.drawImage(await urlToImageDom(`${url}colormap${defaultAddr}`), 0, 0)
+            this.canvasControl.continentBumpMapCtx.drawImage(await urlToImageDom(`${url}continent${defaultAddr}`), 0, 0)
+            this.canvasControl.mapCtx.drawImage(await urlToImageDom(`${url}map${defaultAddr}`), 0, 0)
+        }
     }
 }
 

@@ -24,6 +24,7 @@ import com.oreilly.servlet.MultipartRequest;
 import common.Util;
 import dao.CanvasDAO;
 import dao.PlanetDAO;
+import vo.Planet;
 import vo.User;
 
 //tomcat 기본 설정이 PUT, DELETE를 막아놔서 수행 제출하고 작동 안될까봐 따로 준비
@@ -87,8 +88,9 @@ public class PlanetSaveServlet extends HttpServlet {
 				return 0;
 			}
 			
+			Planet planet = this.planetDao.getPlanet(planetId);
 			this.planetDao.changeSeaLevel(planetId, seaLevel);
-			this.canvasDao.putCanvas(planetId, "/"+fileId+".png");
+			this.canvasDao.putCanvas(planet.getCanvas().getCanvasId(), "/"+fileId+".png");
 		} catch (IOException e) {
 			e.printStackTrace();
 			return 0;
