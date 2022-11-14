@@ -434,6 +434,19 @@ body {
     align-items: center;
 }
 
+.information-container table {
+    border-collapse: separate;
+    border-spacing: 0px 10px;
+}
+
+.information-container td {
+    vertical-align: text-top;
+}
+
+.information-container .main-btn {
+    width: 100%;
+}
+
 /* information-container 종료 */
 
 /* planet-create-container */

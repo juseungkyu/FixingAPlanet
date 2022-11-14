@@ -12,9 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/resources/style/basic.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/controls/OrbitControls.min.js"></script>
+    <link rel="stylesheet" href="/resources/style/fontawesome.css">
+
+    <script src="/resources/js/lib/three.js"></script>
+    <script src="/resources/js/lib/orbitControls.js"></script>
     <script src="/resources/js/util/util.js"></script>
     <script src="/resources/js/App.js" type="module"></script>
 </head>
@@ -300,21 +301,47 @@
     <!-- 상세설명 페이지 -->
     <div class="fix-full information-container">
         <div>
-            <div class="w-300px">
-                <h3>기획</h3>
-                <p>주승규</p>
-
-                <h3>디자인</h3>
-                <p>주승규</p>
-
-                <h3>디자인</h3>
-                <p>주승규</p>
-
-                <h3>스크롤바 디자인 아이디어 제공</h3>
-                <p>유성준</p>
-
-                <h3>서비스 도움</h3>
-                <p>정수민</p>
+            <div class="w-300px d-flex">
+                <table class="w-100">
+                    <tbody>
+                        <tr class="w-100">
+                            <td rowspan="3">기획</td>
+                            <td>주승규</td>
+                        </tr>
+                        <tr class="w-100">
+                            <td>주윤민</td>
+                        </tr>
+                        <tr class="w-100">
+                            <td>주승민</td>
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr class="w-100">
+                            <td rowspan="2">디자인</td>
+                            <td>주일규</td>
+                        </tr>
+                        <tr class="w-100">
+                            <td>주이규</td>
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr class="w-100">
+                            <td rowspan="2">개발</td>
+                            <td>주삼규</td>
+                        </tr>
+                        <tr class="w-100">
+                            <td>주사규</td>
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr class="w-100">
+                            <td rowspan="1">스크롤바 디자인 아이디어 제공</td>
+                            <td>유성준</td>
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                    </tbody>
+                </table>
             </div>
             <div class="d-flex justify-end w-300px">
                 <button class="btn main-btn">메인화면으로</button>
