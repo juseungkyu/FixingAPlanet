@@ -40,6 +40,8 @@ public class CanvasDAO {
 			e.printStackTrace();
 			System.out.println("getCanvas error");
 		}
+
+		JdbcUtil.close(conn, pstmt, rs);
 		
 		return output;
 		
@@ -86,6 +88,8 @@ public class CanvasDAO {
 			System.out.println("createCanvas error");
 		}
 		
+		JdbcUtil.close(conn, pstmt, rs);
+		
 		return output;
 	}
 	
@@ -95,7 +99,6 @@ public class CanvasDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 
 		conn = JdbcUtil.getConnection();
 		try {
@@ -113,7 +116,8 @@ public class CanvasDAO {
 			e.printStackTrace();
 			System.out.println("putCanvas error");
 		}
-		
+
+		JdbcUtil.close(conn, pstmt);
 		return output;
 	}
 }

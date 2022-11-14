@@ -1,8 +1,4 @@
-<%@page import="common.Util"%>
-<%@page import="org.json.simple.JSONObject"%>
-<%@page import="vo.User"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -20,17 +16,7 @@
 </head>
 <body>
 
-	<div id="init-data">
-	<%
-		User user = (User) session.getAttribute("userSession");
-	
-		if(user != null){ 
-			out.println(Util.UserToJSON(user));
-		} else {
-            out.println("null");
-        }
-	%>
-	</div>
+	<div id="init-data">null</div>
 
     <!-- 로딩창 -->
     <div class="wait active">

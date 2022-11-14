@@ -44,11 +44,27 @@ export default class CreatePage {
         this.createBtn.addEventListener('click', this.onCreateBtnClick)
     }
 
+    /**
+     * title 받아오기
+     * @returns title string
+     */
     getTitle = () => this.titleField.value
+    /**
+     * title 설정하기
+     * @param {String} value 
+     */
     setTitle(value) {
         this.titleField.value = value
     }
+    /**
+     * content 받아오기
+     * @returns content string
+     */
     getContent = () => this.contentField.value
+    /**
+     * content 설정하기
+     * @param {String} value 
+     */
     setContent(value) {
         this.contentField.value = value
     }

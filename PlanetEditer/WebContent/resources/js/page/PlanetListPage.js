@@ -216,6 +216,10 @@ export default class PlanetListPage {
         })
     }
 
+    /**
+     * 자신의 행성 삭제 
+     * @param {Number} planetId 
+     */
     async removePlanet(planetId) {
         if(this.isProcessing){
             return

@@ -17,6 +17,9 @@ export default class CanvasPage {
         this.addEvent()
     }
 
+    /**
+     * 캔버스 페이지 기본 설정
+     */
     init() {
         this.controller = new PlanetController()
         this.canvasControl = new CanvasControl()
@@ -33,12 +36,18 @@ export default class CanvasPage {
         this.render.stopAnimate()
     }
 
+    /**
+     * 캔버스 페이지 이벤트 설정
+     */
     addEvent() {
         this.saveAndExitBtn.addEventListener('click', this.saveAndExit)
         this.exitBtn.addEventListener('click', this.exit)
         window.addEventListener('resize', this.render.setRendererSize)
     }
 
+    /**
+     * 저장하고 나가기
+     */
     saveAndExit = async ()=>{
         if(this.isProcessing) {
             return
@@ -69,11 +78,18 @@ export default class CanvasPage {
         this.isProcessing = false
     }
 
+    /**
+     * 나가기
+     */
     exit = ()=>{
         this.render.stopAnimate()
         this.app.setMainPage()
     }
 
+    /**
+     * 호출되었을때
+     * @param {Number} planetId 
+     */
     async onCall(planetId) {
         if(this.isProcessing){
             return
@@ -95,15 +111,28 @@ export default class CanvasPage {
         
         this.sessionCheck(this.currentPlanetInfo.playerId)
 
+        // 불러온 정보 그리기
         await this.drawCanvas(this.currentPlanetInfo)
+
+        // 해수면 조절
         this.tool.drawWaterTool.waterLevel.value = this.currentPlanetInfo.planetSeaLevel
         this.tool.drawWaterTool.changeSeaLevel()
+
+        // 업데이트 
+        this.canvasControl.updateCanvas()
+        this.canvasControl.updateCloudCanvas()
+
+        // 렌더 재시작
         this.render.animate()
         
         this.app.unsetWaitMode()
         this.isProcessing = false
     }
 
+    /**
+     * 제작자인지 체크
+     * @param {String} playerId 
+     */
     sessionCheck(playerId) {
         console.log(this.app.session, playerId)
 
@@ -119,6 +148,9 @@ export default class CanvasPage {
         this.setEditer()
     }
 
+    /**
+     * 뷰어로 행성보기
+     */
     setViewer() {
         console.log('open Viewer')
         this.tool.moveToolSet()
@@ -129,6 +161,9 @@ export default class CanvasPage {
         this.saveAndExitBtn.style.visibility = 'hidden'
     }
 
+    /**
+     * 편집기로 행성 보기
+     */
     setEditer() {
         console.log('open Editer')
         this.tool.moveToolSet()
@@ -138,6 +173,10 @@ export default class CanvasPage {
         this.saveAndExitBtn.style.visibility = 'visible'
     }
 
+    /**
+     * 받아온 정보로 캔버스를 그림
+     * @param {*} planetInfo 
+     */
     async drawCanvas(planetInfo) {
         const {canvas} = planetInfo
         const {
@@ -149,12 +188,28 @@ export default class CanvasPage {
         } = canvas
         const url = '/resources/image/canvas/'
         try {
-            this.canvasControl.bumpMapCtx.drawImage(await urlToImageDom(`${url}bumpmap${canvasBumpMapAddr}`), 0, 0)
-            this.canvasControl.cloudMapCtx.drawImage(await urlToImageDom(`${url}cloudmap${canvasCloudMapAddr}`), 0, 0)
-            this.canvasControl.colorMapCtx.drawImage(await urlToImageDom(`${url}colormap${canvasColorMapAddr}`), 0, 0)
-            this.canvasControl.continentBumpMapCtx.drawImage(await urlToImageDom(`${url}continent${canvasContinentMapAddr}`), 0, 0)
-            this.canvasControl.mapCtx.drawImage(await urlToImageDom(`${url}map${canvasMapAddr}`), 0, 0)   
+            const 
+            bumpMap = await urlToImageDom(`${url}bumpmap${canvasBumpMapAddr}`),
+            cloudMap = await urlToImageDom(`${url}cloudmap${canvasCloudMapAddr}`),
+            colorMap = await urlToImageDom(`${url}colormap${canvasColorMapAddr}`),
+            continentMap = await urlToImageDom(`${url}continent${canvasContinentMapAddr}`),
+            map = await urlToImageDom(`${url}map${canvasMapAddr}`)
+
+            console.log(bumpMap)
+            console.log(cloudMap)
+            console.log(colorMap)
+            console.log(continentMap)
+            console.log(map)
+
+            this.canvasControl.bumpMapCtx.drawImage(bumpMap, 0, 0)
+            this.canvasControl.cloudMapCtx.drawImage(cloudMap, 0, 0)
+            this.canvasControl.colorMapCtx.drawImage(colorMap, 0, 0)
+            this.canvasControl.continentBumpMapCtx.drawImage(continentMap, 0, 0)
+            this.canvasControl.mapCtx.drawImage(map, 0, 0)  
+            
+            console.log('success')
         } catch (error) {
+            console.log(error)
             const defaultAddr = '/default.png'
             this.canvasControl.bumpMapCtx.drawImage(await urlToImageDom(`${url}bumpmap${defaultAddr}`), 0, 0)
             this.canvasControl.cloudMapCtx.drawImage(await urlToImageDom(`${url}cloudmap${defaultAddr}`), 0, 0)

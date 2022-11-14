@@ -34,6 +34,7 @@ public class UserDAO {
 			e.printStackTrace();
 			System.out.println("getUser error");
 		}
+		JdbcUtil.close(conn, pstmt, rs);
 		
 		return output;
 	}
@@ -52,7 +53,6 @@ public class UserDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 
 		conn = JdbcUtil.getConnection();
 		try {
@@ -67,6 +67,8 @@ public class UserDAO {
 			e.printStackTrace();
 			System.out.println("createUser error");
 		}
+		
+		JdbcUtil.close(conn, pstmt);
 		
 		return output;
 	}

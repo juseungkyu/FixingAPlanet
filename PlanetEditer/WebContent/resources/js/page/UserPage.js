@@ -11,6 +11,9 @@ export default class UserPage {
         this.init()
     }
 
+    /**
+     * 초기 설정
+     */
     init() {
         this.isProcessing = false
         this.container = document.querySelector('.user-container')
@@ -41,6 +44,9 @@ export default class UserPage {
         this.addEvent()
     }
 
+    /**
+     * 이벤트 설정
+     */
     addEvent() {
         // TAB 변경
         this.logTabChangeBtn.addEventListener('click', ()=>{
@@ -54,6 +60,9 @@ export default class UserPage {
         this.joinSubmit.addEventListener('click', this.join)
     }
 
+    /**
+     * 로그인 시도
+     */
     login = async () =>{
         if(this.isProcessing){
             return
@@ -87,6 +96,9 @@ export default class UserPage {
         this.isProcessing = false
     }
 
+    /**
+     * 회원가입 시도
+     */
     join = async () => {
         if(this.isProcessing){
             return
@@ -115,6 +127,9 @@ export default class UserPage {
 
     }
 
+    /**
+     * 필드 비우기
+     */
     resetField() {
         const loginFormsKeys = Object.keys(this.loginForms)
         loginFormsKeys.forEach(x => {
@@ -127,6 +142,10 @@ export default class UserPage {
         });
     }
 
+    /**
+     * login or join tab으로 바꾸기
+     * @param {String} type 
+     */
     changeTab(type) {
         this.resetField()
 

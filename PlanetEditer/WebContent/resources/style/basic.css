@@ -26,6 +26,10 @@ p {
     width: 100%;
 }
 
+.w-300px {
+    width: 300px;
+}
+
 .w-1000px {
     width: 1000px;
 }

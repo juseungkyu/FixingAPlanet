@@ -40,7 +40,7 @@ public class SessionServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter ps = response.getWriter();
+		PrintWriter ps = response.getWriter(); 
 
 		String requestData = request.getParameter("json");
 

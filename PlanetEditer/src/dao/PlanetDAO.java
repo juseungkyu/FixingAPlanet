@@ -43,6 +43,7 @@ public class PlanetDAO {
 			e.printStackTrace();
 			System.out.println("getPlanetAll error");
 		}
+		JdbcUtil.close(conn, pstmt, rs);
 		
 		return output;
 	}
@@ -78,6 +79,7 @@ public class PlanetDAO {
 			e.printStackTrace();
 			System.out.println("getPlanetAll error");
 		}
+		JdbcUtil.close(conn, pstmt, rs);
 		
 		return output;
 	}
@@ -112,7 +114,8 @@ public class PlanetDAO {
 			e.printStackTrace();
 			System.out.println("getPlanetAll error");
 		}
-		
+
+		JdbcUtil.close(conn, pstmt, rs);
 		return output;
 	}
 	
@@ -144,6 +147,8 @@ public class PlanetDAO {
 			System.out.println("createPlanet error");
 		}
 		
+		JdbcUtil.close(conn, pstmt);
+		
 		return output;
 	}
 
@@ -165,7 +170,8 @@ public class PlanetDAO {
 			e.printStackTrace();
 			System.out.println("updatePlanet error");
 		}
-		
+
+		JdbcUtil.close(conn, pstmt);
 		return output;
 	}
 
@@ -185,6 +191,7 @@ public class PlanetDAO {
 			e.printStackTrace();
 			System.out.println("deletePlanet error");
 		}
+		JdbcUtil.close(conn, pstmt);
 		
 		return output;
 	}	
