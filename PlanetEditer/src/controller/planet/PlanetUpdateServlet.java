@@ -28,7 +28,7 @@ import vo.User;
 
 // tomcat 기본 설정이 PUT, DELETE를 막아놔서 수행 제출하고 작동 안될까봐 따로 준비 
 @WebServlet("/planet/update")
-public class PlanetUpdateServelt extends HttpServlet {
+public class PlanetUpdateServlet extends HttpServlet {
     private static PlanetDAO planetDao = new PlanetDAO(); 
 
 	// 행성 정보 수정
@@ -47,7 +47,7 @@ public class PlanetUpdateServelt extends HttpServlet {
 		
 		String title = "";
 		String content = "";
-		Integer planetId = 0;
+		int planetId = 0;
 		
 		try {
 			JSONParser parser = new JSONParser();
@@ -55,7 +55,7 @@ public class PlanetUpdateServelt extends HttpServlet {
 			JSONObject requestJson = (JSONObject) obj;
 			title = (String) requestJson.get("title");
 			content = (String) requestJson.get("content");
-			planetId = (int) requestJson.get("planetId");
+			planetId = Long.valueOf((long) requestJson.get("planetId")).intValue();
 		} catch (ParseException e) {
 			ps.println(Util.createErrorMessage("데이터가 json 형식이 아닙니다."));
 			return;
@@ -89,7 +89,7 @@ public class PlanetUpdateServelt extends HttpServlet {
 			return;
 		}
 		
-		int result = planetDao.updatePlanetInfo(planetId, title, content);
+		int result = planetDao.updatePlanetInfo(planet.getPlanetId(), title, content);
 		
 		if(result == 0) {
 			ps.println(Util.createErrorMessage("행성 정보 수정 중 오류가 발생했습니다."));

@@ -196,7 +196,7 @@ public class PlanetDAO {
 		return output;
 	}
 
-	public int updatePlanetInfo(Integer planetId, String title, String content) {
+	public int updatePlanetInfo(int planetId, String title, String content) {
 		int output = 0;
 		
 		Connection conn = null;
@@ -205,7 +205,7 @@ public class PlanetDAO {
 		conn = JdbcUtil.getConnection();
 		try {
 			pstmt = conn.prepareStatement("UPDATE planets " + 
-					"SET planet_title=?, planet_content" + 
+					"SET planet_title=?, planet_content=?" + 
 					"WHERE planet_id=?");
 			pstmt.setString(1, title);
 			pstmt.setString(2, content);

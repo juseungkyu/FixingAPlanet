@@ -1,16 +1,20 @@
 import PlanetController from '../ajax/PlanetController.js';
 
 /**
- * 행성 생성을 제어하는 페이지
+ * 행성 정보 수정을 제어하는 페이지
  * @param {App} app 이 페이지를 생성할 App
  */
-export default class CreatePage {
+export default class UpdatePage {
     constructor(app) {
-        console.log('CreatePage start')
+        console.log('UpdatePage start')
         this.isCreateProcessing = false
         this.app = app
-        this.container = document.querySelector('.planet-create-container')
+        this.container = document.querySelector('.info-update-container')
         this.controller = new PlanetController()
+
+        this.res = null
+
+        this.planetId = -1
 
         this.init()
     }
@@ -18,18 +22,23 @@ export default class CreatePage {
     /**
      * 페이지 호출 시 실행
      */
-    onCall() {
-        this.setContent('')
-        this.setTitle('')
+    onCall(planetId, title, content) {
+        this.planetId = planetId
+        this.setContent(content)
+        this.setTitle(title)
+
+        return new Promise((res, rej)=>{
+            this.res = res
+        })
     }
 
     /**
      * 초기설정
      */
     init() {
-        this.contentField = this.container.querySelector('#planet-create-content')
-        this.titleField = this.container.querySelector('#planet-create-title')
-        this.createBtn = this.container.querySelector('.create-btn')
+        this.contentField = this.container.querySelector('#planet-update-content')
+        this.titleField = this.container.querySelector('#planet-update-title')
+        this.updateBtn = this.container.querySelector('.update-btn')
 
         this.addEvent()
     }
@@ -41,7 +50,7 @@ export default class CreatePage {
         this.contentField.addEventListener('input', this.contentFormatCheck)
         this.titleField.addEventListener('input', this.titleFormatCheck)
 
-        this.createBtn.addEventListener('click', this.onCreateBtnClick)
+        this.updateBtn.addEventListener('click', this.onUpdateBtnClick)
     }
 
     /**
@@ -73,7 +82,7 @@ export default class CreatePage {
      * 생성 버튼 클릭
      * @param {Event} e
      */
-    onCreateBtnClick = async () => {
+    onUpdateBtnClick = async () => {
         if(!this.contentFormatCheck() || !this.titleFormatCheck()) {
             return
         }
@@ -82,7 +91,7 @@ export default class CreatePage {
         }
         this.isCreateProcessing = true
         this.app.setWaitMode()
-        const data = await this.controller.createPlanet(this.getTitle(), this.getContent())
+        const data = await this.controller.updatePlanet(this.planetId, this.getTitle(), this.getContent())
 
         if(data.error){
             alert(data.data)
@@ -91,14 +100,15 @@ export default class CreatePage {
             return
         }
 
-        alert('생성 되었습니다.')
+        alert(data.data.message)
 
-        this.setContent('')
-        this.setTitle('')
-
-        this.app.setMainPage()
         this.app.unsetWaitMode()
         this.isCreateProcessing = false
+
+        this.res({
+            title : this.getTitle(),
+            content : this.getContent()
+        }) 
     }
 
     /**

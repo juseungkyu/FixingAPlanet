@@ -67,6 +67,25 @@ export default class PlanetController extends Controller {
     createPlanet = async (title, content) => await this.post(`/planet`, {title, content})
 
     /**
+     * 행성 정보를 수정함
+     * @param {String} title 
+     * @param {String} content 
+     * @returns {
+     *    'error' = false,
+     *    'data' : {
+     *          "message" : "변경을 성공했습니다."
+     *     },
+     *  }
+     * @returns {
+     *    'error' = true,
+     *    'data' : {
+     *          "message" : "변경을 실패했습니다."
+     *     },
+     *  } 
+     */
+    updatePlanet = async (planetId, title, content) => await this.post(`/planet/update`, {planetId, title, content})
+
+    /**
      * 행성 하나를 생성함
      * @param {Number} planetId
      * @param {

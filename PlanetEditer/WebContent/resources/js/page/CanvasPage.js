@@ -2,6 +2,7 @@ import PlanetController from '../ajax/PlanetController.js';
 import Render from '../planet/view/Render.js';
 import ToolControl from '../planet/tool/ToolControl.js';
 import CanvasControl from '../planet/canvasControl/CanvasControl.js';
+import UpdatePage from './UpdatePage.js';
 
 /**
  * canvas(행성 뷰어)를 제어하는 페이지
@@ -11,7 +12,6 @@ export default class CanvasPage {
     constructor(app) {
         console.log('CanvasPage start')
         this.app = app
-        this.container = document.querySelector('.canvas-container')
 
         this.init()
         this.addEvent()
@@ -31,10 +31,15 @@ export default class CanvasPage {
 
         this.saveAndExitBtn = this.container.querySelector('.save-btn')
         this.exitBtn = this.container.querySelector('.exit-btn')
+        this.infoUpdateBtn = this.container.querySelector('.info-update-btn')
+
         this.ui = this.container.querySelectorAll('.ui')
         this.info = this.container.querySelector('.planet-info')
 
         this.render.stopAnimate()
+
+        this.infoUpdatePage = document.querySelector('.info-update-container')
+        this.updatePageControl = new UpdatePage(this.app)
     }
 
     /**
@@ -43,6 +48,7 @@ export default class CanvasPage {
     addEvent() {
         this.saveAndExitBtn.addEventListener('click', this.saveAndExit)
         this.exitBtn.addEventListener('click', this.exit)
+        this.infoUpdateBtn.addEventListener('click', this.opanInfoUpdatePage)
         window.addEventListener('resize', this.render.setRendererSize)
     }
 
@@ -165,6 +171,7 @@ export default class CanvasPage {
         this.container.querySelector('.right-top').style.visibility = 'visible'
         this.container.querySelector('.center-bottom').style.visibility = 'visible'
         this.saveAndExitBtn.style.visibility = 'hidden'
+        this.infoUpdateBtn.style.visibility = 'hidden'
     }
 
     /**
@@ -177,6 +184,7 @@ export default class CanvasPage {
             x.style.visibility = 'visible'
         })
         this.saveAndExitBtn.style.visibility = 'visible'
+        this.infoUpdateBtn.style.visibility = 'visible'
     }
 
     /**
@@ -223,6 +231,43 @@ export default class CanvasPage {
             this.canvasControl.continentBumpMapCtx.drawImage(await urlToImageDom(`${url}continent${defaultAddr}`), 0, 0)
             this.canvasControl.mapCtx.drawImage(await urlToImageDom(`${url}map${defaultAddr}`), 0, 0)
         }
+    }
+
+    /**
+     * 유저 페이지 활성화
+     * @param {String} type login or join
+     */
+    setUserPage = (type) => {
+        this.unsetPageAll()
+        this.userPageControl.onCall(type)
+    }
+
+    /**
+     * 정보 수정 페이지 열기
+     */
+    opanInfoUpdatePage = async () => {
+        if(this.isProcessing){
+            return
+        }
+        this.isProcessing = true
+
+        this.container.classList.remove('active')
+        this.infoUpdatePage.classList.add('active')
+        const updateInfo = await this.updatePageControl.onCall(
+            this.currentPlanetInfo.planetId, 
+            this.currentPlanetInfo.planetTitle, 
+            this.currentPlanetInfo.planetContent
+        )
+        this.infoUpdatePage.classList.remove('active') 
+        this.container.classList.add('active')
+        
+        this.currentPlanetInfo.planetTitle = updateInfo.title
+        this.currentPlanetInfo.planetContent = updateInfo.content
+
+        this.info.querySelector('h2').innerText = this.currentPlanetInfo.planetTitle
+        this.info.querySelector('p').innerText = this.currentPlanetInfo.planetContent
+
+        this.isProcessing = false
     }
 }
 

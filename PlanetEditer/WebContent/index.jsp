@@ -218,6 +218,7 @@
             <div class="planet-info">
                 <h2>나유탄성</h2>
                 <p>에일리언 에일리언</p>
+                <button class="btn info-update-btn small">정보 편집</button>
             </div>
         </div>
         <div class="right-bottom ui">
@@ -350,6 +351,25 @@
         </div>
     </div>
     <!-- 상세설명 페이지 -->
+
+    <!-- 행성 정보 수정 페이지 -->
+    <div class="fix-full info-update-container">
+        <h2 class="d-flex">행성 정보 수정 하기</h2>           
+        <div class="d-flex flex-col gap-10">
+            <fieldset class="text-form">
+                <legend class="label">제목</legend>
+                <input type="text" id="planet-update-title">
+            </fieldset>
+            <fieldset class="textarea-form">
+                <legend class="label">설명</legend>
+                <textarea id="planet-update-content"></textarea>
+            </fieldset>
+            <div class="d-flex gap-10">
+                <button class="btn update-btn">정보 수정</button>
+            </div>
+        </div>
+    </div>
+    <!-- 행성 정보 수정 페이지 -->
     
 
 </body>

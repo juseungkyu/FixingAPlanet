@@ -58,7 +58,7 @@ p {
 }
 
 .btn.small {
-    width: 150px;
+    width: 150px !important;
     height: 50px;
 }
 
@@ -473,6 +473,16 @@ body {
 }
 
 /* planet-create-container 종료*/
+
+/*info-update-container*/
+.info-update-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+/*info-update-container 종료*/
 
 
 /*list-container*/
