@@ -32,6 +32,7 @@ export default class CanvasPage {
         this.saveAndExitBtn = this.container.querySelector('.save-btn')
         this.exitBtn = this.container.querySelector('.exit-btn')
         this.ui = this.container.querySelectorAll('.ui')
+        this.info = this.container.querySelector('.planet-info')
 
         this.render.stopAnimate()
     }
@@ -122,6 +123,10 @@ export default class CanvasPage {
         this.canvasControl.updateCanvas()
         this.canvasControl.updateCloudCanvas()
 
+        // 설명 쓰기
+        this.info.querySelector('h2').innerText = this.currentPlanetInfo.planetTitle
+        this.info.querySelector('p').innerText = this.currentPlanetInfo.planetContent
+
         // 렌더 재시작
         this.render.animate()
         
@@ -158,6 +163,7 @@ export default class CanvasPage {
             x.style.visibility = 'hidden'
         })
         this.container.querySelector('.right-top').style.visibility = 'visible'
+        this.container.querySelector('.center-bottom').style.visibility = 'visible'
         this.saveAndExitBtn.style.visibility = 'hidden'
     }
 

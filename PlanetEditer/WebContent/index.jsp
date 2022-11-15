@@ -12,8 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/resources/style/basic.css">
-    <link rel="stylesheet" href="/resources/style/fontawesome.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <script src="/resources/js/lib/three.js"></script>
     <script src="/resources/js/lib/orbitControls.js"></script>
     <script src="/resources/js/util/util.js"></script>
@@ -80,7 +80,7 @@
                     <img src="./resources/image/canvas/map/test.png" alt="지도">
                     <div class="text">
                         <h3>지구</h3>
-                        <p>가장 아름다운 행성 - 지구는 내가 먼저 선점했다 ㅅㄱ</p>
+                        <p>지구는 내가 먼저 선점했다 ㅅㄱ</p>
                         <p class="creater">제작자 : 주승규</p>
                     </div>
                 </div>
@@ -215,8 +215,9 @@
             </div>
         </div>
         <div class="center-bottom ui">
-            <div class="map">
-
+            <div class="planet-info">
+                <h2>나유탄성</h2>
+                <p>에일리언 에일리언</p>
             </div>
         </div>
         <div class="right-bottom ui">
@@ -309,15 +310,6 @@
                             <td>주승규</td>
                         </tr>
                         <tr class="w-100">
-                            <td>주윤민</td>
-                        </tr>
-                        <tr class="w-100">
-                            <td>주승민</td>
-                        </tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr class="w-100">
-                            <td rowspan="2">디자인</td>
                             <td>주일규</td>
                         </tr>
                         <tr class="w-100">
@@ -326,11 +318,20 @@
                         <tr></tr>
                         <tr></tr>
                         <tr class="w-100">
-                            <td rowspan="2">개발</td>
+                            <td rowspan="2">디자인</td>
                             <td>주삼규</td>
                         </tr>
                         <tr class="w-100">
                             <td>주사규</td>
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr class="w-100">
+                            <td rowspan="2">개발</td>
+                            <td>주오규</td>
+                        </tr>
+                        <tr class="w-100">
+                            <td>주육규</td>
                         </tr>
                         <tr></tr>
                         <tr></tr>

@@ -151,6 +151,18 @@ body {
 
 /* UI */
 
+.canvas-container .planet-info {
+    text-align: center;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.canvas-container .planet-info>* {
+    text-align: center;
+    word-wrap: break-word;
+    width: 100%;
+}
+
 .map{
     background-color: #555555;
     /* height: 150px; */
@@ -214,6 +226,7 @@ body {
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
+    width: 400px;
 }
 
 .right-bottom {

@@ -168,7 +168,7 @@ public class PlanetDAO {
 			output = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("updatePlanet error");
+			System.out.println("changeSeaLevel error");
 		}
 
 		JdbcUtil.close(conn, pstmt);
@@ -193,6 +193,30 @@ public class PlanetDAO {
 		}
 		JdbcUtil.close(conn, pstmt);
 		
+		return output;
+	}
+
+	public int updatePlanetInfo(Integer planetId, String title, String content) {
+		int output = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = JdbcUtil.getConnection();
+		try {
+			pstmt = conn.prepareStatement("UPDATE planets " + 
+					"SET planet_title=?, planet_content" + 
+					"WHERE planet_id=?");
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, planetId);
+			output = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("updatePlanetInfo error");
+		}
+
+		JdbcUtil.close(conn, pstmt);
 		return output;
 	}	
 }
