@@ -79,7 +79,7 @@ export default class UpdatePage {
     }
 
     /**
-     * 생성 버튼 클릭
+     * 수정 버튼 클릭
      * @param {Event} e
      */
     onUpdateBtnClick = async () => {
