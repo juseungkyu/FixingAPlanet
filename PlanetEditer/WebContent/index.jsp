@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>행성편집기</title>
     <link rel="stylesheet" href="/resources/style/basic.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
@@ -32,6 +32,18 @@
         }
 	%>
 	</div>
+
+    <!-- 튜토리얼 안내 -->
+    <div class="tutorial">
+        <div class="w-300px">
+            <h3>처음 접속 하셨습니다.<br>튜토리얼을 진행하시겠습니까?</h3>
+            <div class="d-flex gap-10 mt-10">
+                <button class="btn tutorial-yes-btn">네</button>
+                <button class="btn tutorial-no-btn">아니요</button>
+            </div>
+        </div>
+    </div>
+    <!-- 튜토리얼 안내 -->
 
     <!-- 로딩창 -->
     <div class="wait active">

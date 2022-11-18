@@ -72,7 +72,6 @@ public class JoinServlet extends HttpServlet {
 			ps.println(Util.createErrorMessage("playerName가 감지되지 않습니다."));
 			return;
 		}
-		System.out.println(playerPw);
 
 		String playerPwHash = HashUtil.stringTohash(playerPw);
 		

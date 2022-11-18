@@ -206,7 +206,7 @@ export default class Controller {
         try {
             const response = await fetch(url, {
                 method: 'POST',
-                body : formData ,
+                body: formData ,
                 // headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
             })
             json = await (response).json()

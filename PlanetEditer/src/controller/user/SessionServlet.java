@@ -80,9 +80,6 @@ public class SessionServlet extends HttpServlet {
 
 		String playerPwHash = HashUtil.stringTohash(playerPw);
 
-		System.out.println(playerPw);
-		System.out.println(playerPwHash);
-
 		if (!playerPwHash.equals(user.getUserPw())) {
 			ps.println(Util.createErrorMessage("올바르지 않은 비밀번호입니다."));
 			return;

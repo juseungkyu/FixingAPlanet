@@ -33,9 +33,36 @@ class App {
         // test
         // this.test()
 
+        this.tutorial()
+
         this.getInitData()
         this.addEvent()
         this.unsetWaitMode()
+    }
+
+    /**
+     * tutorial
+     */
+    tutorial() {
+        if(window.localStorage.getItem('isNotFirst')) {
+            console.log('tutorial skip')
+            return
+        }
+
+        const tutorialWindow = document.querySelector('.tutorial')
+        tutorialWindow.classList.add('active')
+
+        window.localStorage.setItem('isNotFirst', 'yes')
+
+        const tutorialYesBtn = tutorialWindow.querySelector('.tutorial-yes-btn')
+        const tutorialNoBtn = tutorialWindow.querySelector('.tutorial-no-btn')
+
+        tutorialYesBtn.addEventListener('click', ()=> {
+            window.location.href = '/tutorial.html'
+        })
+        tutorialNoBtn.addEventListener('click', ()=> {
+            tutorialWindow.classList.remove('active')
+        })
     }
 
     /**
