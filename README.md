@@ -1,6 +1,6 @@
 # Fixing a Planet
 
-
+### <a href="https://juseungkyu.github.io/FixingAPlanetDemo/">데모 버젼 플레이하기(로딩 시간이 오래 걸릴 수 있습니다.)</a>
 
 ### 사용 기술
 
